@@ -1,4 +1,4 @@
-#include "Board.h"
+#include "../lib/Board.h"
 
 #include <iostream>
 #include <array>
