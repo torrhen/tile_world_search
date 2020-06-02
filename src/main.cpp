@@ -1,12 +1,18 @@
 #include "../lib/Board.h"
+#include "../lib/Node.h"
 
 #include <iostream>
 
 int main()
 {
-	Board b;
+	// Board b;
 
-	b.show();
+	// b.show();
+
+	Node n;
+
+
+	n.getState().show();
 
 	return 0;
 }
