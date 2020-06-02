@@ -195,3 +195,17 @@ void Board::movePLeft()
 	}
 	// otherwise do nothing
 }
+
+void Board::show()
+{
+	std::cout << "\n";
+	for (int i = height - 1; i >= 0; --i)
+	{
+		std::cout << "| ";
+		for (int j = 0; j < width; ++j)
+		{
+			std::cout << configuration[j][i] << " | "; 
+		}
+		std::cout << "\n";
+	}
+}

@@ -2,14 +2,13 @@
 #define BOARD_H
 
 #include <array>
-#include <cstddef>
 
 class Board
 {
 	private:
 		// store board structure
-		const static std::size_t width = 4;
-		const static std::size_t height = 4;
+		const static int width = 4;
+		const static int height = 4;
 		
 		std::array<std::array<char, width>, height> configuration;
 
@@ -48,6 +47,9 @@ class Board
 		void movePDown();
 		void movePLeft();
 		void movePRight();
+
+		// display board configuration
+		void show();
 };
 
 #endif

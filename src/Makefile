@@ -5,8 +5,13 @@ CXX = g++
 HEADER_DIR = ../lib/
 CXXFLAGS = -c -Wall -I$(HEADER_DIR)
 
-output: main.o Board.o
-	$(CXX) Board.o main.o -o output
+# to run from src/ 
+# ming32-make         (to complie)
+# ming32-make run     (to execute program)
+# ming32-make clean   (to delete files)
+
+program: main.o Board.o
+	$(CXX) Board.o main.o -o program
 
 main.o: main.cpp
 	$(CXX) -c main.cpp
@@ -15,7 +20,7 @@ Board.o: Board.cpp $(HEADER_DIR)Board.h
 	$(CXX) -c Board.cpp
 
 run:
-	output.exe
+	program.exe
 
 clean: 
-	del *.o *.h.gch output.exe
+	del *.o *.h.gch program.exe

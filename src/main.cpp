@@ -5,9 +5,9 @@
 int main()
 {
 	Board b;
-	Board f;
+	b.movePUp();
 
-	std::cout << "Working." << std::endl;
+	b.show();
 
 	return 0;
 }
