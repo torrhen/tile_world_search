@@ -3,7 +3,7 @@
 #include <iostream>
 #include <array>
 
-// board constructor
+// constructor
 Board::Board()
 	: P{3, 0, 'P'}, A{2, 0, 'A'}, B{1, 0, 'B'}, C{0, 0, 'C'}
 {
@@ -41,11 +41,8 @@ Board::Board(Board&& Board)
 	C = {Board.C.x_position, Board.C.y_position, Board.C.id};
 	placeTiles();
 
-	Board.P = {-1, -1, 'P'};
-	Board.A = {-1, -1, 'A'};
-	Board.B = {-1, -1, 'B'};
-	Board.C = {-1, -1, 'C'};
 	Board.clearTiles();
+	Board.is_empty = true;
 }
 
 // move assignment operator
@@ -57,11 +54,8 @@ Board& Board::operator=(Board&& Board)
 	C = {Board.C.x_position, Board.C.y_position, Board.C.id};
 	placeTiles();
 
-	Board.P = {-1, -1, 'P'};
-	Board.A = {-1, -1, 'A'};
-	Board.B = {-1, -1, 'B'};
-	Board.C = {-1, -1, 'C'};
 	Board.clearTiles();
+	Board.is_empty = true;
 
 	return *this;
 }
@@ -196,16 +190,26 @@ void Board::movePLeft()
 	// otherwise do nothing
 }
 
+// is board empty of tiles?
+bool Board::isEmpty()
+{
+	return is_empty;
+}
+
+// display board configuration
 void Board::show()
 {
-	std::cout << "\n";
-	for (int i = height - 1; i >= 0; --i)
+	if (!isEmpty())
 	{
-		std::cout << "| ";
-		for (int j = 0; j < width; ++j)
-		{
-			std::cout << configuration[j][i] << " | "; 
-		}
 		std::cout << "\n";
+		for (int i = height - 1; i >= 0; --i)
+		{
+			std::cout << "| ";
+			for (int j = 0; j < width; ++j)
+			{
+				std::cout << configuration[j][i] << " | ";
+			}
+			std::cout << "\n";
+		}
 	}
 }

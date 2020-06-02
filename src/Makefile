@@ -23,4 +23,4 @@ run:
 	program.exe
 
 clean: 
-	del *.o *.h.gch program.exe
+	del *.o program.exe

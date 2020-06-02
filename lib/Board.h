@@ -2,13 +2,14 @@
 #define BOARD_H
 
 #include <array>
+#include <cstddef>
 
 class Board
 {
 	private:
 		// store board structure
-		const static int width = 4;
-		const static int height = 4;
+		const static std::size_t width = 4;
+		const static std::size_t height = 4;
 		
 		std::array<std::array<char, width>, height> configuration;
 
@@ -23,6 +24,9 @@ class Board
 		Tile A;
 		Tile B;
 		Tile C;
+
+		// does board contain tiles?
+		bool is_empty = false;
 
 	public:
 		Board();
@@ -50,6 +54,8 @@ class Board
 
 		// display board configuration
 		void show();
+
+		bool isEmpty();
 };
 
 #endif

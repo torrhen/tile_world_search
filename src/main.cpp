@@ -5,7 +5,6 @@
 int main()
 {
 	Board b;
-	b.movePUp();
 
 	b.show();
 
