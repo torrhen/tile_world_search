@@ -3,15 +3,18 @@
 
 #include "Board.h"
 
+#include <memory>
+
 class Node
 {
 	private:
 		Board State;
-		Node* Parent;
+		std::shared_ptr<Node> Parent;
 
 	public:
 		// constructors
 		Node(const Board& State);
+		Node(const Board& State, const Node& Parent);
 
 		// copy constructor
 		Node(const Node& Node);
@@ -24,7 +27,7 @@ class Node
 		Board getState() const;
 
 		// get Parent 
-		Node getParent() const;
+		std::shared_ptr<Node> getParent() const;
 };
 
 #endif

@@ -6,13 +6,13 @@
 Node::Node(const Board& State)
 {
 	this->State = State;
-	this->Parent = std::shared_ptr<Node>(nullptr);
+	this->Parent = nullptr;
 }
 
-Node::Node(const Board& State, Node* Parent)
+Node::Node(const Board& State, const Node& Parent)
 {
 	this->State = State;
-	this->Parent = std::shared_ptr<Node>(Parent);
+	this->Parent = std::make_shared<Node>(Parent);
 }
 
 // copy constructor
@@ -43,7 +43,7 @@ Board Node::getState() const
 }
 
 // get Parent
-Node* Board::getParent() const
+std::shared_ptr<Node> Node::getParent() const
 {
 	return Parent;
 }
