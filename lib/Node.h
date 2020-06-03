@@ -7,6 +7,7 @@ class Node
 {
 	private:
 		Board State;
+		Node* Parent;
 
 	public:
 		// constructors
@@ -16,9 +17,14 @@ class Node
 		Node(const Node& Node);
 		// copy assignment operator
 		Node& operator=(const Node& Node);
+		// destructor
+		~Node();
 
 		// get node state
 		Board getState() const;
+
+		// get Parent 
+		Node getParent() const;
 };
 
 #endif
