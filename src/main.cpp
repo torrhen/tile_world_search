@@ -11,7 +11,6 @@ int main()
 
 	Node n;
 
-
 	n.getState().show();
 
 	return 0;

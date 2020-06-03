@@ -6,11 +6,12 @@
 class Node
 {
 	private:
-		Board* State;
+		Board State;
 
 	public:
-		// constructor
-		Node();
+		// constructors
+		Node(const Board& State);
+
 		// copy constructor
 		Node(const Node& Node);
 		// copy assignment operator

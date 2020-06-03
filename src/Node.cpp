@@ -1,9 +1,9 @@
 #include "../lib/Node.h"
 
 // constructor
-Node::Node()
+Node::Node(const Board& State)
 {
-	State = &(Board());
+	this->State = State;
 }
 
 // copy constructor
@@ -22,5 +22,5 @@ Node& Node::operator=(const Node& Node)
 // get state
 Board Node::getState() const
 {
-	return *State;
+	return State;
 }
