@@ -7,11 +7,12 @@ int main()
 {
 	Board StartBoard;
 
-	StartBoard.show();
-
 	Node RootNode(StartBoard);
 
+	Node NewNode(RootNode);
+
 	RootNode.getState().show();
+	NewNode.getState().show();
 
 	return 0;
 }

@@ -9,13 +9,13 @@ Node::Node(const Board& State)
 // copy constructor
 Node::Node(const Node& Node)
 {
-	State = Node.State;
+	State = Node.getState();
 }
 
 // copy assignment operator
 Node& Node::operator=(const Node& Node)
 {
-	State = Node.State;
+	State = Node.getState();
 	return *this;
 }
 
