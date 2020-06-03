@@ -19,6 +19,6 @@ class Node
 
 		// get node state
 		Board getState() const;
-},
+};
 
 #endif

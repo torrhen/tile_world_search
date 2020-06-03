@@ -5,13 +5,13 @@
 
 int main()
 {
-	// Board b;
+	Board StartBoard;
 
-	// b.show();
+	StartBoard.show();
 
-	Node n;
+	Node RootNode(StartBoard);
 
-	n.getState().show();
+	RootNode.getState().show();
 
 	return 0;
 }

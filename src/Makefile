@@ -10,11 +10,14 @@ CXXFLAGS = -c -Wall -I$(HEADER_DIR)
 # ming32-make run     (to execute program)
 # ming32-make clean   (to delete files)
 
-program: main.o Board.o
-	$(CXX) Board.o main.o -o program
+program: main.o Board.o Node.o
+	$(CXX) Board.o Node.o main.o -o program
 
 main.o: main.cpp
 	$(CXX) -c main.cpp
+
+Node.o: Node.cpp $(HEADER_DIR)Node.h
+	$(CXX) -c Node.cpp
 
 Board.o: Board.cpp $(HEADER_DIR)Board.h
 	$(CXX) -c Board.cpp
