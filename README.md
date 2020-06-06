@@ -1,32 +1,41 @@
-# Tile World Problem (C++)
+# Tile Search Problem (C++)
 
-Repository contains the search algorithms required to solve the "Tile World" problem.
+## Overview
+An agent (**P**) moves within a simulated (N x N) grid which contains other types of tiles (**A**, **B**, **C**). Squares within the grid that do not contain a tile are marked with an **X**. The agent starts in a pre-defined start grid. The objective is to move around the grid and position the **A**, **B** and **C** tiles so that the goal grid is satisfied.
 
-An agent ("P") moves within a simulated N x N grid which contains other types of tiles ("A", "B", "C" and "X"). The goal of the agent is move around this grid and position the "A", "B" and "C" tiles so that they match their positions in the goal state from a start state.
+**Start Grid**:
 
-Start State:
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **C** &nbsp;|&nbsp; **P** &nbsp;|<br>
 
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; A &nbsp;|&nbsp; B &nbsp;|&nbsp; C &nbsp;|&nbsp; P &nbsp;|<br>
+**Goal Grid**:
 
-Goal State:
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **A** &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **B** &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **C** &nbsp;|&nbsp; X &nbsp;|&nbsp; **P** &nbsp;|<br>
 
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; X &nbsp;|&nbsp; A &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; X &nbsp;|&nbsp; B &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; X &nbsp;|&nbsp; C &nbsp;|&nbsp; X &nbsp;|&nbsp; P &nbsp;|<br>
+When the agent moves into a position that is already occupied by another tile, the position of the obstructing tile is automatically swapped with the agent
 
-When the agent moves into a position that is already occupied by another tile, their positions are swapped.
+e.g. &nbsp; Agent moves left into a position already occupied by the **C** tile
 
-e.g. &nbsp; Agent moves left (new position occupied by tile "C")
+**Before move**:
 
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; A &nbsp;|&nbsp; B &nbsp;|&nbsp; C &nbsp;|&nbsp; P &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **C** &nbsp;|&nbsp; **P** &nbsp;|<br>
 
-|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-|&nbsp; A &nbsp;|&nbsp; B &nbsp;|&nbsp; P &nbsp;|&nbsp; C &nbsp;|<br>
+**After move**:
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **P** &nbsp;|&nbsp; **C** &nbsp;|<br>
+
+## Tree Search Algorithms
 
 The search for this goal state is done using breadth-first, depth-first, iterative deepening and A* TREE search. The project can be used to investigate how performance scales with problem difficulty, based on two metrics.
 
