@@ -8,6 +8,7 @@
 class Node
 {
 	private:
+		int depth;
 		Board State;
 		std::shared_ptr<Node> Parent;
 
@@ -28,6 +29,9 @@ class Node
 
 		// get Parent 
 		std::shared_ptr<Node> getParent() const;
+
+		// get node depth
+		int getDepth() const;
 };
 
 #endif
