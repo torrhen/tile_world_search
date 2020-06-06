@@ -5,34 +5,34 @@ An agent (**P**) moves within a simulated (N x N) grid which contains other type
 
 **Start Grid**:
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **C** &nbsp;|&nbsp; **P** &nbsp;|<br>
 
 **Goal Grid**:
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **A** &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **B** &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; **C** &nbsp;|&nbsp; X &nbsp;|&nbsp; **P** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **C** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **P** &nbsp;|<br>
 
-When the agent moves into a position that is already occupied by another tile, the position of the obstructing tile is automatically swapped with the agent
+When the agent moves into a position that is already occupied by another tile, the position of the obstructing tile is automatically swapped with the agent.
 
-e.g. &nbsp; Agent moves left into a position already occupied by the **C** tile
+e.g. &nbsp; Agent moves left into a position already occupied by the **C** tile.
 
 **Before move**:
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **C** &nbsp;|&nbsp; **P** &nbsp;|<br>
 
 **After move**:
 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|&nbsp; X &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|&nbsp; **X** &nbsp;|<br>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; **A** &nbsp;|&nbsp; **B** &nbsp;|&nbsp; **P** &nbsp;|&nbsp; **C** &nbsp;|<br>
 
 ## Tree Search Algorithms
