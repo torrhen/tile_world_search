@@ -1,18 +1,17 @@
-#include "../lib/Board.h"
-#include "../lib/Node.h"
+#include "../lib/Grid.h"
+// #include "../lib/Node.h"
 
 #include <iostream>
 
 int main()
 {
-	Board StartBoard;
+	TileSearch::Grid g;
 
-	Node RootNode(StartBoard);
+	g.show();
 
-	Node NewNode(RootNode);
+	g.movePUp();
 
-	RootNode.getState().show();
-	NewNode.getState().show();
+	g.show();
 
 	return 0;
 }
