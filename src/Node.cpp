@@ -2,59 +2,62 @@
 
 #include <memory>
 
-// constructor without parent node
-Node::Node(const Board& State)
+namespace TileSearch
 {
-	this->depth = 0;
-	this->State = State;
-	this->Parent = nullptr;
-}
+	// constructor without parent node (root node)
+	Node::Node(const Grid& State)
+	{
+		this->depth = 0;
+		this->State = State;
+		this->Parent = nullptr;
+	}
 
-// constructor with parent node
-Node::Node(const Board& State, const Node& Parent)
-{
-	this->depth = Parent.getDepth() + 1;
-	this->State = State;
-	this->Parent = std::make_shared<Node>(Parent);
-}
+	// constructor with parent node (child node)
+	Node::Node(const Grid& State, const Node& Parent)
+	{
+		this->depth = Parent.getDepth() + 1;
+		this->State = State;
+		this->Parent = std::make_shared<Node>(Parent);
+	}
 
-// copy constructor
-Node::Node(const Node& Node)
-{
-	depth = Node.getDepth();
-	State = Node.getState();
-	Parent = Node.getParent();
-}
+	// copy constructor
+	Node::Node(const Node& Node)
+	{
+		this->depth = Node.getDepth();
+		this->State = Node.getState();
+		this->Parent = Node.getParent();
+	}
 
-// copy assignment operator
-Node& Node::operator=(const Node& Node)
-{
-	depth = Node.getDepth();
-	State = Node.getState();
-	Parent = Node.getParent();
-	return *this;
-}
+	// copy assignment operator
+	Node& Node::operator=(const Node& Node)
+	{
+		this->depth = Node.getDepth();
+		this->State = Node.getState();
+		this->Parent = Node.getParent();
+		return *this;
+	}
 
-// destructor
-Node::~Node()
-{
+	// destructor
+	Node::~Node()
+	{
 	
-}
+	}
 
-// get state
-Board Node::getState() const
-{
-	return State;
-}
+	// get node state
+	Grid Node::getState() const
+	{
+		return State;
+	}
 
-// get Parent
-std::shared_ptr<Node> Node::getParent() const
-{
-	return Parent;
-}
+	// get parent node
+	std::shared_ptr<Node> Node::getParent() const
+	{
+		return Parent;
+	}
 
-// get depth
-int getDepth() const
-{
-	return depth;
+	// get node depth
+	int Node::getDepth() const
+	{
+		return depth;
+	}
 }

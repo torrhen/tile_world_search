@@ -1,17 +1,14 @@
 #include "../lib/Grid.h"
-// #include "../lib/Node.h"
+#include "../lib/Node.h"
 
 #include <iostream>
 
 int main()
 {
-	TileSearch::Grid g;
+	TileSearch::Grid s;
+	TileSearch::Node n(s);
 
-	g.show();
-
-	g.movePUp();
-
-	g.show();
+	n.getState().show();
 
 	return 0;
 }

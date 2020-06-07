@@ -11,14 +11,14 @@ CXXFLAGS = -c -Wall -I$(HEADER_DIR)
 # ming32-make clean   (to delete files)
 
 # add Node
-program: main.o Grid.o
-	$(CXX) Grid.o main.o -o program
+program: main.o Node.o Grid.o
+	$(CXX) Grid.o Node.o main.o -o program
 
 main.o: main.cpp
 	$(CXX) -c main.cpp
 
-# Node.o: Node.cpp $(HEADER_DIR)Node.h
-# 	$(CXX) -c Node.cpp
+Node.o: Node.cpp $(HEADER_DIR)Node.h
+	$(CXX) -c Node.cpp
 
 Grid.o: Grid.cpp $(HEADER_DIR)Grid.h
 	$(CXX) -c Grid.cpp
