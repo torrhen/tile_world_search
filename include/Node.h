@@ -4,6 +4,7 @@
 #include "Grid.h"
 
 #include <memory>
+#include <vector>
 
 namespace TileSearch
 {
@@ -16,6 +17,8 @@ namespace TileSearch
 			Grid State;
 			// store the parent node (multiple nodes can share the same parent)
 			std::shared_ptr<Node> Parent;
+			// store node children
+			std::vector<Node> Children;
 
 		public:
 			// constructors
@@ -29,6 +32,9 @@ namespace TileSearch
 			// destructor
 			~Node();
 
+			// create children
+			void createChildren();
+
 			// get node state
 			Grid getState() const;
 
@@ -37,6 +43,9 @@ namespace TileSearch
 
 			// get node depth
 			int getDepth() const;
+
+			// get children
+			std::vector<Node> getChildren() const;
 	};
 }
 

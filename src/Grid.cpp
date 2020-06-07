@@ -7,7 +7,7 @@ namespace TileSearch
 {
 	// constructor
 	Grid::Grid()
-		: P{3, 0, 'P'}, A{2, 0, 'A'}, B{1, 0, 'B'}, C{0, 0, 'C'}
+		: P{2, 3, 'P'}, A{2, 0, 'A'}, B{1, 0, 'B'}, C{0, 0, 'C'}
 	{
 		build();
 	}
@@ -192,6 +192,19 @@ namespace TileSearch
 			build();
 		}
 		// otherwise do nothing
+	}
+
+	// compare grid configuration to another
+	bool Grid::isIdenticalTo(const Grid& Other)
+	{
+		if (this->configuration == Other.configuration)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	// display grid configuration

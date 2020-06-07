@@ -8,7 +8,12 @@ int main()
 	TileSearch::Grid s;
 	TileSearch::Node n(s);
 
-	n.getState().show();
+	n.createChildren();
+
+	for (int i = 0; i < n.getChildren().size(); ++i)
+	{
+		n.getChildren()[i].getState().show();
+	}
 
 	return 0;
 }

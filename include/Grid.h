@@ -55,6 +55,9 @@ namespace TileSearch
 
 			// display grid configuration
 			void show();
+
+			// check if two grids have the same configuration
+			bool isIdenticalTo(const Grid& Other);
 	};
 }
 

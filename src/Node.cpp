@@ -1,6 +1,7 @@
 #include "../include/Node.h"
 
 #include <memory>
+#include <vector>
 
 namespace TileSearch
 {
@@ -26,6 +27,7 @@ namespace TileSearch
 		this->depth = Node.getDepth();
 		this->State = Node.getState();
 		this->Parent = Node.getParent();
+		this->Children = Node.getChildren();
 	}
 
 	// copy assignment operator
@@ -34,6 +36,7 @@ namespace TileSearch
 		this->depth = Node.getDepth();
 		this->State = Node.getState();
 		this->Parent = Node.getParent();
+		this->Children = Node.getChildren();
 		return *this;
 	}
 
@@ -41,6 +44,42 @@ namespace TileSearch
 	Node::~Node()
 	{
 	
+	}
+
+	// create node children
+	void Node::createChildren()
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			Node Child(*this);
+			switch(i)
+			{
+				case 0:
+				Child.State.movePUp();
+				break;
+
+				case 1:
+				Child.State.movePLeft();
+				// check if child state is the same as parent state (no move made)
+				break;
+
+				case 2:
+				Child.State.movePDown();
+				// check if child state is the same as parent state (no move made)
+				break;
+
+				case 3:
+				Child.State.movePRight();
+				// check if child state is the same as parent state (no move made)
+				break;
+			}
+			// if the child state is not equal to the parent state...
+			if (!(Child.State.isIdenticalTo(this->getState())))
+			{	
+				// keep the child
+				Children.push_back(Child);
+			}
+		}
 	}
 
 	// get node state
@@ -59,5 +98,11 @@ namespace TileSearch
 	int Node::getDepth() const
 	{
 		return depth;
+	}
+
+	// get node children
+	std::vector<Node> Node::getChildren() const
+	{
+		return Children;
 	}
 }
