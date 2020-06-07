@@ -9,7 +9,7 @@ namespace TileSearch
 	Grid::Grid()
 		: P{3, 0, 'P'}, A{2, 0, 'A'}, B{1, 0, 'B'}, C{0, 0, 'C'}
 	{
-		placeTiles();
+		build();
 	}
 
 	// copy constructor
@@ -19,7 +19,7 @@ namespace TileSearch
 		this->A = {Other.A.x, Other.A.y, Other.A.id};
 		this->B = {Other.B.x, Other.B.y, Other.B.id};
 		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		placeTiles();
+		build();
 	}
 
 	// copy assignment operator 
@@ -29,7 +29,7 @@ namespace TileSearch
 		this->A = {Other.A.x, Other.A.y, Other.A.id};
 		this->B = {Other.B.x, Other.B.y, Other.B.id};
 		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		placeTiles();	
+		build();	
 
 		return *this;
 	}
@@ -41,9 +41,9 @@ namespace TileSearch
 		this->A = {Other.A.x, Other.A.y, Other.A.id};
 		this->B = {Other.B.x, Other.B.y, Other.B.id};
 		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		placeTiles();
+		build();
 
-		Other.clearTiles();
+		Other.clear();
 		Other.isEmpty = true;
 	}
 
@@ -54,9 +54,9 @@ namespace TileSearch
 		this->A = {Other.A.x, Other.A.y, Other.A.id};
 		this->B = {Other.B.x, Other.B.y, Other.B.id};
 		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		placeTiles();
+		build();
 
-		Other.clearTiles();
+		Other.clear();
 		Other.isEmpty = true;
 
 		return *this;
@@ -69,7 +69,7 @@ namespace TileSearch
 	}
 
 	// temporarily remove board tiles
-	void Grid::clearTiles()
+	void Grid::clear()
 	{
 		configuration = 
 		{{
@@ -81,9 +81,9 @@ namespace TileSearch
 	}
 
 	// place the P, A, B and C tiles in their positions
-	void Grid::placeTiles()
+	void Grid::build()
 	{
-		clearTiles();
+		clear();
 		configuration[P.x][P.y] = P.id;
 		configuration[A.x][A.y] = A.id;
 		configuration[B.x][B.y] = B.id;
@@ -113,7 +113,7 @@ namespace TileSearch
 			}
 			// move P up
 			P.y += 1;
-			placeTiles();
+			build();
 		}
 		// otherwise do nothing
 	}
@@ -139,7 +139,7 @@ namespace TileSearch
 			}
 			// move P down
 			P.y -= 1;
-			placeTiles();
+			build();
 		}
 		// otherwise do nothing
 	}
@@ -163,7 +163,7 @@ namespace TileSearch
 			}
 			// move P right
 			P.x += 1;
-			placeTiles();
+			build();
 		}
 		// otherwise do nothing
 	}
@@ -189,12 +189,12 @@ namespace TileSearch
 			}
 			// move P left
 			P.x -= 1;
-			placeTiles();
+			build();
 		}
 		// otherwise do nothing
 	}
 
-	// display board configuration
+	// display grid configuration
 	void Grid::show()
 	{
 		if (!isEmpty)

@@ -12,7 +12,7 @@ namespace TileSearch
 			// store grid structure
 			const static std::size_t width = 4;
 			const static std::size_t height = 4;
-		
+			// store grid
 			std::array<std::array<char, width>, height> configuration;
 
 			struct Tile
@@ -21,13 +21,12 @@ namespace TileSearch
 				int y;
 				char id;
 			};
-
 			Tile P;
 			Tile A;
 			Tile B;
 			Tile C;
 
-			// does grid contain tiles?
+			// does the grid contain tiles?
 			bool isEmpty = false;
 
 		public:
@@ -42,11 +41,11 @@ namespace TileSearch
 			Grid& operator=(Grid&& Grid);
 			~Grid();
 
-			// remove all tiles
-			void clearTiles();
+			// remove all tiles from grid
+			void clear();
 
-			// add tiles 
-			void placeTiles();
+			// add tiles to grid
+			void build();
 
 			// move the P tile
 			void movePUp();
