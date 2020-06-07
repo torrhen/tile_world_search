@@ -2,8 +2,8 @@
 CXX = g++
 # include compiler flags for all warnings and debugging
 # add /lib folder containing header files
-HEADER_DIR = ../lib/
-CXXFLAGS = -c -Wall -I$(HEADER_DIR)
+INC_DIR = ../include/
+CXXFLAGS = -c -Wall -I$(INC_DIR)
 
 # to run from src/ 
 # ming32-make         (to complie)
@@ -17,10 +17,10 @@ program: main.o Node.o Grid.o
 main.o: main.cpp
 	$(CXX) -c main.cpp
 
-Node.o: Node.cpp $(HEADER_DIR)Node.h
+Node.o: Node.cpp $(INC_DIR)Node.h
 	$(CXX) -c Node.cpp
 
-Grid.o: Grid.cpp $(HEADER_DIR)Grid.h
+Grid.o: Grid.cpp $(INC_DIR)Grid.h
 	$(CXX) -c Grid.cpp
 
 run:

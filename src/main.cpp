@@ -1,5 +1,5 @@
-#include "../lib/Grid.h"
-#include "../lib/Node.h"
+#include "../include/Grid.h"
+#include "../include/Node.h"
 
 #include <iostream>
 

@@ -1,4 +1,4 @@
-#include "../lib/Node.h"
+#include "../include/Node.h"
 
 #include <memory>
 
