@@ -23,7 +23,6 @@ namespace TileSearch
 		public:
 			// constructors
 			Node(const Grid& State);
-			Node(const Grid& State, const Node& Parent);
 
 			// copy constructor
 			Node(const Node& Node);

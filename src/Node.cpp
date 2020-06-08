@@ -13,14 +13,6 @@ namespace TileSearch
 		this->Parent = nullptr;
 	}
 
-	// constructor with parent node (child node)
-	Node::Node(const Grid& State, const Node& Parent)
-	{
-		this->depth = Parent.getDepth() + 1;
-		this->State = State;
-		this->Parent = std::make_shared<Node>(Parent);
-	}
-
 	// copy constructor
 	Node::Node(const Node& Node)
 	{
@@ -76,6 +68,11 @@ namespace TileSearch
 			// if the child state is not equal to the parent state...
 			if (!(Child.State.isIdenticalTo(this->getState())))
 			{	
+				// update child node
+				Child.Parent.reset(this);
+				Child.depth += 1;
+				Child.Children.clear();
+
 				// keep the child
 				Children.push_back(Child);
 			}
