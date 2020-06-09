@@ -7,7 +7,7 @@ namespace TileSearch
 {
 	// constructor
 	Grid::Grid()
-		: P{2, 3, 'P'}, A{2, 0, 'A'}, B{1, 0, 'B'}, C{0, 0, 'C'}
+		: P{3, 0, 'P'}, A{0, 0, 'A'}, B{1, 0, 'B'}, C{2, 0, 'C'}
 	{
 		build();
 	}
@@ -25,12 +25,16 @@ namespace TileSearch
 	// copy assignment operator 
 	Grid& Grid::operator=(const Grid& Other)
 	{
-		this->P = {Other.P.x, Other.P.y, Other.P.id};
-		this->A = {Other.A.x, Other.A.y, Other.A.id};
-		this->B = {Other.B.x, Other.B.y, Other.B.id};
-		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		build();	
+		// self assignment check
+		if (&Other != this)
+		{
+			this->P = {Other.P.x, Other.P.y, Other.P.id};
+			this->A = {Other.A.x, Other.A.y, Other.A.id};
+			this->B = {Other.B.x, Other.B.y, Other.B.id};
+			this->C = {Other.C.x, Other.C.y, Other.C.id};
+			build();
 
+		}
 		return *this;
 	}
 
@@ -50,15 +54,18 @@ namespace TileSearch
 	// move assignment operator
 	Grid& Grid::operator=(Grid&& Other)
 	{
-		this->P = {Other.P.x, Other.P.y, Other.P.id};
-		this->A = {Other.A.x, Other.A.y, Other.A.id};
-		this->B = {Other.B.x, Other.B.y, Other.B.id};
-		this->C = {Other.C.x, Other.C.y, Other.C.id};
-		build();
+		// self assignment check
+		if (&Other != this)
+		{
+			this->P = {Other.P.x, Other.P.y, Other.P.id};
+			this->A = {Other.A.x, Other.A.y, Other.A.id};
+			this->B = {Other.B.x, Other.B.y, Other.B.id};
+			this->C = {Other.C.x, Other.C.y, Other.C.id};
+			build();
 
-		Other.clear();
-		Other.isEmpty = true;
-
+			Other.clear();
+			Other.isEmpty = true;
+		}
 		return *this;
 	}
 

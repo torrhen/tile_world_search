@@ -14,21 +14,25 @@ namespace TileSearch
 	}
 
 	// copy constructor
-	Node::Node(const Node& Node)
+	Node::Node(const Node& Other)
 	{
-		this->depth = Node.getDepth();
-		this->State = Node.getState();
-		this->Parent = Node.getParent();
-		this->Children = Node.getChildren();
+		this->depth = Other.getDepth();
+		this->State = Other.getState();
+		this->Parent = Other.getParent();
+		this->Children = Other.getChildren();
 	}
 
 	// copy assignment operator
-	Node& Node::operator=(const Node& Node)
+	Node& Node::operator=(const Node& Other)
 	{
-		this->depth = Node.getDepth();
-		this->State = Node.getState();
-		this->Parent = Node.getParent();
-		this->Children = Node.getChildren();
+		// self assignment check
+		if (&Other != this)
+		{
+			this->depth = Other.getDepth();
+			this->State = Other.getState();
+			this->Parent = Other.getParent();
+			this->Children = Other.getChildren();
+		}
 		return *this;
 	}
 
@@ -43,6 +47,7 @@ namespace TileSearch
 	{
 		for (int i = 0; i < 4; ++i)
 		{
+			// create child node from the parent
 			Node Child(*this);
 			switch(i)
 			{
@@ -52,20 +57,17 @@ namespace TileSearch
 
 				case 1:
 				Child.State.movePLeft();
-				// check if child state is the same as parent state (no move made)
 				break;
 
 				case 2:
 				Child.State.movePDown();
-				// check if child state is the same as parent state (no move made)
 				break;
 
 				case 3:
 				Child.State.movePRight();
-				// check if child state is the same as parent state (no move made)
 				break;
 			}
-			// if the child state is not equal to the parent state...
+			// if the child state is different to the parent state...(successful move was made)
 			if (!(Child.State.isIdenticalTo(this->getState())))
 			{	
 				// update child node
