@@ -23,7 +23,7 @@ int main()
 		std::cout << n.getChildren()[i].getParent() << std::endl;
 		std::cout << n.getChildren()[i].getChildren().size() << std::endl;
 
-		if (i == 2)
+		if (i == 1)
 		{
 			TileSearch::Node b(n.getChildren()[i]);
 			b.getState().show();
