@@ -6,48 +6,45 @@
 namespace TileSearch
 {
 	// constructor without parent node (root node)
-	Node::Node(const Grid& State)
+	Node::Node(const Grid& state)
 	{
 		this->depth = 0;
-		this->State = State;
+		this->State = state;
 		this->Parent = nullptr;
 	}
 
-	// copy constructor
-	Node::Node(const Node& Other)
+	Node::Node(const Node& other)
 	{
-		this->depth = Other.getDepth();
-		this->State = Other.getState();
-		this->Parent = Other.getParent();
-		this->Children = Other.getChildren();
+		this->depth = other.getDepth();
+		this->State = other.getState();
+		this->Parent = other.getParent();
+		this->Children = other.getChildren();
 	}
 
-	// copy assignment operator
-	Node& Node::operator=(const Node& Other)
+	Node& Node::operator=(const Node& other)
 	{
 		// self assignment check
-		if (&Other != this)
+		if (&other != this)
 		{
-			this->depth = Other.getDepth();
-			this->State = Other.getState();
-			this->Parent = Other.getParent();
-			this->Children = Other.getChildren();
+			this->depth = other.getDepth();
+			this->State = other.getState();
+			this->Parent = other.getParent();
+			this->Children = other.getChildren();
 		}
 		return *this;
 	}
 
-	// destructor
 	Node::~Node()
 	{
 	
 	}
 
-	// create node children
+	// create all possible child nodes
 	void Node::createChildren()
 	{
+		// create a new child node by moving tile P in each direction
 		for (int i = 0; i < 4; ++i)
 		{
-			// create child node from the parent
 			Node Child(*this);
 			switch(i)
 			{
@@ -67,7 +64,7 @@ namespace TileSearch
 				Child.State.movePRight();
 				break;
 			}
-			// if the child state is different to the parent state...(successful move was made)
+			// if the movement of the P tile was successful then the child node state is different from its parents 
 			if (!(Child.State.isIdenticalTo(this->getState())))
 			{	
 				// update child node
@@ -81,25 +78,21 @@ namespace TileSearch
 		}
 	}
 
-	// get node state
 	Grid Node::getState() const
 	{
 		return State;
 	}
 
-	// get parent node
 	std::shared_ptr<Node> Node::getParent() const
 	{
 		return Parent;
 	}
 
-	// get node depth
 	int Node::getDepth() const
 	{
 		return depth;
 	}
 
-	// get node children
 	std::vector<Node> Node::getChildren() const
 	{
 		return Children;

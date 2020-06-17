@@ -11,7 +11,6 @@ namespace TileSearch
 	class Node
 	{
 		private:
-			// store depth of the node within the search tree
 			int depth;
 			// store the current node state
 			Grid State;
@@ -21,29 +20,19 @@ namespace TileSearch
 			std::vector<Node> Children;
 
 		public:
-			// constructors
 			Node(const Grid& State);
 
-			// copy constructor
 			Node(const Node& Node);
 			// copy assignment operator
 			Node& operator=(const Node& Node);
-			// destructor
+
 			~Node();
 
-			// create children
 			void createChildren();
 
-			// get node state
 			Grid getState() const;
-
-			// get Parent 
 			std::shared_ptr<Node> getParent() const;
-
-			// get node depth
 			int getDepth() const;
-
-			// get children
 			std::vector<Node> getChildren() const;
 	};
 }
