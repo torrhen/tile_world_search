@@ -2,88 +2,83 @@
 
 #include <iostream>
 #include <array>
+#include <iterator>
 
 namespace TileSearch
 {
-	// constructor
 	Grid::Grid()
 		: P{3, 0, 'P'}, A{0, 0, 'A'}, B{1, 0, 'B'}, C{2, 0, 'C'}
 	{
 		build();
 	}
 
-	// copy constructor
-	Grid::Grid(const Grid& Other)
+	Grid::Grid(const Grid& other)
 	{
-		this->P = {Other.P.x, Other.P.y, Other.P.id};
-		this->A = {Other.A.x, Other.A.y, Other.A.id};
-		this->B = {Other.B.x, Other.B.y, Other.B.id};
-		this->C = {Other.C.x, Other.C.y, Other.C.id};
+		this->P = {other.P.x, other.P.y, other.P.id};
+		this->A = {other.A.x, other.A.y, other.A.id};
+		this->B = {other.B.x, other.B.y, other.B.id};
+		this->C = {other.C.x, other.C.y, other.C.id};
 		build();
 	}
 
-	// copy assignment operator 
-	Grid& Grid::operator=(const Grid& Other)
+	Grid& Grid::operator=(const Grid& other)
 	{
 		// self assignment check
-		if (&Other != this)
+		if (&other != this)
 		{
-			this->P = {Other.P.x, Other.P.y, Other.P.id};
-			this->A = {Other.A.x, Other.A.y, Other.A.id};
-			this->B = {Other.B.x, Other.B.y, Other.B.id};
-			this->C = {Other.C.x, Other.C.y, Other.C.id};
+			this->P = {other.P.x, other.P.y, other.P.id};
+			this->A = {other.A.x, other.A.y, other.A.id};
+			this->B = {other.B.x, other.B.y, other.B.id};
+			this->C = {other.C.x, other.C.y, other.C.id};
 			build();
 
 		}
 		return *this;
 	}
 
-	// move constructor
-	Grid::Grid(Grid&& Other)
+	Grid::Grid(Grid&& other)
 	{
-		this->P = {Other.P.x, Other.P.y, Other.P.id};
-		this->A = {Other.A.x, Other.A.y, Other.A.id};
-		this->B = {Other.B.x, Other.B.y, Other.B.id};
-		this->C = {Other.C.x, Other.C.y, Other.C.id};
+		this->P = {other.P.x, other.P.y, other.P.id};
+		this->A = {other.A.x, other.A.y, other.A.id};
+		this->B = {other.B.x, other.B.y, other.B.id};
+		this->C = {other.C.x, other.C.y, other.C.id};
 		build();
 
-		Other.clear();
-		Other.isEmpty = true;
+		other.clear();
+		other.isEmpty = true;
 	}
 
-	// move assignment operator
-	Grid& Grid::operator=(Grid&& Other)
+	Grid& Grid::operator=(Grid&& other)
 	{
 		// self assignment check
-		if (&Other != this)
+		if (&other != this)
 		{
-			this->P = {Other.P.x, Other.P.y, Other.P.id};
-			this->A = {Other.A.x, Other.A.y, Other.A.id};
-			this->B = {Other.B.x, Other.B.y, Other.B.id};
-			this->C = {Other.C.x, Other.C.y, Other.C.id};
+			this->P = {other.P.x, other.P.y, other.P.id};
+			this->A = {other.A.x, other.A.y, other.A.id};
+			this->B = {other.B.x, other.B.y, other.B.id};
+			this->C = {other.C.x, other.C.y, other.C.id};
 			build();
 
-			Other.clear();
-			Other.isEmpty = true;
+			other.clear();
+			other.isEmpty = true;
 		}
 		return *this;
 	}
 
-	// destructor
 	Grid::~Grid()
 	{
 
 	}
 
-	// temporarily remove board tiles
+	// temporarily remove grid tiles
 	void Grid::clear()
 	{
 		configuration = 
 		{{
-			{'X', 'X', 'X', 'X'},
-			{'X', 'X', 'X', 'X'},
-			{'X', 'X', 'X', 'X'},
-			{'X', 'X', 'X', 'X'}
+			{'-', '-', '-', '-'},
+			{'-', '-', '-', '-'},
+			{'-', '-', '-', '-'},
+			{'-', '-', '-', '-'}
 		}};
 	}
 
@@ -91,14 +86,13 @@ namespace TileSearch
 	void Grid::build()
 	{
 		clear();
-		configuration[P.x][P.y] = P.id;
-		configuration[A.x][A.y] = A.id;
-		configuration[B.x][B.y] = B.id;
-		configuration[C.x][C.y] = C.id;
+		configuration[P.y][P.x] = P.id;
+		configuration[A.y][A.x] = A.id;
+		configuration[B.y][B.x] = B.id;
+		configuration[C.y][C.x] = C.id;
 	}
 
-	// move P tile 
-
+	// move the P tile up, down, right and left
 	void Grid::movePUp()
 	{
 		// if P can move upwards...
@@ -201,17 +195,14 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	// compare grid configuration to another
-	bool Grid::isIdenticalTo(const Grid& Other)
+	// compare configuration between grids
+	bool Grid::isIdenticalTo(const Grid& other)
 	{
-		if (this->configuration == Other.configuration)
+		if (this->configuration == other.configuration)
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	// display grid configuration
@@ -220,12 +211,13 @@ namespace TileSearch
 		if (!isEmpty)
 		{
 			std::cout << "\n";
-			for (int i = height - 1; i >= 0; --i)
+			for (std::array<std::array<char, height>, width>::reverse_iterator row = configuration.rbegin(); 
+					row != configuration.rend(); ++row)
 			{
 				std::cout << "| ";
-				for (int j = 0; j < width; ++j)
+				for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
 				{
-					std::cout << configuration[j][i] << " | ";
+					std::cout << *col << " | ";
 				}
 				std::cout << "\n";
 			}

@@ -6,45 +6,46 @@
 
 namespace TileSearch
 {
+	struct Tile
+	{
+		int x, y;
+		char id;
+	};
+
 	class Grid
 	{
 		private:
-			// store grid structure
-			const static std::size_t width = 4;
-			const static std::size_t height = 4;
-			// store grid
-			std::array<std::array<char, width>, height> configuration;
+			// size of grid set at compile time
+			static constexpr std::size_t width = 4;
+			static constexpr std::size_t height = 4;
+			
+			std::array<std::array<char, height>, width> configuration;
 
-			struct Tile
-			{
-				int x;
-				int y;
-				char id;
-			};
+			// store the positions of each grid tile
 			Tile P;
 			Tile A;
 			Tile B;
 			Tile C;
 
-			// does the grid contain tiles?
+			// empty grids cannot be displayed to the console
 			bool isEmpty = false;
 
 		public:
+
 			Grid();
-			// copy constructor
-			Grid(const Grid& Grid);
-			// copy assignment operator
-			Grid& operator=(const Grid& Grid);
-			// move constructor
-			Grid(Grid&& Grid);
-			// move assignment operator
-			Grid& operator=(Grid&& Grid);
+
+			Grid(const Grid& other);
+			Grid& operator=(const Grid& other);
+
+			Grid(Grid&& other);
+			Grid& operator=(Grid&& other);
+
 			~Grid();
 
-			// remove all tiles from grid
+			// remove grid tiles
 			void clear();
 
-			// add tiles to grid
+			// place grid tiles
 			void build();
 
 			// move the P tile
@@ -57,7 +58,7 @@ namespace TileSearch
 			void show();
 
 			// check if two grids have the same configuration
-			bool isIdenticalTo(const Grid& Other);
+			bool isIdenticalTo(const Grid& other);
 	};
 }
 

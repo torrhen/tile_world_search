@@ -15,6 +15,7 @@ int main()
 	std::cout << n.getDepth() << std::endl;
 	std::cout << n.getParent() << std::endl;
 	std::cout << n.getChildren().size() << std::endl;
+	n.getState().show();
 
 	for (int i = 0; i < n.getChildren().size(); ++i)
 	{
