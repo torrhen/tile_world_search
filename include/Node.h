@@ -23,7 +23,6 @@ namespace TileSearch
 			Node(const Grid& State);
 
 			Node(const Node& Node);
-			// copy assignment operator
 			Node& operator=(const Node& Node);
 
 			~Node();

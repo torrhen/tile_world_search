@@ -55,10 +55,10 @@ namespace TileSearch
 			void build();
 
 			// move the P tile
-			void movePUp();
-			void movePDown();
-			void movePLeft();
-			void movePRight();
+			void movePUp() noexcept;
+			void movePDown() noexcept;
+			void movePLeft() noexcept;
+			void movePRight() noexcept;
 
 			// display grid configuration
 			void show();

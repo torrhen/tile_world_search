@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <array>
+#include <exception>
 #include <iterator>
 
 namespace TileSearch
@@ -73,27 +74,36 @@ namespace TileSearch
 	// temporarily remove grid tiles
 	void Grid::clear()
 	{
-		configuration = 
-		{{
-			{'-', '-', '-', '-'},
-			{'-', '-', '-', '-'},
-			{'-', '-', '-', '-'},
-			{'-', '-', '-', '-'}
-		}};
+		for (std::array<std::array<char, height>, width>::iterator row = configuration.begin(); 
+					row != configuration.end(); ++row)
+		{
+			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
+			{
+				*col = '-';
+			}
+		}
 	}
 
 	// place the P, A, B and C tiles in their positions
 	void Grid::build()
 	{
 		clear();
-		configuration[P.y][P.x] = P.id;
-		configuration[A.y][A.x] = A.id;
-		configuration[B.y][B.x] = B.id;
-		configuration[C.y][C.x] = C.id;
+		try
+		{
+			configuration.at(P.y).at(P.x) = P.id;
+			configuration.at(A.y).at(A.x) = A.id;
+			configuration.at(B.y).at(B.x) = B.id;
+			configuration.at(C.y).at(C.x) = C.id;
+		}
+		catch (std::out_of_range)
+		{
+			std::cout << "Could not build grid." << std::endl;
+		}
+
 	}
 
 	// move the P tile up, down, right and left
-	void Grid::movePUp()
+	void Grid::movePUp() noexcept
 	{
 		// if P can move upwards...
 		if (P.y != height - 1)
@@ -119,7 +129,7 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void Grid::movePDown()
+	void Grid::movePDown() noexcept
 	{
 		// if P can move downwards...
 		if (P.y != 0)
@@ -145,7 +155,7 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void Grid::movePRight()
+	void Grid::movePRight() noexcept
 	{
 		// if P can move right...
 		if (P.x != width - 1)
@@ -169,7 +179,7 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void Grid::movePLeft()
+	void Grid::movePLeft() noexcept
 	{
 		// if P can move left...
 		if (P.x != 0)

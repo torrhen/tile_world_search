@@ -21,24 +21,25 @@ int main()
 
 	for (int i = 0; i < n.getChildren().size(); ++i)
 	{
-		n.getChildren()[i].getState().show();
-		std::cout << n.getChildren()[i].getDepth() << std::endl;
-		std::cout << n.getChildren()[i].getParent() << std::endl;
-		std::cout << n.getChildren()[i].getChildren().size() << std::endl;
+		
+		n.getChildren().at(i).getState().show();
+		std::cout << n.getChildren().at(i).getDepth() << std::endl;
+		std::cout << n.getChildren().at(i).getParent() << std::endl;
+		std::cout << n.getChildren().at(i).getChildren().size() << std::endl;
 
 		if (i == 1)
 		{
-			TileSearch::Node b(n.getChildren()[i]);
+			TileSearch::Node b(n.getChildren().at(i));
 			b.getState().show();
 			std::cout << &b << std::endl;
 			b.createChildren();
 			for (int j = 0; j < b.getChildren().size(); ++j)
 			{
-				b.getChildren()[j].getState().show();
-				std::cout << b.getChildren()[j].getDepth() << std::endl;
-				std::cout << b.getChildren()[j].getParent() << std::endl;
-				std::cout << b.getChildren()[j].getChildren().size() << std::endl;
-				std::cout << std::boolalpha << b.getChildren()[j].getState().isGoal() << std::endl;
+				b.getChildren().at(j).getState().show();
+				std::cout << b.getChildren().at(j).getDepth() << std::endl;
+				std::cout << b.getChildren().at(j).getParent() << std::endl;
+				std::cout << b.getChildren().at(j).getChildren().size() << std::endl;
+				std::cout << std::boolalpha << b.getChildren().at(j).getState().isGoal() << std::endl;
 			}
 		}
 		else
