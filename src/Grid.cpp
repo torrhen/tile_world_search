@@ -205,6 +205,17 @@ namespace TileSearch
 		return false;
 	}
 
+	bool Grid::isGoal()
+	{
+		if ((P.x == P_goal.x && P.y == P_goal.y) && (A.x == A_goal.x && A.y == A_goal.y) &&
+				(B.x == B_goal.x && B.y == B_goal.y) && (C.x == C_goal.x && C.y == C_goal.y))
+		{
+			return true;
+		}
+		return false;
+	}
+
+
 	// display grid configuration
 	void Grid::show()
 	{

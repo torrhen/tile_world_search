@@ -8,6 +8,8 @@ int main()
 	TileSearch::Grid s;
 	TileSearch::Node n(s);
 
+	std::cout << std::boolalpha << s.isGoal() << std::endl;
+
 
 	std::cout << &n << std::endl;
 
@@ -36,6 +38,7 @@ int main()
 				std::cout << b.getChildren()[j].getDepth() << std::endl;
 				std::cout << b.getChildren()[j].getParent() << std::endl;
 				std::cout << b.getChildren()[j].getChildren().size() << std::endl;
+				std::cout << std::boolalpha << b.getChildren()[j].getState().isGoal() << std::endl;
 			}
 		}
 		else
