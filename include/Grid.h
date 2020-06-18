@@ -1,3 +1,10 @@
+/* 	
+	author name: 		'Toby Coleman'
+	author ID:			'tsc1n19'
+	repository:			'TileSearch'
+	last modified:		'18/06/2020'
+*/
+
 #ifndef GRID_H
 #define GRID_H
 

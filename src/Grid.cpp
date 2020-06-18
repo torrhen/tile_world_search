@@ -1,3 +1,10 @@
+/* 	
+	author name: 		'Toby Coleman'
+	author ID:			'tsc1n19'
+	repository:			'TileSearch'
+	last modified:		'18/06/2020'
+*/
+
 #include "../include/Grid.h"
 
 #include <iostream>
@@ -7,12 +14,16 @@
 
 namespace TileSearch
 {
+	/* ========== Grid Class ========== */
+
 	// temporarily remove all tiles from the grid
 	void Grid::clear()
 	{
+		// iterate over each row of the grid...
 		for (std::array<std::array<char, grid_height>, grid_width>::iterator row = configuration.begin(); 
 					row != configuration.end(); ++row)
 		{
+			// iterate over each column of each row...
 			for (std::array<char, grid_width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
 				*col = '-';
@@ -43,10 +54,12 @@ namespace TileSearch
 	void Grid::show()
 	{
 		std::cout << "\n";
-		for (std::array<std::array<char, grid_height>, grid_width>::reverse_iterator row = configuration.rbegin(); 
-				row != configuration.rend(); ++row)
+		// iterate over each row (in reverse order)...
+		// reversing the order allows the grid to be properly displayed within the console
+		for (std::array<std::array<char, grid_height>, grid_width>::reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
 		{
 			std::cout << "| ";
+			// iterate over each column of each row...
 			for (std::array<char, grid_width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
 				std::cout << *col << " | ";
@@ -82,6 +95,8 @@ namespace TileSearch
 		return configuration;
 	}
 
+		/* ========== Start Grid Class ========== */
+
 	StartGrid::StartGrid()
 	{
 		// set the starting positions of each tile
@@ -93,6 +108,8 @@ namespace TileSearch
 		build();
 	}
 
+		/* ========== Goal Grid Class ========== */
+
 	GoalGrid::GoalGrid()
 	{
 		// set the goal positions of each tile
@@ -103,6 +120,8 @@ namespace TileSearch
 		// build the goal grid
 		build();
 	}
+
+		/* ========== Standard Grid Class ========== */
 
 	StandardGrid::StandardGrid(const Grid& other)
 	{
