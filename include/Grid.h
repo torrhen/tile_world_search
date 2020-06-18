@@ -25,12 +25,12 @@ namespace TileSearch
 			bool isEmpty = false;
 
 		public:
-			Grid();
+			Grid() = default;
 			Grid(const Grid& other) = delete;
 			Grid& operator=(const Grid& other) = delete;
 			Grid(Grid&& other) = delete;
 			Grid& operator=(Grid&& other) = delete;
-			~Grid();
+			~Grid() = default;
 
 			void clear();
 			void build();
@@ -48,7 +48,7 @@ namespace TileSearch
 			StartGrid();
 			StartGrid(const Grid& other) = delete;
 			Grid& operator=(const Grid& other) = delete;
-			~StartGrid();
+			~StartGrid() = default;
 	};
 
 	class GoalGrid : public Grid
@@ -57,7 +57,7 @@ namespace TileSearch
 			GoalGrid();
 			GoalGrid(const Grid& other) = delete;
 			Grid& operator=(const Grid& other) = delete;
-			~GoalGrid();
+			~GoalGrid() = default;
 	};
 
 	class StandardGrid : public Grid
@@ -66,6 +66,7 @@ namespace TileSearch
 			StandardGrid() = delete;
 			StandardGrid(const Grid& other);
 			Grid& operator=(const Grid& other);
+			~StandardGrid() = default;
 
 			// bool isIdenticalTo(const Grid& other);
 

@@ -22,8 +22,6 @@ int main()
 
 	g.show();
 
-
-
 	// TileSearch::Node n(s);
 
 	// std::cout << std::boolalpha << s.isGoal() << std::endl;

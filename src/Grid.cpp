@@ -7,16 +7,6 @@
 
 namespace TileSearch
 {
-	Grid::Grid()
-	{
-
-	}
-
-	Grid::~Grid()
-	{
-
-	}
-
 	// temporarily remove grid tiles
 	void Grid::clear()
 	{
@@ -98,11 +88,6 @@ namespace TileSearch
 		build();
 	}
 
-	StartGrid::~StartGrid()
-	{
-
-	}
-
 	GoalGrid::GoalGrid()
 	{
 		clear();
@@ -113,11 +98,6 @@ namespace TileSearch
 		C = std::make_pair(1, 0);
 		// build the goal grid
 		build();
-	}
-
-	GoalGrid::~GoalGrid()
-	{
-
 	}
 
 	StandardGrid::StandardGrid(const Grid& other)
