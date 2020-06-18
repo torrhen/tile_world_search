@@ -1,10 +1,3 @@
-/* 	
-	author name: 		'Toby Coleman'
-	author ID:			'tsc1n19'
-	repository:			'TileSearch'
-	last modified:		'18/06/2020'
-*/
-
 #include "../include/Grid.h"
 
 #include <iostream>
@@ -95,7 +88,7 @@ namespace TileSearch
 		return configuration;
 	}
 
-		/* ========== Start Grid Class ========== */
+	/* ========== Start Grid Class ========== */
 
 	StartGrid::StartGrid()
 	{
@@ -108,7 +101,7 @@ namespace TileSearch
 		build();
 	}
 
-		/* ========== Goal Grid Class ========== */
+	/* ========== Goal Grid Class ========== */
 
 	GoalGrid::GoalGrid()
 	{
@@ -121,7 +114,7 @@ namespace TileSearch
 		build();
 	}
 
-		/* ========== Standard Grid Class ========== */
+	/* ========== Standard Grid Class ========== */
 
 	StandardGrid::StandardGrid(const Grid& other)
 	{
