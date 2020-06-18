@@ -9,13 +9,17 @@ int main()
 
 	s.show();
 
+
 	TileSearch::StandardGrid n(s);
 	n.show();
 	n.movePLeft();
 	n.movePLeft();
 	n.show();
 	n.movePRight();
+	n.movePRight();
 	n.show();
+
+	std::cout << std::boolalpha << n.isIdenticalTo(s) << std::endl;
 
 
 	TileSearch::GoalGrid g;
