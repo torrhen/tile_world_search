@@ -117,7 +117,13 @@ namespace TileSearch
 
 	Grid& StandardGrid::operator=(const Grid& other)
 	{
-		// copy and swap
+		// copy the positions of each tile
+		P = other.getP();
+		A = other.getA();
+		B = other.getB();
+		C = other.getC();
+		// build the grid	
+		build();
 		return *this;
 	}
 

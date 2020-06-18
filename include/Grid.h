@@ -34,7 +34,7 @@ namespace TileSearch
 			Grid(Grid&& other) = delete;
 
 			Grid& operator=(Grid&& other) = delete;
-			Grid& operator=(const Grid& other) = delete;
+			Grid& operator=(const Grid& other) = default;
 
 			~Grid() = default;
 
