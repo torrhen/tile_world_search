@@ -8,62 +8,8 @@
 namespace TileSearch
 {
 	Grid::Grid()
-		: P{3, 0, 'P'}, A{0, 0, 'A'}, B{1, 0, 'B'}, C{2, 0, 'C'}
 	{
-		build();
-	}
 
-	Grid::Grid(const Grid& other)
-	{
-		this->P = {other.P.x, other.P.y, other.P.id};
-		this->A = {other.A.x, other.A.y, other.A.id};
-		this->B = {other.B.x, other.B.y, other.B.id};
-		this->C = {other.C.x, other.C.y, other.C.id};
-		build();
-	}
-
-	Grid& Grid::operator=(const Grid& other)
-	{
-		// self assignment check
-		if (&other != this)
-		{
-			this->P = {other.P.x, other.P.y, other.P.id};
-			this->A = {other.A.x, other.A.y, other.A.id};
-			this->B = {other.B.x, other.B.y, other.B.id};
-			this->C = {other.C.x, other.C.y, other.C.id};
-			build();
-
-		}
-		return *this;
-	}
-
-	Grid::Grid(Grid&& other)
-	{
-		this->P = {other.P.x, other.P.y, other.P.id};
-		this->A = {other.A.x, other.A.y, other.A.id};
-		this->B = {other.B.x, other.B.y, other.B.id};
-		this->C = {other.C.x, other.C.y, other.C.id};
-		build();
-
-		other.clear();
-		other.isEmpty = true;
-	}
-
-	Grid& Grid::operator=(Grid&& other)
-	{
-		// self assignment check
-		if (&other != this)
-		{
-			this->P = {other.P.x, other.P.y, other.P.id};
-			this->A = {other.A.x, other.A.y, other.A.id};
-			this->B = {other.B.x, other.B.y, other.B.id};
-			this->C = {other.C.x, other.C.y, other.C.id};
-			build();
-
-			other.clear();
-			other.isEmpty = true;
-		}
-		return *this;
 	}
 
 	Grid::~Grid()
@@ -90,141 +36,16 @@ namespace TileSearch
 		clear();
 		try
 		{
-			configuration.at(P.y).at(P.x) = P.id;
-			configuration.at(A.y).at(A.x) = A.id;
-			configuration.at(B.y).at(B.x) = B.id;
-			configuration.at(C.y).at(C.x) = C.id;
+			configuration.at(std::get<1>(P)).at(std::get<0>(P)) = 'P';
+			configuration.at(std::get<1>(A)).at(std::get<0>(A)) = 'A';
+			configuration.at(std::get<1>(B)).at(std::get<0>(B)) = 'B';
+			configuration.at(std::get<1>(C)).at(std::get<0>(C)) = 'C';
 		}
 		catch (std::out_of_range)
 		{
 			std::cout << "Could not build grid." << std::endl;
 		}
-
 	}
-
-	// move the P tile up, down, right and left
-	void Grid::movePUp() noexcept
-	{
-		// if P can move upwards...
-		if (P.y != height - 1)
-		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if (A.y == P.y + 1 and A.x == P.x)
-			{
-				A.y = P.y;
-			}
-			else if (B.y == P.y + 1 and B.x == P.x)
-			{
-				B.y = P.y;
-			}
-			else if (C.y == P.y + 1 and C.x == P.x)
-			{
-				C.y = P.y;
-			}
-			// move P up
-			P.y += 1;
-			build();
-		}
-		// otherwise do nothing
-	}
-
-	void Grid::movePDown() noexcept
-	{
-		// if P can move downwards...
-		if (P.y != 0)
-		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if (A.y == P.y - 1 and A.x == P.x)
-			{
-				A.y = P.y;
-			}
-			else if (B.y == P.y - 1 and B.x == P.x)
-			{
-				B.y = P.y;
-			}
-			else if (C.y == P.y - 1 and C.x == P.x)
-			{
-				C.y = P.y;
-			}
-			// move P down
-			P.y -= 1;
-			build();
-		}
-		// otherwise do nothing
-	}
-
-	void Grid::movePRight() noexcept
-	{
-		// if P can move right...
-		if (P.x != width - 1)
-		{
-			if (A.x == P.x + 1 and A.y == P.y)
-			{	
-				A.x = P.x;
-			}
-			else if (B.x == P.x + 1 and B.y == P.y)
-			{
-				B.x = P.x;
-			}
-			else if (C.x == P.x + 1 and C.y == P.y)
-			{
-				C.x = P.x;
-			}
-			// move P right
-			P.x += 1;
-			build();
-		}
-		// otherwise do nothing
-	}
-
-	void Grid::movePLeft() noexcept
-	{
-		// if P can move left...
-		if (P.x != 0)
-		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if (A.x == P.x - 1 and A.y == P.y)
-			{
-				A.x = P.x;
-			}
-			else if (B.x == P.x - 1 and B.y == P.y)
-			{
-				B.x = P.x;
-			}
-			else if (C.x == P.x - 1 and C.y == P.y)
-			{
-				C.x = P.x;
-			}
-			// move P left
-			P.x -= 1;
-			build();
-		}
-		// otherwise do nothing
-	}
-
-	// compare configuration between grids
-	bool Grid::isIdenticalTo(const Grid& other)
-	{
-		if (this->configuration == other.configuration)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool Grid::isGoal()
-	{
-		if ((P.x == P_goal.x && P.y == P_goal.y) && (A.x == A_goal.x && A.y == A_goal.y) &&
-				(B.x == B_goal.x && B.y == B_goal.y) && (C.x == C_goal.x && C.y == C_goal.y))
-		{
-			return true;
-		}
-		return false;
-	}
-
 
 	// display grid configuration
 	void Grid::show()
@@ -244,4 +65,185 @@ namespace TileSearch
 			}
 		}
 	}
+
+	std::pair<int, int> Grid::getP() const
+	{
+		return P;
+	}
+
+	std::pair<int, int> Grid::getA() const
+	{
+		return A;
+	}
+
+	std::pair<int, int> Grid::getB() const
+	{
+		return B;
+	}
+
+	std::pair<int, int> Grid::getC() const
+	{
+		return C;
+	}
+
+	StartGrid::StartGrid()
+	{
+		clear();
+		// set the starting positions of each tile
+		P = std::make_pair(3, 0);
+		A = std::make_pair(0, 0);
+		B = std::make_pair(1, 0);
+		C = std::make_pair(2, 0);
+		// build the start grid
+		build();
+	}
+
+	StartGrid::~StartGrid()
+	{
+
+	}
+
+	GoalGrid::GoalGrid()
+	{
+		clear();
+		// set the goal positions of each tile
+		P = std::make_pair(3, 0);
+		A = std::make_pair(1, 2);
+		B = std::make_pair(1, 1);
+		C = std::make_pair(1, 0);
+		// build the goal grid
+		build();
+	}
+
+	GoalGrid::~GoalGrid()
+	{
+
+	}
+
+	StandardGrid::StandardGrid(const Grid& other)
+	{
+		clear();
+		// copy the positions of each tile
+		P = other.getP();
+		A = other.getA();
+		B = other.getB();
+		C = other.getC();
+		// build the grid	
+		build();
+	}
+
+	Grid& StandardGrid::operator=(const Grid& other)
+	{
+		// copy and swap
+		return *this;
+	}
+
+	// move the P tile up, down, right and left
+	void StandardGrid::movePUp()
+	{
+		// if P can move upwards...
+		if (std::get<1>(P) != height - 1)
+		{
+			// if the new position of P is taken...
+			// swap the tile in the new position with P
+			if ((std::get<1>(A) == std::get<1>(P) + 1) and (std::get<0>(A) == std::get<0>(P)))
+			{
+				A.swap(P);
+			}
+			else if ((std::get<1>(B) == std::get<1>(P) + 1) and (std::get<0>(B) == std::get<0>(P)))
+			{
+				B.swap(P);
+			}
+			else if ((std::get<1>(C) == std::get<1>(P) + 1) and (std::get<0>(C) == std::get<0>(P)))
+			{
+				C.swap(P);
+			}
+			// rebuild grid
+			build();
+		}
+		// otherwise do nothing
+	}
+
+	void StandardGrid::movePDown()
+	{
+		// if P can move downwards...
+		if (std::get<1>(P) != 0)
+		{
+			// if the new position of P is taken...
+			// swap the tile in the new position with P
+			if ((std::get<1>(A) == std::get<1>(P) - 1) and (std::get<0>(A) == std::get<0>(P)))
+			{
+				A.swap(P);
+			}
+			else if ((std::get<1>(B) == std::get<1>(P) - 1) and (std::get<0>(B) == std::get<0>(P)))
+			{
+				B.swap(P);
+			}
+			else if ((std::get<1>(C) == std::get<1>(P) - 1) and (std::get<0>(C) == std::get<0>(P)))
+			{
+				C.swap(P);
+			}
+			// rebuild grid
+			build();
+		}
+		// otherwise do nothing
+	}
+
+	void StandardGrid::movePRight()
+	{
+		// if P can move right...
+		if (std::get<0>(P) != width - 1)
+		{
+			if ((std::get<0>(A) == std::get<0>(P) + 1) and (std::get<1>(A) == std::get<1>(P)))
+			{	
+				A.swap(P);
+			}
+			else if ((std::get<0>(B) == std::get<0>(P) + 1) and (std::get<1>(B) == std::get<1>(P)))
+			{
+				B.swap(P);
+			}
+			else if ((std::get<0>(C) == std::get<0>(P) + 1) and (std::get<1>(C) == std::get<1>(P)))
+			{
+				C.swap(P);
+			}
+			// rebuild grid
+			build();
+		}
+		// otherwise do nothing
+	}
+
+	void StandardGrid::movePLeft()
+	{
+		// if P can move left...
+		if (std::get<0>(P) != 0)
+		{
+			// if the new position of P is taken...
+			// swap the tile in the new position with P
+			if ((std::get<0>(A) == std::get<0>(P) - 1) and (std::get<1>(A) == std::get<1>(P)))
+			{
+				A.swap(P);
+			}
+			else if ((std::get<0>(B) == std::get<0>(P) - 1) and (std::get<1>(B) == std::get<1>(P)))
+			{
+				B.swap(P);
+			}
+			else if ((std::get<0>(C) == std::get<0>(P) - 1) and (std::get<1>(C) == std::get<1>(P)))
+			{
+				C.swap(P);
+			}
+			// rebuild grid
+			build();
+		}
+		// otherwise do nothing
+	}
+
+	// // compare configuration between grids
+	// bool StandardGrid::isIdenticalTo(const Grid& other)
+	// {
+	// 	if (this->configuration == other.configuration)
+	// 	{
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
 }

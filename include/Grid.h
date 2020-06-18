@@ -2,72 +2,78 @@
 #define GRID_H
 
 #include <array>
+#include <utility>
 #include <cstddef>
 
 namespace TileSearch
 {
-	struct Tile
-	{
-		int x, y;
-		char id;
-	};
-
 	class Grid
 	{
-		private:
-			// store the desired final positions of each tile in the grid
-			static constexpr Tile P_goal = {3, 0, 'P'};
-			static constexpr Tile A_goal = {1, 2, 'A'};
-			static constexpr Tile B_goal = {1, 1, 'B'};
-			static constexpr Tile C_goal = {1, 0, 'C'};
-
+		protected:
 			// size of grid set at compile time
 			static constexpr std::size_t width = 4;
 			static constexpr std::size_t height = 4;
-			
+
 			std::array<std::array<char, height>, width> configuration;
 
-			// store the current positions of each grid tile
-			Tile P;
-			Tile A;
-			Tile B;
-			Tile C;
+			// store x, y positions of each grid tile
+			std::pair<int, int> P;
+			std::pair<int, int> A;
+			std::pair<int, int> B;
+			std::pair<int, int> C;
 
-			// empty grids cannot be displayed to the console
 			bool isEmpty = false;
 
 		public:
-
 			Grid();
-
-			Grid(const Grid& other);
-			Grid& operator=(const Grid& other);
-
-			Grid(Grid&& other);
-			Grid& operator=(Grid&& other);
-
+			Grid(const Grid& other) = delete;
+			Grid& operator=(const Grid& other) = delete;
+			Grid(Grid&& other) = delete;
+			Grid& operator=(Grid&& other) = delete;
 			~Grid();
 
-			// remove grid tiles
 			void clear();
-
-			// place grid tiles
 			void build();
-
-			// move the P tile
-			void movePUp() noexcept;
-			void movePDown() noexcept;
-			void movePLeft() noexcept;
-			void movePRight() noexcept;
-
-			// display grid configuration
 			void show();
 
-			// check if two grids have the same configuration
-			bool isIdenticalTo(const Grid& other);
+			std::pair<int, int> getP() const;
+			std::pair<int, int> getA() const;
+			std::pair<int, int> getB() const;
+			std::pair<int, int> getC() const;
+	};
 
-			// check if goal grid has been reached
-			bool isGoal();
+	class StartGrid : public Grid
+	{
+		public:
+			StartGrid();
+			StartGrid(const Grid& other) = delete;
+			Grid& operator=(const Grid& other) = delete;
+			~StartGrid();
+	};
+
+	class GoalGrid : public Grid
+	{
+		public:
+			GoalGrid();
+			GoalGrid(const Grid& other) = delete;
+			Grid& operator=(const Grid& other) = delete;
+			~GoalGrid();
+	};
+
+	class StandardGrid : public Grid
+	{
+		public:
+			StandardGrid() = delete;
+			StandardGrid(const Grid& other);
+			Grid& operator=(const Grid& other);
+
+			// bool isIdenticalTo(const Grid& other);
+
+			// move the P tile
+			void movePUp();
+			void movePDown();
+			void movePLeft();
+			void movePRight();
 	};
 }
 

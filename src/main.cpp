@@ -1,52 +1,70 @@
 #include "../include/Grid.h"
-#include "../include/Node.h"
+// #include "../include/Node.h"
 
 #include <iostream>
 
 int main()
 {
-	TileSearch::Grid s;
-	TileSearch::Node n(s);
+	TileSearch::StartGrid s;
 
-	std::cout << std::boolalpha << s.isGoal() << std::endl;
+	s.show();
+
+	TileSearch::StandardGrid n(s);
+	n.show();
+	n.movePLeft();
+	n.movePLeft();
+	n.show();
+	n.movePRight();
+	n.show();
 
 
-	std::cout << &n << std::endl;
+	TileSearch::GoalGrid g;
 
-	n.createChildren();
-	std::cout << n.getDepth() << std::endl;
-	std::cout << n.getParent() << std::endl;
-	std::cout << n.getChildren().size() << std::endl;
-	n.getState().show();
+	g.show();
 
-	for (int i = 0; i < n.getChildren().size(); ++i)
-	{
+
+
+	// TileSearch::Node n(s);
+
+	// std::cout << std::boolalpha << s.isGoal() << std::endl;
+
+
+	// std::cout << &n << std::endl;
+
+	// n.createChildren();
+	// std::cout << n.getDepth() << std::endl;
+	// std::cout << n.getParent() << std::endl;
+	// std::cout << n.getChildren().size() << std::endl;
+	// n.getState().show();
+
+	// for (int i = 0; i < n.getChildren().size(); ++i)
+	// {
 		
-		n.getChildren().at(i).getState().show();
-		std::cout << n.getChildren().at(i).getDepth() << std::endl;
-		std::cout << n.getChildren().at(i).getParent() << std::endl;
-		std::cout << n.getChildren().at(i).getChildren().size() << std::endl;
+	// 	n.getChildren().at(i).getState().show();
+	// 	std::cout << n.getChildren().at(i).getDepth() << std::endl;
+	// 	std::cout << n.getChildren().at(i).getParent() << std::endl;
+	// 	std::cout << n.getChildren().at(i).getChildren().size() << std::endl;
 
-		if (i == 1)
-		{
-			TileSearch::Node b(n.getChildren().at(i));
-			b.getState().show();
-			std::cout << &b << std::endl;
-			b.createChildren();
-			for (int j = 0; j < b.getChildren().size(); ++j)
-			{
-				b.getChildren().at(j).getState().show();
-				std::cout << b.getChildren().at(j).getDepth() << std::endl;
-				std::cout << b.getChildren().at(j).getParent() << std::endl;
-				std::cout << b.getChildren().at(j).getChildren().size() << std::endl;
-				std::cout << std::boolalpha << b.getChildren().at(j).getState().isGoal() << std::endl;
-			}
-		}
-		else
-		{
+	// 	if (i == 1)
+	// 	{
+	// 		TileSearch::Node b(n.getChildren().at(i));
+	// 		b.getState().show();
+	// 		std::cout << &b << std::endl;
+	// 		b.createChildren();
+	// 		for (int j = 0; j < b.getChildren().size(); ++j)
+	// 		{
+	// 			b.getChildren().at(j).getState().show();
+	// 			std::cout << b.getChildren().at(j).getDepth() << std::endl;
+	// 			std::cout << b.getChildren().at(j).getParent() << std::endl;
+	// 			std::cout << b.getChildren().at(j).getChildren().size() << std::endl;
+	// 			std::cout << std::boolalpha << b.getChildren().at(j).getState().isGoal() << std::endl;
+	// 		}
+	// 	}
+	// 	else
+	// 	{
 
-		}
-	}
+	// 	}
+	// }
 
 	std::cout << "Finished." << std::endl;
 
