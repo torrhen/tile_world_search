@@ -51,7 +51,7 @@ namespace TileSearch
 		// reversing the order allows the grid to be properly displayed within the console
 		for (std::array<std::array<char, grid_height>, grid_width>::reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
 		{
-			std::cout << "| ";
+			std::cout << "                    | ";
 			// iterate over each column of each row...
 			for (std::array<char, grid_width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
@@ -59,6 +59,8 @@ namespace TileSearch
 			}
 			std::cout << "\n";
 		}
+		std::cout << "\n"; 
+		std::cout << "                =========================" << std::endl;
 	}
 
 	// return the position of tiles P, A, B and C

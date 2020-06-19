@@ -27,17 +27,17 @@ namespace TileSearch
 			// add tiles to grid
 			void build();
 
-		public:
+			// grid constructor should only be accessed from derived classes
 			Grid() = default;
 
-			Grid(const Grid& other) = delete;
-			Grid(Grid&& other) = delete;
-
-			Grid& operator=(Grid&& other) = delete;
+			// grid copy/ move constructors should only be accessed from derived classes
+			Grid(const Grid& other) = default;
+			//Grid(Grid&& other) = delete;
+			// grid copy/move assignment operators should only be accessed from derived classes
 			Grid& operator=(const Grid& other) = default;
+			//Grid& operator=(Grid&& other) = delete;
 
-			~Grid() = default;
-
+		public:
 			// display grid configuration
 			void show();
 
@@ -56,10 +56,11 @@ namespace TileSearch
 		public:
 			StartGrid();
 
+			// start grid should not copy/steal from another grid
 			StartGrid(const Grid& other) = delete;
+			StartGrid(Grid&& other) = delete;
 			Grid& operator=(const Grid& other) = delete;
-
-			~StartGrid() = default;
+			Grid& operator=(Grid&& other) = delete;
 	};
 
 	class GoalGrid : public Grid
@@ -67,21 +68,23 @@ namespace TileSearch
 		public:
 			GoalGrid();
 
+			// goal grid should not copy/steal from another grid
 			GoalGrid(const Grid& other) = delete;
+			GoalGrid(Grid&& other) = delete;
 			Grid& operator=(const Grid& other) = delete;
-
-			~GoalGrid() = default;
+			Grid& operator=(Grid&& other) = delete;
 	};
 
 	class StandardGrid : public Grid
 	{
 		public:
+			// standard grid should only copy/steal from another grid
 			StandardGrid() = delete;
 
 			StandardGrid(const Grid& other);
+			// StandardGrid(Grid&& other) = delete;
 			Grid& operator=(const Grid& other);
-			
-			~StandardGrid() = default;
+			// Grid& operator=(Grid&& other) = delete;
 
 			// compare the configuration of two grids
 			bool isIdenticalTo(const Grid& other);

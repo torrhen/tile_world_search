@@ -5,35 +5,32 @@
 
 int main()
 {
-	// =======================  created 18/06/20  ===============================
-	// TileSearch::StartGrid s;
+	// ===========================================================================
 
-	// s.show();
+	TileSearch::StartGrid s;
 
+	s.show();
 
-	// TileSearch::StandardGrid n(s);
-	// n.show();
-	// n.movePLeft();
-	// n.movePLeft();
-	// n.show();
-	// n.movePRight();
-	// n.movePRight();
-	// n.show();
+	TileSearch::StandardGrid n(s);
+	n.show();
+	n.movePLeft();
+	n.movePLeft();
+	n.show();
+	n.movePRight();
+	n.movePRight();
+	n.show();
 
-	// std::cout << std::boolalpha << n.isIdenticalTo(s) << std::endl;
+	TileSearch::GoalGrid g;
 
+	g.show();
 
-	// TileSearch::GoalGrid g;
+	TileSearch::StandardGrid h(g);
 
-	// g.show();
+	h.show();
 
-	// TileSearch::StandardGrid h(g);
+	h = n;
 
-	// h.show();
-
-	// h = n;
-
-	// h.show();
+	h.show();
 
 	// ===========================================================================
 
