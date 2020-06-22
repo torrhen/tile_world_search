@@ -1,100 +1,92 @@
+#include "../include/Grid.h"
 #include "../include/Node.h"
 
 #include <memory>
 #include <vector>
 
-namespace TileSearch
-{
-	// // constructor without parent node (root node)
-	// Node::Node(const Grid& state)
-	// {
-	// 	this->depth = 0;
-	// 	this->State = state;
-	// 	this->Parent = nullptr;
-	// }
+// namespace TileSearch
+// {
+// 	unsigned int Node::getDepth() const
+// 	{
+// 		return depth;
+// 	}
 
-	// Node::Node(const Node& other)
-	// {
-	// 	this->depth = other.getDepth();
-	// 	this->State = other.getState();
-	// 	this->Parent = other.getParent();
-	// 	this->Children = other.getChildren();
-	// }
+// 	std::unique_ptr<Grid> Node::getState() const
+// 	{
+// 		return state;
+// 	}
 
-	// Node& Node::operator=(const Node& other)
-	// {
-	// 	// self assignment check
-	// 	if (&other != this)
-	// 	{
-	// 		this->depth = other.getDepth();
-	// 		this->State = other.getState();
-	// 		this->Parent = other.getParent();
-	// 		this->Children = other.getChildren();
-	// 	}
-	// 	return *this;
-	// }
+// 	std::shared_ptr<Node> Node::getParent() const
+// 	{
+// 		return parent;
+// 	}
 
-	// Node::~Node()
-	// {
-	
-	// }
+// 	std::vector<std::shared_ptr<Node>> Node::getChildren() const
+// 	{
+// 		return children;
+// 	}
 
-	// // create all possible child nodes
-	// void Node::createChildren()
-	// {
-	// 	// create a new child node by moving tile P in each direction
-	// 	for (int i = 0; i < 4; ++i)
-	// 	{
-	// 		Node Child(*this);
-	// 		switch(i)
-	// 		{
-	// 			case 0:
-	// 			Child.State.movePUp();
-	// 			break;
+// 	RootNode::RootNode()
+// 		: Node::depth(0)
+// 	{
+// 		this->state = std::make_unique<Grid>(new StartGrid());
+// 		parent = std::make_shared<Node>(nullptr);
+// 	}
 
-	// 			case 1:
-	// 			Child.State.movePLeft();
-	// 			break;
+// 	StandardNode::StandardNode(const Node& other)
+// 		: Node::depth(other.getDepth() + 1)
+// 	{
+// 		state = std::make_unique<Grid>(&StandardGrid(other.getState()));
+// 		parent = std::make_shared<Node>(&other);
+// 	}
 
-	// 			case 2:
-	// 			Child.State.movePDown();
-	// 			break;
+// 	Node& operator=(const Node& other)
+// 		: depth(other.getDepth() + 1)
+// 	{
+// 		state = std::make_shared<Grid>(&StandardNode(other.getState()));
+// 		parent = std::make_shared<Node>(&other);
 
-	// 			case 3:
-	// 			Child.State.movePRight();
-	// 			break;
-	// 		}
-	// 		// if the movement of the P tile was successful then the child node state is different from its parents 
-	// 		if (!(Child.State.isIdenticalTo(this->getState())))
-	// 		{	
-	// 			// update child node
-	// 			Child.Parent.reset(this);
-	// 			Child.depth += 1;
-	// 			Child.Children.clear();
+// 		return *this;
+// 	}
 
-	// 			// keep the child
-	// 			Children.push_back(Child);
-	// 		}
-	// 	}
-	// }
+// 	bool StandardNode::isValidChild(const Node& other)
+// 	{
+// 		if (&other == this or other.getState() == state)
+// 		{
+// 			return false;
+// 		}
+// 		return true;
+// 	}
 
-	// Grid Node::getState() const
-	// {
-	// 	return State;
-	// }
-
-	// std::shared_ptr<Node> Node::getParent() const
-	// {
-	// 	return Parent;
-	// }
-
-	// int Node::getDepth() const
-	// {
-	// 	return depth;
-	// }
-
-	// std::vector<Node> Node::getChildren() const
-	// {
-	// 	return Children;
-	// }
-}
+// 	// create all possible child nodes
+// 	void Node::createChildren()
+// 	{
+// 		// create a new child node by moving tile P in all legal directions
+// 		for (int i = 0; i < 4; ++i)
+// 		{
+// 			StandardNode Child(*this);
+// 			auto childstate = Child.getState();
+// 			switch(i)
+// 			{
+// 				case 0:
+// 				childstate->movePUp();
+// 				break;
+// 				case 1:
+// 				childstate->movePLeft();
+// 				break;
+// 				case 2:
+// 				childstate->movePDown();
+// 				break;
+// 				case 3:
+// 				childstate->movePRight();
+// 				break;
+// 			}
+// 			// if the movement of the P tile was successful then the child node state is different from its parents 
+// 			if (isValidChild(Child))
+// 			{	
+// 				// keep the child
+// 				children.push_back(Child);
+// 			}
+// 		}
+// 	}
+// }

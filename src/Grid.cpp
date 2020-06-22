@@ -9,15 +9,22 @@ namespace TileSearch
 {
 	/* ========== Grid Class ========== */
 
+	Grid::Grid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
+		: P(P), A(A), B(B), C(C)
+	{
+		// build the grid
+		build();
+	}
+
 	// temporarily remove all tiles from the grid
 	void Grid::clear()
 	{
 		// iterate over each row of the grid...
-		for (std::array<std::array<char, grid_height>, grid_width>::iterator row = configuration.begin(); 
+		for (std::array<std::array<char, height>, width>::iterator row = configuration.begin(); 
 					row != configuration.end(); ++row)
 		{
 			// iterate over each column of each row...
-			for (std::array<char, grid_width>::iterator col = row->begin(); col != row->end(); ++col)
+			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
 				*col = '-';
 			}
@@ -49,11 +56,11 @@ namespace TileSearch
 		std::cout << "\n";
 		// iterate over each row (in reverse order)...
 		// reversing the order allows the grid to be properly displayed within the console
-		for (std::array<std::array<char, grid_height>, grid_width>::reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
+		for (std::array<std::array<char, height>, width>::reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
 		{
 			std::cout << "                    | ";
 			// iterate over each column of each row...
-			for (std::array<char, grid_width>::iterator col = row->begin(); col != row->end(); ++col)
+			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
 				std::cout << *col << " | ";
 			}
@@ -85,48 +92,33 @@ namespace TileSearch
 	}
 
 	// return the configuration of the grid
-	std::array<std::array<char, Grid::grid_height>, Grid::grid_width> Grid::getConfiguration() const
+	std::array<std::array<char, Grid::height>, Grid::width> Grid::getConfiguration() const
 	{
 		return configuration;
 	}
 
 	/* ========== Start Grid Class ========== */
 
-	StartGrid::StartGrid()
+	StartGrid::StartGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
+		: Grid(P, A, B, C)
 	{
-		// set the starting positions of each tile
-		P = std::make_pair(3, 0);
-		A = std::make_pair(0, 0);
-		B = std::make_pair(1, 0);
-		C = std::make_pair(2, 0);
-		// build the start grid
-		build();
+
 	}
 
 	/* ========== Goal Grid Class ========== */
 
-	GoalGrid::GoalGrid()
+	GoalGrid::GoalGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
+		: Grid(P, A, B, C)
 	{
-		// set the goal positions of each tile
-		P = std::make_pair(3, 0);
-		A = std::make_pair(1, 2);
-		B = std::make_pair(1, 1);
-		C = std::make_pair(1, 0);
-		// build the goal grid
-		build();
+
 	}
 
 	/* ========== Standard Grid Class ========== */
 
 	StandardGrid::StandardGrid(const Grid& other)
+		: Grid(other.getP(), other.getA(), other.getB(), other.getC())
 	{
-		// copy the positions of each tile
-		P = other.getP();
-		A = other.getA();
-		B = other.getB();
-		C = other.getC();
-		// build the grid	
-		build();
+
 	}
 
 	Grid& StandardGrid::operator=(const Grid& other)
@@ -145,7 +137,7 @@ namespace TileSearch
 	void StandardGrid::movePUp()
 	{
 		// if P can move upwards...
-		if (std::get<1>(P) != grid_height - 1)
+		if (std::get<1>(P) != height - 1)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
@@ -195,7 +187,7 @@ namespace TileSearch
 	void StandardGrid::movePRight()
 	{
 		// if P can move right...
-		if (std::get<0>(P) != grid_width - 1)
+		if (std::get<0>(P) != width - 1)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
@@ -243,7 +235,7 @@ namespace TileSearch
 	}
 
 	// compare the configuration of two grids
-	bool StandardGrid::isIdenticalTo(const Grid& other)
+	bool StandardGrid::operator==(const Grid& other)
 	{
 		if ((&other == this) or (configuration == other.getConfiguration()))
 		{

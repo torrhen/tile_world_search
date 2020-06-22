@@ -11,10 +11,10 @@ namespace TileSearch
 	{
 		protected:
 			// size of grid set at compile time
-			static constexpr std::size_t grid_width = 4;
-			static constexpr std::size_t grid_height = 4;
+			static constexpr std::size_t width = 4;
+			static constexpr std::size_t height = 4;
 
-			std::array<std::array<char, grid_height>, grid_width> configuration;
+			std::array<std::array<char, height>, width> configuration;
 
 			// store x, y positions of each grid tile
 			std::pair<int, int> P;
@@ -27,15 +27,8 @@ namespace TileSearch
 			// add tiles to grid
 			void build();
 
-			// grid constructor should only be accessed from derived classes
-			Grid() = default;
-
-			// grid copy/ move constructors should only be accessed from derived classes
-			Grid(const Grid& other) = default;
-			//Grid(Grid&& other) = delete;
-			// grid copy/move assignment operators should only be accessed from derived classes
-			Grid& operator=(const Grid& other) = default;
-			//Grid& operator=(Grid&& other) = delete;
+			// Grid class should not be initialised directly
+			Grid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C);
 
 		public:
 			// display grid configuration
@@ -48,17 +41,18 @@ namespace TileSearch
 			std::pair<int, int> getC() const;
 
 			// return the configuration of the grid
-			std::array<std::array<char, grid_height>, grid_width> getConfiguration() const;
+			std::array<std::array<char, height>, width> getConfiguration() const;
 	};
 
 	class StartGrid : public Grid
 	{
 		public:
-			StartGrid();
+			StartGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C);
 
 			// start grid should not copy/steal from another grid
 			StartGrid(const Grid& other) = delete;
 			StartGrid(Grid&& other) = delete;
+
 			Grid& operator=(const Grid& other) = delete;
 			Grid& operator=(Grid&& other) = delete;
 	};
@@ -66,11 +60,12 @@ namespace TileSearch
 	class GoalGrid : public Grid
 	{
 		public:
-			GoalGrid();
+			GoalGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C);
 
 			// goal grid should not copy/steal from another grid
 			GoalGrid(const Grid& other) = delete;
 			GoalGrid(Grid&& other) = delete;
+
 			Grid& operator=(const Grid& other) = delete;
 			Grid& operator=(Grid&& other) = delete;
 	};
@@ -79,15 +74,16 @@ namespace TileSearch
 	{
 		public:
 			// standard grid should only copy/steal from another grid
-			StandardGrid() = delete;
+			StandardGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C) = delete;
 
 			StandardGrid(const Grid& other);
-			// StandardGrid(Grid&& other) = delete;
-			Grid& operator=(const Grid& other);
-			// Grid& operator=(Grid&& other) = delete;
+			StandardGrid(Grid&& other) = delete;
 
-			// compare the configuration of two grids
-			bool isIdenticalTo(const Grid& other);
+			Grid& operator=(const Grid& other);
+			Grid& operator=(Grid&& other) = delete;
+
+			// two grids are identical if they have the exact same configuration
+			bool operator==(const Grid& other);
 
 			// move the P tile within the grid
 			void movePUp();

@@ -3,11 +3,30 @@
 
 #include <iostream>
 
+// set the starting positions of each tile in the grid
+namespace Start
+{
+	std::pair<int, int> P = std::make_pair(3, 0);
+	std::pair<int, int> A = std::make_pair(0, 0);
+	std::pair<int, int> B = std::make_pair(1, 0);
+	std::pair<int, int> C = std::make_pair(2, 0);		
+}
+
+// set the final positions of each tile in the grid
+namespace Goal
+{
+	std::pair<int, int> P = std::make_pair(3, 0);
+	std::pair<int, int> A = std::make_pair(1, 2);
+	std::pair<int, int> B = std::make_pair(1, 1);
+	std::pair<int, int> C = std::make_pair(1, 0);
+}
+
+
 int main()
 {
 	// ===========================================================================
 
-	TileSearch::StartGrid s;
+	TileSearch::StartGrid s(Start::P, Start::A, Start::B, Start::C);
 
 	s.show();
 
@@ -20,7 +39,7 @@ int main()
 	n.movePRight();
 	n.show();
 
-	TileSearch::GoalGrid g;
+	TileSearch::GoalGrid g(Goal::P, Goal::A, Goal::B, Goal::C);
 
 	g.show();
 
@@ -32,13 +51,17 @@ int main()
 
 	h.show();
 
+	std::cout << std::boolalpha << (h == n) << std::endl;
+
 	// ===========================================================================
 
+	// TileSearch::StartGrid s;
 
-	// TileSearch::Node n(s);
+	// TileSearch::RootNode r(s);
 
-	// std::cout << std::boolalpha << s.isGoal() << std::endl;
-
+	// std::cout << r.getDepth() << std::endl;
+	// std::cout << r.getParent() << std::endl;
+	// r.getState()->show();
 
 	// std::cout << &n << std::endl;
 
