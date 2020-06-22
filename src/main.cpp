@@ -35,23 +35,24 @@ int main()
 	n.movePLeft();
 	n.movePLeft();
 	n.show();
-	n.movePRight();
-	n.movePRight();
-	n.show();
 
 	TileSearch::GoalGrid g(Goal::P, Goal::A, Goal::B, Goal::C);
 
 	g.show();
 
-	TileSearch::StandardGrid h(g);
+	TileSearch::StandardGrid i(n);
+	i.movePUp();
+	i.show();
 
-	h.show();
+	n = i;
 
-	h = n;
+	n.movePLeft();
+	n.movePUp();
+	n.movePRight();
+	n.movePDown();
+	n.show();
 
-	h.show();
-
-	std::cout << std::boolalpha << (h == n) << std::endl;
+	std::cout << std::boolalpha << (i == n) << std::endl;
 
 	// ===========================================================================
 

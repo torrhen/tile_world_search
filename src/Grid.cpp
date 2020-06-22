@@ -115,22 +115,10 @@ namespace TileSearch
 
 	/* ========== Standard Grid Class ========== */
 
-	StandardGrid::StandardGrid(const Grid& other)
+	StandardGrid::StandardGrid(const StartGrid& other)
 		: Grid(other.getP(), other.getA(), other.getB(), other.getC())
 	{
 
-	}
-
-	Grid& StandardGrid::operator=(const Grid& other)
-	{
-		// copy the positions of each tile
-		P = other.getP();
-		A = other.getA();
-		B = other.getB();
-		C = other.getC();
-		// build the grid	
-		build();
-		return *this;
 	}
 
 	// move the P tile up, down, right and left
@@ -152,6 +140,10 @@ namespace TileSearch
 			else if ((std::get<1>(C) == std::get<1>(P) + 1) and (std::get<0>(C) == std::get<0>(P)))
 			{
 				C.swap(P);
+			}
+			else
+			{
+				std::get<1>(P) += 1;
 			}
 			// rebuild grid
 			build();
@@ -178,6 +170,10 @@ namespace TileSearch
 			{
 				C.swap(P);
 			}
+			else
+			{
+				std::get<1>(P) -= 1;
+			}
 			// rebuild grid
 			build();
 		}
@@ -203,6 +199,10 @@ namespace TileSearch
 			{
 				C.swap(P);
 			}
+			else
+			{
+				std::get<0>(P) += 1;
+			}
 			// rebuild grid
 			build();
 		}
@@ -227,6 +227,10 @@ namespace TileSearch
 			else if ((std::get<0>(C) == std::get<0>(P) - 1) and (std::get<1>(C) == std::get<1>(P)))
 			{
 				C.swap(P);
+			}
+			else
+			{
+				std::get<0>(P) -= 1;
 			}
 			// rebuild grid
 			build();

@@ -50,11 +50,11 @@ namespace TileSearch
 			StartGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C);
 
 			// start grid should not copy/steal from another grid
-			StartGrid(const Grid& other) = delete;
-			StartGrid(Grid&& other) = delete;
+			StartGrid(const StartGrid& other) = delete;
+			StartGrid(StartGrid&& other) = delete;
 
-			Grid& operator=(const Grid& other) = delete;
-			Grid& operator=(Grid&& other) = delete;
+			StartGrid& operator=(const StartGrid& other) = delete;
+			StartGrid& operator=(StartGrid&& other) = delete;
 	};
 
 	class GoalGrid : public Grid
@@ -63,24 +63,18 @@ namespace TileSearch
 			GoalGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C);
 
 			// goal grid should not copy/steal from another grid
-			GoalGrid(const Grid& other) = delete;
-			GoalGrid(Grid&& other) = delete;
+			GoalGrid(const GoalGrid& other) = delete;
+			GoalGrid(GoalGrid&& other) = delete;
 
-			Grid& operator=(const Grid& other) = delete;
-			Grid& operator=(Grid&& other) = delete;
+			GoalGrid& operator=(const GoalGrid& other) = delete;
+			GoalGrid& operator=(GoalGrid&& other) = delete;
 	};
 
 	class StandardGrid : public Grid
 	{
 		public:
-			// standard grid should only copy/steal from another grid
-			StandardGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C) = delete;
-
-			StandardGrid(const Grid& other);
-			StandardGrid(Grid&& other) = delete;
-
-			Grid& operator=(const Grid& other);
-			Grid& operator=(Grid&& other) = delete;
+			// standard grid should only be created using another grid
+			StandardGrid(const StartGrid& other);
 
 			// two grids are identical if they have the exact same configuration
 			bool operator==(const Grid& other);
