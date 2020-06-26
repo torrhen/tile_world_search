@@ -9,7 +9,7 @@ namespace TileSearch
 {
 	/* ========== Grid Class ========== */
 
-	Grid::Grid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
+	Grid::Grid(tile P, tile A, tile B, tile C)
 		: P(P), A(A), B(B), C(C)
 	{
 		// build the grid
@@ -70,79 +70,29 @@ namespace TileSearch
 		std::cout << "                =========================" << std::endl;
 	}
 
-	// return the position of tiles P, A, B and C
-	std::pair<int, int> Grid::getP() const
-	{
-		return P;
-	}
-
-	std::pair<int, int> Grid::getA() const
-	{
-		return A;
-	}
-
-	std::pair<int, int> Grid::getB() const
-	{
-		return B;
-	}
-
-	std::pair<int, int> Grid::getC() const
-	{
-		return C;
-	}
-
-	// return the configuration of the grid
-	std::array<std::array<char, Grid::height>, Grid::width> Grid::getConfiguration() const
-	{
-		return configuration;
-	}
-
-	/* ========== Start Grid Class ========== */
-
-	StartGrid::StartGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
-		: Grid(P, A, B, C)
-	{
-
-	}
-
-	/* ========== Goal Grid Class ========== */
-
-	GoalGrid::GoalGrid(std::pair<int, int> P, std::pair<int, int> A, std::pair<int, int> B, std::pair<int, int> C)
-		: Grid(P, A, B, C)
-	{
-
-	}
-
-	/* ========== Standard Grid Class ========== */
-
-	StandardGrid::StandardGrid(const StartGrid& other)
-		: Grid(other.getP(), other.getA(), other.getB(), other.getC())
-	{
-
-	}
-
 	// move the P tile up, down, right and left
-	void StandardGrid::movePUp()
+	void Grid::movePUp()
 	{
 		// if P can move upwards...
-		if (std::get<1>(P) != height - 1)
+		if (getYPosition(P) != height - 1)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((std::get<1>(A) == std::get<1>(P) + 1) and (std::get<0>(A) == std::get<0>(P)))
+			if ((getYPosition(A) == getYPosition(P) + 1) and (getXPosition(A) == getXPosition(P)))
 			{
 				A.swap(P);
 			}
-			else if ((std::get<1>(B) == std::get<1>(P) + 1) and (std::get<0>(B) == std::get<0>(P)))
+			else if ((getYPosition(B) == getYPosition(P) + 1) and (getXPosition(B) == getXPosition(P)))
 			{
 				B.swap(P);
 			}
-			else if ((std::get<1>(C) == std::get<1>(P) + 1) and (std::get<0>(C) == std::get<0>(P)))
+			else if ((getYPosition(C) == getYPosition(P) + 1) and (getXPosition(C) == getXPosition(P)))
 			{
 				C.swap(P);
 			}
 			else
 			{
+				// move P upwards
 				std::get<1>(P) += 1;
 			}
 			// rebuild grid
@@ -151,27 +101,28 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void StandardGrid::movePDown()
+	void Grid::movePDown()
 	{
 		// if P can move downwards...
-		if (std::get<1>(P) != 0)
+		if (getYPosition(P) != 0)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((std::get<1>(A) == std::get<1>(P) - 1) and (std::get<0>(A) == std::get<0>(P)))
+			if ((getYPosition(A) == getYPosition(P) - 1) and (getXPosition(A) == getXPosition(P)))
 			{
 				A.swap(P);
 			}
-			else if ((std::get<1>(B) == std::get<1>(P) - 1) and (std::get<0>(B) == std::get<0>(P)))
+			else if ((getYPosition(B) == getYPosition(P) - 1) and (getXPosition(B) == getXPosition(P)))
 			{
 				B.swap(P);
 			}
-			else if ((std::get<1>(C) == std::get<1>(P) - 1) and (std::get<0>(C) == std::get<0>(P)))
+			else if ((getYPosition(C) == getYPosition(P) - 1) and (getXPosition(C) == getXPosition(P)))
 			{
 				C.swap(P);
 			}
 			else
 			{
+				// move P downwards
 				std::get<1>(P) -= 1;
 			}
 			// rebuild grid
@@ -180,27 +131,28 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void StandardGrid::movePRight()
+	void Grid::movePRight()
 	{
 		// if P can move right...
-		if (std::get<0>(P) != width - 1)
+		if (getXPosition(P) != width - 1)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((std::get<0>(A) == std::get<0>(P) + 1) and (std::get<1>(A) == std::get<1>(P)))
+			if ((getXPosition(A) == getXPosition(P) + 1) and (getYPosition(A) == getYPosition(P)))
 			{	
 				A.swap(P);
 			}
-			else if ((std::get<0>(B) == std::get<0>(P) + 1) and (std::get<1>(B) == std::get<1>(P)))
+			else if ((getXPosition(B) == getXPosition(P) + 1) and (getYPosition(B) == getYPosition(P)))
 			{
 				B.swap(P);
 			}
-			else if ((std::get<0>(C) == std::get<0>(P) + 1) and (std::get<1>(C) == std::get<1>(P)))
+			else if ((getXPosition(C) == getXPosition(P) + 1) and (getYPosition(C) == getYPosition(P)))
 			{
 				C.swap(P);
 			}
 			else
 			{
+				// move P right
 				std::get<0>(P) += 1;
 			}
 			// rebuild grid
@@ -209,27 +161,28 @@ namespace TileSearch
 		// otherwise do nothing
 	}
 
-	void StandardGrid::movePLeft()
+	void Grid::movePLeft()
 	{
 		// if P can move left...
-		if (std::get<0>(P) != 0)
+		if (getXPosition(P) != 0)
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((std::get<0>(A) == std::get<0>(P) - 1) and (std::get<1>(A) == std::get<1>(P)))
+			if ((getXPosition(A) == getXPosition(P) - 1) and (getYPosition(A) == getYPosition(P)))
 			{
 				A.swap(P);
 			}
-			else if ((std::get<0>(B) == std::get<0>(P) - 1) and (std::get<1>(B) == std::get<1>(P)))
+			else if ((getXPosition(B) == getXPosition(P) - 1) and (getYPosition(B) == getYPosition(P)))
 			{
 				B.swap(P);
 			}
-			else if ((std::get<0>(C) == std::get<0>(P) - 1) and (std::get<1>(C) == std::get<1>(P)))
+			else if ((getXPosition(C) == getXPosition(P) - 1) and (getYPosition(C) == getYPosition(P)))
 			{
 				C.swap(P);
 			}
 			else
 			{
+				// move P left
 				std::get<0>(P) -= 1;
 			}
 			// rebuild grid
@@ -239,12 +192,30 @@ namespace TileSearch
 	}
 
 	// compare the configuration of two grids
-	bool StandardGrid::operator==(const Grid& other)
+	bool operator==(const Grid &first, const Grid &second)
 	{
-		if ((&other == this) or (configuration == other.getConfiguration()))
+		if ((&first == &second) or (first.getConfiguration() == second.getConfiguration()))
 		{
 			return true;
 		}
 		return false;
+	}
+
+	// get x position of a specific tile within the grid
+	int Grid::getXPosition(tile grid_tile) const
+	{
+		return std::get<0>(grid_tile);
+	}
+
+	// get y position of a specific tile within the grid
+	int Grid::getYPosition(tile grid_tile) const
+	{
+		return std::get<1>(grid_tile);
+	}
+
+	// return the configuration of the grid
+	std::array<std::array<char, Grid::height>, Grid::width> Grid::getConfiguration() const
+	{
+		return configuration;
 	}
 }

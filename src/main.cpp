@@ -3,56 +3,62 @@
 
 #include <iostream>
 
-// set the starting positions of each tile in the grid
-namespace Start
+namespace TileSearch
 {
-	std::pair<int, int> P = std::make_pair(3, 0);
-	std::pair<int, int> A = std::make_pair(0, 0);
-	std::pair<int, int> B = std::make_pair(1, 0);
-	std::pair<int, int> C = std::make_pair(2, 0);		
-}
+	// tile is defined in Grid.h
 
-// set the final positions of each tile in the grid
-namespace Goal
-{
-	std::pair<int, int> P = std::make_pair(3, 0);
-	std::pair<int, int> A = std::make_pair(1, 2);
-	std::pair<int, int> B = std::make_pair(1, 1);
-	std::pair<int, int> C = std::make_pair(1, 0);
-}
+	// set the starting positions of each tile in the grid
+	namespace Start
+	{
+		tile P = std::make_pair(3, 0);
+		tile A = std::make_pair(0, 0);
+		tile B = std::make_pair(1, 0);
+		tile C = std::make_pair(2, 0);		
+	}
 
+	// set the final positions of each tile in the grid
+	namespace Goal
+	{
+		tile P = std::make_pair(3, 0);
+		tile A = std::make_pair(1, 2);
+		tile B = std::make_pair(1, 1);
+		tile C = std::make_pair(1, 0);
+	}
+}
 
 int main()
 {
 	// ===========================================================================
 
-	TileSearch::StartGrid s(Start::P, Start::A, Start::B, Start::C);
+	using namespace TileSearch;
 
-	s.show();
+	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
 
-	TileSearch::StandardGrid n(s);
-	n.show();
-	n.movePLeft();
-	n.movePLeft();
-	n.show();
+	StartGrid.show();
 
-	TileSearch::GoalGrid g(Goal::P, Goal::A, Goal::B, Goal::C);
+	Grid NormalGrid(StartGrid);
+	NormalGrid.show();
+	NormalGrid.movePLeft();
+	NormalGrid.movePLeft();
+	NormalGrid.show();
 
-	g.show();
+	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
 
-	TileSearch::StandardGrid i(n);
+	GoalGrid.show();
+
+	Grid i(NormalGrid);
 	i.movePUp();
 	i.show();
 
-	n = i;
+	NormalGrid = i;
 
-	n.movePLeft();
-	n.movePUp();
-	n.movePRight();
-	n.movePDown();
-	n.show();
+	NormalGrid.movePLeft();
+	NormalGrid.movePUp();
+	NormalGrid.movePRight();
+	NormalGrid.movePDown();
+	NormalGrid.show();
 
-	std::cout << std::boolalpha << (i == n) << std::endl;
+	std::cout << std::boolalpha << (i == NormalGrid) << std::endl;
 
 	// ===========================================================================
 
