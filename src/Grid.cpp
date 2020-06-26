@@ -39,10 +39,10 @@ namespace TileSearch
 		{
 			// y position placed in first index, x position placed in second index
 			// this is done so that the configuration of the grid is properly displayed to the console
-			configuration.at(std::get<1>(P)).at(std::get<0>(P)) = 'P';
-			configuration.at(std::get<1>(A)).at(std::get<0>(A)) = 'A';
-			configuration.at(std::get<1>(B)).at(std::get<0>(B)) = 'B';
-			configuration.at(std::get<1>(C)).at(std::get<0>(C)) = 'C';
+			configuration.at(getYPosition(P)).at(getXPosition(P)) = 'P';
+			configuration.at(getYPosition(A)).at(getXPosition(A)) = 'A';
+			configuration.at(getYPosition(B)).at(getXPosition(B)) = 'B';
+			configuration.at(getYPosition(C)).at(getXPosition(C)) = 'C';
 		}
 		catch (std::out_of_range)
 		{

@@ -24,15 +24,16 @@ namespace TileSearch
 			tile B;
 			tile C;
 
+			// remove tiles from grid
+			void clear();
+			// add tiles to grid
+			void build();
+			
 		public:
 			Grid(tile P, tile A, tile B, tile C);
 
 			// display grid configuration
 			void show();
-			// remove tiles from grid
-			void clear();
-			// add tiles to grid
-			void build();
 
 			// move the P tile within the grid
 			void movePUp();
