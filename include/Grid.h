@@ -7,8 +7,12 @@
 
 namespace TileSearch
 {
-	// store x, y positions of each grid tile
-	using tile = std::pair<int, int>;
+	// store x, y positions and id of each grid tile
+	struct tile 
+	{
+		std::pair<int, int> position = std::make_pair(0, 0);
+		char ID = ' ';
+	};
 
 	class Grid
 	{
@@ -19,16 +23,13 @@ namespace TileSearch
 
 			std::array<std::array<char, height>, width> configuration;
 
-			tile P;
-			tile A;
-			tile B;
-			tile C;
+			tile P, A, B, C;
 
 			// remove tiles from grid
 			void clear();
 			// add tiles to grid
 			void build();
-			
+
 		public:
 			Grid(tile P, tile A, tile B, tile C);
 
@@ -41,16 +42,18 @@ namespace TileSearch
 			void movePLeft();
 			void movePRight();
 
-			// return the positions of grid tiles
-			int getXPosition(tile grid_tile) const;
-			int getYPosition(tile grid_tile) const;
+			// return the position of a grid tile
+			int getXPosition(const tile &grid_tile) const;
+			int getYPosition(const tile &grid_tile) const;
+			// return the ID of a grid tile
+			char getID(const tile &grid_tile) const;
 
 			// return the configuration of the grid
 			std::array<std::array<char, height>, width> getConfiguration() const;
 	};
 
 	// two grids are identical if they have the exact same configuration
-	bool operator==(const Grid &first, const Grid &second);
+	bool operator==(const Grid &lhs, const Grid &rhs);
 }
 
 #endif

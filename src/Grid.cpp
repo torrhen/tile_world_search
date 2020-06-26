@@ -39,10 +39,10 @@ namespace TileSearch
 		{
 			// y position placed in first index, x position placed in second index
 			// this is done so that the configuration of the grid is properly displayed to the console
-			configuration.at(getYPosition(P)).at(getXPosition(P)) = 'P';
-			configuration.at(getYPosition(A)).at(getXPosition(A)) = 'A';
-			configuration.at(getYPosition(B)).at(getXPosition(B)) = 'B';
-			configuration.at(getYPosition(C)).at(getXPosition(C)) = 'C';
+			configuration.at(getYPosition(P)).at(getXPosition(P)) = getID(P);
+			configuration.at(getYPosition(A)).at(getXPosition(A)) = getID(A);
+			configuration.at(getYPosition(B)).at(getXPosition(B)) = getID(B);
+			configuration.at(getYPosition(C)).at(getXPosition(C)) = getID(C);
 		}
 		catch (std::out_of_range)
 		{
@@ -80,20 +80,20 @@ namespace TileSearch
 			// swap the tile in the new position with P
 			if ((getYPosition(A) == getYPosition(P) + 1) and (getXPosition(A) == getXPosition(P)))
 			{
-				A.swap(P);
+				(A.position).swap(P.position);
 			}
 			else if ((getYPosition(B) == getYPosition(P) + 1) and (getXPosition(B) == getXPosition(P)))
 			{
-				B.swap(P);
+				(B.position).swap(P.position);
 			}
 			else if ((getYPosition(C) == getYPosition(P) + 1) and (getXPosition(C) == getXPosition(P)))
 			{
-				C.swap(P);
+				(C.position).swap(P.position);
 			}
 			else
 			{
 				// move P upwards
-				std::get<1>(P) += 1;
+				std::get<1>(P.position) += 1;
 			}
 			// rebuild grid
 			build();
@@ -110,20 +110,20 @@ namespace TileSearch
 			// swap the tile in the new position with P
 			if ((getYPosition(A) == getYPosition(P) - 1) and (getXPosition(A) == getXPosition(P)))
 			{
-				A.swap(P);
+				(A.position).swap(P.position);
 			}
 			else if ((getYPosition(B) == getYPosition(P) - 1) and (getXPosition(B) == getXPosition(P)))
 			{
-				B.swap(P);
+				(B.position).swap(P.position);
 			}
 			else if ((getYPosition(C) == getYPosition(P) - 1) and (getXPosition(C) == getXPosition(P)))
 			{
-				C.swap(P);
+				(C.position).swap(P.position);
 			}
 			else
 			{
 				// move P downwards
-				std::get<1>(P) -= 1;
+				std::get<1>(P.position) -= 1;
 			}
 			// rebuild grid
 			build();
@@ -140,20 +140,20 @@ namespace TileSearch
 			// swap the tile in the new position with P
 			if ((getXPosition(A) == getXPosition(P) + 1) and (getYPosition(A) == getYPosition(P)))
 			{	
-				A.swap(P);
+				(A.position).swap(P.position);
 			}
 			else if ((getXPosition(B) == getXPosition(P) + 1) and (getYPosition(B) == getYPosition(P)))
 			{
-				B.swap(P);
+				(B.position).swap(P.position);
 			}
 			else if ((getXPosition(C) == getXPosition(P) + 1) and (getYPosition(C) == getYPosition(P)))
 			{
-				C.swap(P);
+				(C.position).swap(P.position);
 			}
 			else
 			{
 				// move P right
-				std::get<0>(P) += 1;
+				std::get<0>(P.position) += 1;
 			}
 			// rebuild grid
 			build();
@@ -170,20 +170,20 @@ namespace TileSearch
 			// swap the tile in the new position with P
 			if ((getXPosition(A) == getXPosition(P) - 1) and (getYPosition(A) == getYPosition(P)))
 			{
-				A.swap(P);
+				(A.position).swap(P.position);
 			}
 			else if ((getXPosition(B) == getXPosition(P) - 1) and (getYPosition(B) == getYPosition(P)))
 			{
-				B.swap(P);
+				(B.position).swap(P.position);
 			}
 			else if ((getXPosition(C) == getXPosition(P) - 1) and (getYPosition(C) == getYPosition(P)))
 			{
-				C.swap(P);
+				(C.position).swap(P.position);
 			}
 			else
 			{
 				// move P left
-				std::get<0>(P) -= 1;
+				std::get<0>(P.position) -= 1;
 			}
 			// rebuild grid
 			build();
@@ -192,9 +192,9 @@ namespace TileSearch
 	}
 
 	// compare the configuration of two grids
-	bool operator==(const Grid &first, const Grid &second)
+	bool operator==(const Grid &lhs, const Grid &rhs)
 	{
-		if ((&first == &second) or (first.getConfiguration() == second.getConfiguration()))
+		if ((&lhs == &rhs) or (lhs.getConfiguration() == rhs.getConfiguration()))
 		{
 			return true;
 		}
@@ -202,15 +202,21 @@ namespace TileSearch
 	}
 
 	// get x position of a specific tile within the grid
-	int Grid::getXPosition(tile grid_tile) const
+	int Grid::getXPosition(const tile &grid_tile) const
 	{
-		return std::get<0>(grid_tile);
+		return std::get<0>(grid_tile.position);
 	}
 
 	// get y position of a specific tile within the grid
-	int Grid::getYPosition(tile grid_tile) const
+	int Grid::getYPosition(const tile &grid_tile) const
 	{
-		return std::get<1>(grid_tile);
+		return std::get<1>(grid_tile.position);
+	}
+
+	// get ID of a specific tile within the grid
+	char Grid::getID(const tile &grid_tile) const
+	{
+		return grid_tile.ID;
 	}
 
 	// return the configuration of the grid

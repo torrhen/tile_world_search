@@ -10,19 +10,19 @@ namespace TileSearch
 	// set the starting positions of each tile in the grid
 	namespace Start
 	{
-		tile P = std::make_pair(3, 0);
-		tile A = std::make_pair(0, 0);
-		tile B = std::make_pair(1, 0);
-		tile C = std::make_pair(2, 0);		
+		tile P = {std::make_pair(3, 0), 'P'};
+		tile A = {std::make_pair(0, 0), 'A'};
+		tile B = {std::make_pair(1, 0), 'B'};
+		tile C = {std::make_pair(2, 0), 'C'};		
 	}
 
 	// set the final positions of each tile in the grid
 	namespace Goal
 	{
-		tile P = std::make_pair(3, 0);
-		tile A = std::make_pair(1, 2);
-		tile B = std::make_pair(1, 1);
-		tile C = std::make_pair(1, 0);
+		tile P = {std::make_pair(3, 0), 'P'};
+		tile A = {std::make_pair(1, 2), 'A'};
+		tile B = {std::make_pair(1, 1), 'B'};
+		tile C = {std::make_pair(1, 0), 'C'};
 	}
 }
 
