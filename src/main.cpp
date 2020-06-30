@@ -1,5 +1,5 @@
 #include "../include/Grid.h"
-// #include "../include/Node.h"
+#include "../include/Node.h"
 
 #include <iostream>
 
@@ -34,31 +34,44 @@ int main()
 
 	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
 
-	StartGrid.show();
+	Node RootNode(StartGrid);
 
-	Grid NormalGrid(StartGrid);
-	NormalGrid.show();
-	NormalGrid.movePLeft();
-	NormalGrid.movePLeft();
-	NormalGrid.show();
+	RootNode.generateChildren();
 
-	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
+	Node s(RootNode.getChildren()[1].getState());
+	s.generateChildren();
 
-	GoalGrid.show();
+	for (int i = 0; i < s.getChildren().size(); ++i)
+	{
+		s.getChildren()[i].getState().show();
+		std::cout << s.getChildren()[i].getDepth() << std::endl;
+	}
 
-	Grid i(NormalGrid);
-	i.movePUp();
-	i.show();
+	std::cout << s.getChildren().size() << std::endl;
+	s.getChildren()[0].getParent()->getState().show();
 
-	NormalGrid = i;
+	//NormalGrid.show();
+	//NormalGrid.movePLeft();
+	//NormalGrid.movePLeft();
+	//NormalGrid.show();
 
-	NormalGrid.movePLeft();
-	NormalGrid.movePUp();
-	NormalGrid.movePRight();
-	NormalGrid.movePDown();
-	NormalGrid.show();
+	//Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
 
-	std::cout << std::boolalpha << (i == NormalGrid) << std::endl;
+	//GoalGrid.show();
+
+	//Grid i(NormalGrid);
+	//i.movePUp();
+	//i.show();
+
+	//NormalGrid = i;
+
+	//NormalGrid.movePLeft();
+	//NormalGrid.movePUp();
+	//NormalGrid.movePRight();
+	//NormalGrid.movePDown();
+	//NormalGrid.show();
+
+	//std::cout << std::boolalpha << (i == NormalGrid) << std::endl;
 
 	// ===========================================================================
 

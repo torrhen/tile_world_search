@@ -78,15 +78,15 @@ namespace TileSearch
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((getYPosition(A) == getYPosition(P) + 1) and (getXPosition(A) == getXPosition(P)))
+			if ((getYPosition(A) == getYPosition(P) + 1) && (getXPosition(A) == getXPosition(P)))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getYPosition(B) == getYPosition(P) + 1) and (getXPosition(B) == getXPosition(P)))
+			else if ((getYPosition(B) == getYPosition(P) + 1) && (getXPosition(B) == getXPosition(P)))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getYPosition(C) == getYPosition(P) + 1) and (getXPosition(C) == getXPosition(P)))
+			else if ((getYPosition(C) == getYPosition(P) + 1) && (getXPosition(C) == getXPosition(P)))
 			{
 				(C.position).swap(P.position);
 			}
@@ -108,15 +108,15 @@ namespace TileSearch
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((getYPosition(A) == getYPosition(P) - 1) and (getXPosition(A) == getXPosition(P)))
+			if ((getYPosition(A) == getYPosition(P) - 1) && (getXPosition(A) == getXPosition(P)))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getYPosition(B) == getYPosition(P) - 1) and (getXPosition(B) == getXPosition(P)))
+			else if ((getYPosition(B) == getYPosition(P) - 1) && (getXPosition(B) == getXPosition(P)))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getYPosition(C) == getYPosition(P) - 1) and (getXPosition(C) == getXPosition(P)))
+			else if ((getYPosition(C) == getYPosition(P) - 1) && (getXPosition(C) == getXPosition(P)))
 			{
 				(C.position).swap(P.position);
 			}
@@ -138,15 +138,15 @@ namespace TileSearch
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((getXPosition(A) == getXPosition(P) + 1) and (getYPosition(A) == getYPosition(P)))
+			if ((getXPosition(A) == getXPosition(P) + 1) && (getYPosition(A) == getYPosition(P)))
 			{	
 				(A.position).swap(P.position);
 			}
-			else if ((getXPosition(B) == getXPosition(P) + 1) and (getYPosition(B) == getYPosition(P)))
+			else if ((getXPosition(B) == getXPosition(P) + 1) && (getYPosition(B) == getYPosition(P)))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getXPosition(C) == getXPosition(P) + 1) and (getYPosition(C) == getYPosition(P)))
+			else if ((getXPosition(C) == getXPosition(P) + 1) && (getYPosition(C) == getYPosition(P)))
 			{
 				(C.position).swap(P.position);
 			}
@@ -168,21 +168,21 @@ namespace TileSearch
 		{
 			// if the new position of P is taken...
 			// swap the tile in the new position with P
-			if ((getXPosition(A) == getXPosition(P) - 1) and (getYPosition(A) == getYPosition(P)))
+			if ((getXPosition(A) == getXPosition(P) - 1) && (getYPosition(A) == getYPosition(P)))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getXPosition(B) == getXPosition(P) - 1) and (getYPosition(B) == getYPosition(P)))
+			else if ((getXPosition(B) == getXPosition(P) - 1) && (getYPosition(B) == getYPosition(P)))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getXPosition(C) == getXPosition(P) - 1) and (getYPosition(C) == getYPosition(P)))
+			else if ((getXPosition(C) == getXPosition(P) - 1) && (getYPosition(C) == getYPosition(P)))
 			{
 				(C.position).swap(P.position);
 			}
 			else
 			{
-				// move P left
+				// move P le
 				std::get<0>(P.position) -= 1;
 			}
 			// rebuild grid
@@ -194,7 +194,7 @@ namespace TileSearch
 	// compare the configuration of two grids
 	bool operator==(const Grid &lhs, const Grid &rhs)
 	{
-		if ((&lhs == &rhs) or (lhs.getConfiguration() == rhs.getConfiguration()))
+		if ((&lhs == &rhs) || (lhs.getConfiguration() == rhs.getConfiguration()))
 		{
 			return true;
 		}
