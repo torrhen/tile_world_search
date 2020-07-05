@@ -24,7 +24,7 @@ namespace TileSearch
 			std::array<std::array<char, height>, width> configuration;
 
 			tile P, A, B, C;
-
+			
 			// remove tiles from grid
 			void clear();
 			// add tiles to grid
@@ -34,7 +34,7 @@ namespace TileSearch
 			Grid(tile P, tile A, tile B, tile C);
 
 			// display grid configuration
-			void show();
+			void show() const;
 
 			// move the P tile within the grid
 			void movePUp();
@@ -49,7 +49,7 @@ namespace TileSearch
 			char getID(const tile &grid_tile) const;
 
 			// return the configuration of the grid
-			std::array<std::array<char, height>, width> getConfiguration() const;
+			const std::array<std::array<char, height>, width>& getConfiguration() const;
 	};
 
 	// two grids are identical if they have the exact same configuration

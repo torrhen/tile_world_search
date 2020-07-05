@@ -3,7 +3,6 @@
 
 #include "Grid.h"
 
-#include <cstddef>
 #include <memory>
 #include <vector>
 
@@ -13,19 +12,26 @@ namespace TileSearch
 	{
 	private:
 		Grid state;
+		// multiple nodes can share the same parent
 		std::shared_ptr<Node> parent;
-		std::size_t depth;
+		// store the depth of the node within the search tree
+		unsigned int depth;
+		// store child nodes
 		std::vector<Node> children;
-	
+
 	public:
 		Node(const Grid &state);
 
-		void generateChildren();
+		void createChildren();
 
-		Grid getState() const;
-		Node* getParent() const;
-		std::size_t getDepth() const;
-		std::vector<Node> getChildren() const;
+		// return node state
+		const Grid& getState() const;
+		// return pointer to parent
+		const Node* getParent() const;
+		// return depth of node
+		const unsigned int& getDepth() const;
+		// return child nodes 
+		const std::vector<Node>& getChildren() const;
 	};
 }
 

@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <array>
-#include <exception>
+#include <stdexcept>
 #include <iterator>
 
 namespace TileSearch
@@ -35,32 +35,26 @@ namespace TileSearch
 	void Grid::build()
 	{
 		clear();
-		try
-		{
-			// y position placed in first index, x position placed in second index
-			// this is done so that the configuration of the grid is properly displayed to the console
-			configuration.at(getYPosition(P)).at(getXPosition(P)) = getID(P);
-			configuration.at(getYPosition(A)).at(getXPosition(A)) = getID(A);
-			configuration.at(getYPosition(B)).at(getXPosition(B)) = getID(B);
-			configuration.at(getYPosition(C)).at(getXPosition(C)) = getID(C);
-		}
-		catch (std::out_of_range)
-		{
-			std::cout << "Could not build grid." << std::endl;
-		}
+
+		// y position placed in first index, x position placed in second index
+		// this is done so that the configuration of the grid is properly displayed to the console
+		configuration[getYPosition(P)][getXPosition(P)] = getID(P);
+		configuration[getYPosition(A)][getXPosition(A)] = getID(A);
+		configuration[getYPosition(B)][getXPosition(B)] = getID(B);
+		configuration[getYPosition(C)][getXPosition(C)] = getID(C);
 	}
 
 	// display grid configuration
-	void Grid::show()
+	void Grid::show() const
 	{
 		std::cout << "\n";
 		// iterate over each row (in reverse order)...
 		// reversing the order allows the grid to be properly displayed within the console
-		for (std::array<std::array<char, height>, width>::reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
+		for (std::array<std::array<char, height>, width>::const_reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
 		{
 			std::cout << "                    | ";
 			// iterate over each column of each row...
-			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
+			for (std::array<char, width>::const_iterator col = row->begin(); col != row->end(); ++col)
 			{
 				std::cout << *col << " | ";
 			}
@@ -220,7 +214,7 @@ namespace TileSearch
 	}
 
 	// return the configuration of the grid
-	std::array<std::array<char, Grid::height>, Grid::width> Grid::getConfiguration() const
+	const std::array<std::array<char, Grid::height>, Grid::width>& Grid::getConfiguration() const
 	{
 		return configuration;
 	}

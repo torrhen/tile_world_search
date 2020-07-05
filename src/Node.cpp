@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <vector>
-#include <iostream>
 
 namespace TileSearch
 {
@@ -15,14 +14,12 @@ namespace TileSearch
 
 	}
 
-	// create all possible child nodes
-	void Node::generateChildren()
+	void Node::createChildren()
 	{
-		// create a new child node by moving tile P in all legal directions
-	 	for (int i = 0; i < 4; ++i)
-	 	{
-	 		Node child(state);
-	 		switch(i)
+		for (int i = 0; i < 4; ++i)
+		{
+			Node child(state);
+			switch(i)
 	 		{
 	 			case 0:
 	 			(child.state).movePUp();
@@ -37,33 +34,32 @@ namespace TileSearch
 				(child.state).movePRight();
 	 			break;
 	 		}
-	 		// if the movement of the p tile was successful then the child node state is different from its parents 
 	 		if (!(child.getState() == getState()))
-	 		{	
+	 		{
 	 			child.depth = getDepth() + 1;
 	 			child.parent = std::make_shared<Node>(*this);
-	 			children.push_back(child);
+	 			children.push_back(std::move(child));		
 	 		}
-	 	}
+		}
 	}
 
-	 Grid Node::getState() const
-	 {
+	const Grid& Node::getState() const
+	{
 		 return state;
-	 }
+	}
 
-	 Node* Node::getParent() const
-	 {
+	const Node* Node::getParent() const
+	{
 	 	return parent.get();
-	 }
+	}
 
-	 std::size_t Node::getDepth() const
-	 {
+	const unsigned int& Node::getDepth() const
+	{
 	 	return depth;
-	 }
+	}
 
-	 std::vector<Node> Node::getChildren() const
-	 {
-	 	return children;
-	 }
+	const std::vector<Node>& Node::getChildren() const
+	{
+		return children;
+	}
 }

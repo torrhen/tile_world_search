@@ -2,6 +2,7 @@
 #include "../include/Node.h"
 
 #include <iostream>
+#include <vector>
 
 namespace TileSearch
 {
@@ -10,6 +11,7 @@ namespace TileSearch
 	// set the starting positions of each tile in the grid
 	namespace Start
 	{
+		// tile start positions must not be lower than 0 or greater than 3
 		tile P = {std::make_pair(3, 0), 'P'};
 		tile A = {std::make_pair(0, 0), 'A'};
 		tile B = {std::make_pair(1, 0), 'B'};
@@ -19,6 +21,7 @@ namespace TileSearch
 	// set the final positions of each tile in the grid
 	namespace Goal
 	{
+		// tile goal positions must not be lower than 0 or greater than 3
 		tile P = {std::make_pair(3, 0), 'P'};
 		tile A = {std::make_pair(1, 2), 'A'};
 		tile B = {std::make_pair(1, 1), 'B'};
@@ -36,19 +39,12 @@ int main()
 
 	Node RootNode(StartGrid);
 
-	RootNode.generateChildren();
+	RootNode.createChildren();
 
-	Node s(RootNode.getChildren()[1].getState());
-	s.generateChildren();
-
-	for (int i = 0; i < s.getChildren().size(); ++i)
+	for (unsigned int i = 0; i < RootNode.getChildren().size(); ++i)
 	{
-		s.getChildren()[i].getState().show();
-		std::cout << s.getChildren()[i].getDepth() << std::endl;
+		(RootNode.getChildren()[i]).getState().show();
 	}
-
-	std::cout << s.getChildren().size() << std::endl;
-	s.getChildren()[0].getParent()->getState().show();
 
 	//NormalGrid.show();
 	//NormalGrid.movePLeft();
