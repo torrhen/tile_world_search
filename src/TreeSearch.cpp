@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <queue>
+#include <stack>
 #include <iterator>
 #include <iostream>
 
@@ -14,9 +15,7 @@ namespace TileSearch
 	template<typename T>
 	TreeSearch<T>::TreeSearch(const Node& root, const Node& goal)
 		: root(root), goal(goal), total_nodes(0), max_nodes(0)
-	{
-
-	}
+	{}
 
 	template<typename T>
 	// generate child nodes and add them to the frontier
@@ -124,4 +123,41 @@ namespace TileSearch
 		std::cout << "done.\n";
 		return 0;
 	}
+
+	/* ========== DepthFirstTreeSearch Class ========== */
+
+	// frontier for breadth-first search is LIFO 
+	template class TreeSearch<std::stack<Node>>;
+
+	DepthFirstTreeSearch::DepthFirstTreeSearch(const Node& root, const Node& goal)
+		: TreeSearch(root, goal)
+	{}
+
+	DepthFirstTreeSearch::run()
+	{
+		std::cout << "Starting Depth First Tree Search.\n";
+
+		setup();
+
+		while(!(frontier.top() == goal))
+		{
+			expand(frontier.top());
+			frontier.pop();
+
+			updateSpaceComplexity();
+
+			// if there are no nodes on the frontier left to expend before the goal node has been found...
+			if (frontier.empty())
+			{
+				// stop the search
+				std::cout << "No Solution Found.\n";
+				return 0;
+			}
+		}
+		std::cout << "Goal Node Found.\nDepth First Search Complete.\nGenerating Solution Path...";
+		generateSolution(frontier.top());
+		std::cout << "done.\n";
+		return 0;	
+	}	
+
 }

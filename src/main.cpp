@@ -23,10 +23,10 @@ namespace TileSearch
 	namespace Goal
 	{
 		// tile goal positions must not be lower than 0 or greater than 3
-		tile P = {std::make_pair(1, 1), 'P'};
+		tile P = {std::make_pair(3, 0), 'P'};
 		tile A = {std::make_pair(0, 0), 'A'};
 		tile B = {std::make_pair(1, 0), 'B'};
-		tile C = {std::make_pair(3, 0), 'C'};
+		tile C = {std::make_pair(2, 0), 'C'};
 	}
 }
 
@@ -44,7 +44,7 @@ int main()
 
 	Node GoalNode(GoalGrid);
 
-	BreadthFirstTreeSearch b(RootNode, GoalNode);
+	DepthFirstTreeSearch b(RootNode, GoalNode);
 
 	b.run();
 

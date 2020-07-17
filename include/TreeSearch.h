@@ -6,8 +6,7 @@
 
 #include <vector>
 #include <queue>
-#include <random>
-#include <algorithm>
+#include <stack>
 
 namespace TileSearch
 {	
@@ -68,6 +67,24 @@ namespace TileSearch
 		BreadthFirstTreeSearch& operator=(BreadthFirstTreeSearch&&) = delete;
 
 		~BreadthFirstTreeSearch() = default;
+
+		int run();
+	};
+
+	class DepthFirstTreeSearch : public TreeSearch<std::stack<Node>>
+	{
+	public:
+		DepthFirstTreeSearch(const Node& root, const Node& goal);
+
+		// delete copy constructors/assignments
+		DepthFirstTreeSearch(const DepthFirstTreeSearch&) = delete;
+		DepthFirstTreeSearch& operator=(const DepthFirstTreeSearch&) = delete;
+
+		// delete move constructors/assignments
+		DepthFirstTreeSearch(DepthFirstTreeSearch&&) = delete;
+		DepthFirstTreeSearch& operator=(DepthFirstTreeSearch&&) = delete;
+
+		~DepthFirstTreeSearch() = default;
 
 		int run();
 	};
