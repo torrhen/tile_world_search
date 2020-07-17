@@ -33,6 +33,8 @@ namespace TileSearch
 		// return child nodes 
 		const std::vector<Node>& getChildren() const;
 	};
+
+	bool operator==(const Node& lhs, const Node& rhs);
 }
 
 #endif
