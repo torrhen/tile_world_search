@@ -3,57 +3,59 @@
 
 #include <array>
 #include <utility>
-#include <cstddef>
 
 namespace TileSearch
 {
-	// store x, y positions and id of each grid tile
-	struct tile 
+	// store position and id of each grid tile
+	class Tile 
 	{
-		std::pair<int, int> position = std::make_pair(0, 0);
-		char ID = ' ';
+		friend class Grid;
+
+	private:
+		std::pair<unsigned int, unsigned int> position;
+		char id;
+
+		unsigned int getX() const { return std::get<0>(position); }
+		unsigned int getY() const { return std::get<1>(position); }
+
+	public:
+		Tile(unsigned int x, unsigned int y, char id);
 	};
 
+	// store and manage the locations of each tile
 	class Grid
 	{
-		private:
-			// size of grid set at compile time
-			static constexpr std::size_t width = 4;
-			static constexpr std::size_t height = 4;
+	private:
+		// set dimensions of grid
+		static constexpr unsigned int width = 4;
+		static constexpr unsigned int height = 4;
+		// store tile locations
+		std::array<std::array<char, height>, width> configuration;
 
-			std::array<std::array<char, height>, width> configuration;
+		Tile P, A, B, C;
 
-			tile P, A, B, C;
-			
-			// remove tiles from grid
-			void clear();
-			// add tiles to grid
-			void build();
+		// remove tiles from grid
+		void clear() noexcept;
+		// place tiles within grid
+		void build() noexcept;
 
-		public:
-			Grid(tile P, tile A, tile B, tile C);
+	public:
+		Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C);
 
-			// display grid configuration
-			void show() const;
+		// display the configuration to the console
+		void show() const noexcept;
+		// move P tile
+		void movePUp() noexcept;
+		void movePDown() noexcept;
+		void movePLeft() noexcept;
+		void movePRight() noexcept;
 
-			// move the P tile within the grid
-			void movePUp();
-			void movePDown();
-			void movePLeft();
-			void movePRight();
-
-			// return the position of a grid tile
-			int getXPosition(const tile &grid_tile) const;
-			int getYPosition(const tile &grid_tile) const;
-			// return the ID of a grid tile
-			char getID(const tile &grid_tile) const;
-
-			// return the configuration of the grid
-			const std::array<std::array<char, height>, width>& getConfiguration() const;
+		// return the configuration of the grid
+		const std::array<std::array<char, height>, width>& getConfiguration() const { return configuration; }
 	};
 
-	// two grids are identical if they have the exact same configuration
-	bool operator==(const Grid &lhs, const Grid &rhs);
+	// check if two grids have identical configurations
+	bool operator==(const Grid& lhs, const Grid& rhs);
 }
 
 #endif

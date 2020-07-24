@@ -1,23 +1,25 @@
 #include "../include/Grid.h"
 
 #include <iostream>
-#include <array>
-#include <stdexcept>
-#include <iterator>
 
 namespace TileSearch
 {
+	/* ========== Tile Class ========== */
+
+	Tile::Tile(unsigned int x, unsigned int y, char id)
+		: position(std::make_pair(x, y)), id(id) 
+	{}
+
 	/* ========== Grid Class ========== */
 
-	Grid::Grid(tile P, tile A, tile B, tile C)
+	Grid::Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C)
 		: P(P), A(A), B(B), C(C)
 	{
-		// build the grid
 		build();
 	}
 
 	// temporarily remove all tiles from the grid
-	void Grid::clear()
+	void Grid::clear() noexcept
 	{
 		// iterate over each row of the grid...
 		for (std::array<std::array<char, height>, width>::iterator row = configuration.begin(); 
@@ -26,196 +28,153 @@ namespace TileSearch
 			// iterate over each column of each row...
 			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
 			{
+				// mark the grid position as blank
 				*col = '-';
 			}
 		}
 	}
 
-	// place the P, A, B and C tiles in their positions
-	void Grid::build()
+	// place the P, A, B and C tiles
+	void Grid::build() noexcept
 	{
 		clear();
-
-		// y position placed in first index, x position placed in second index
-		// this is done so that the configuration of the grid is properly displayed to the console
-		configuration[getYPosition(P)][getXPosition(P)] = getID(P);
-		configuration[getYPosition(A)][getXPosition(A)] = getID(A);
-		configuration[getYPosition(B)][getXPosition(B)] = getID(B);
-		configuration[getYPosition(C)][getXPosition(C)] = getID(C);
+		// y position as first index, x position as second index so that the configuration is properly displayed to the console
+		configuration[P.getY()][P.getX()] = P.id;
+		configuration[A.getY()][A.getX()] = A.id;
+		configuration[B.getY()][B.getX()] = B.id;
+		configuration[C.getY()][C.getX()] = C.id;
 	}
 
-	// display grid configuration
-	void Grid::show() const
+	void Grid::show() const noexcept
 	{
 		std::cout << "\n";
-		// iterate over each row (in reverse order)...
-		// reversing the order allows the grid to be properly displayed within the console
-		for (std::array<std::array<char, height>, width>::const_reverse_iterator row = configuration.rbegin(); row != configuration.rend(); ++row)
+		// iterate over each row in reverse order so the grid is properly displayed within the console
+		for (std::array<std::array<char, height>, width>::const_reverse_iterator row = configuration.crbegin(); row != configuration.crend(); ++row)
 		{
 			std::cout << "                    | ";
 			// iterate over each column of each row...
-			for (std::array<char, width>::const_iterator col = row->begin(); col != row->end(); ++col)
+			for (std::array<char, width>::const_iterator col = row->cbegin(); col != row->cend(); ++col)
 			{
+				// print the contents of the grid position
 				std::cout << *col << " | ";
 			}
 			std::cout << "\n";
 		}
 		std::cout << "\n"; 
-		std::cout << "                =========================" << std::endl;
+		std::cout << "                =========================\n";
 	}
 
-	// move the P tile up, down, right and left
-	void Grid::movePUp()
+	void Grid::movePUp() noexcept
 	{
-		// if P can move upwards...
-		if (getYPosition(P) != height - 1)
+		// check P can move upwards
+		if (P.getY() != height - 1)
 		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if ((getYPosition(A) == getYPosition(P) + 1) && (getXPosition(A) == getXPosition(P)))
+			// swap P with any tile in the new position
+			if ((A.getY() == P.getY() + 1) && (A.getX() == P.getX()))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getYPosition(B) == getYPosition(P) + 1) && (getXPosition(B) == getXPosition(P)))
+			else if ((B.getY() == P.getY() + 1) && (B.getX() == P.getX()))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getYPosition(C) == getYPosition(P) + 1) && (getXPosition(C) == getXPosition(P)))
+			else if ((C.getY() == P.getY() + 1) && (C.getX() == P.getX()))
 			{
 				(C.position).swap(P.position);
 			}
+			// otherwise move P upwards
 			else
 			{
-				// move P upwards
-				std::get<1>(P.position) += 1;
+				std::get<1>(P.position)++;
 			}
-			// rebuild grid
 			build();
 		}
-		// otherwise do nothing
 	}
 
-	void Grid::movePDown()
+	void Grid::movePDown() noexcept
 	{
-		// if P can move downwards...
-		if (getYPosition(P) != 0)
+		// check P can move downwards
+		if (P.getY() != 0)
 		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if ((getYPosition(A) == getYPosition(P) - 1) && (getXPosition(A) == getXPosition(P)))
+			// swap P with any tile in the new position
+			if ((A.getY() == P.getY() - 1) && (A.getX() == P.getX()))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getYPosition(B) == getYPosition(P) - 1) && (getXPosition(B) == getXPosition(P)))
+			else if ((B.getY() == P.getY() - 1) && (B.getX() == P.getX()))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getYPosition(C) == getYPosition(P) - 1) && (getXPosition(C) == getXPosition(P)))
+			else if ((C.getY() == P.getY() - 1) && (C.getX() == P.getX()))
 			{
 				(C.position).swap(P.position);
 			}
+			// otherwise move P downwards
 			else
 			{
-				// move P downwards
-				std::get<1>(P.position) -= 1;
+				std::get<1>(P.position)--;
 			}
-			// rebuild grid
 			build();
 		}
-		// otherwise do nothing
 	}
 
-	void Grid::movePRight()
+	void Grid::movePRight() noexcept
 	{
-		// if P can move right...
-		if (getXPosition(P) != width - 1)
+		// check P can move right
+		if (P.getX() != width - 1)
 		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if ((getXPosition(A) == getXPosition(P) + 1) && (getYPosition(A) == getYPosition(P)))
+			// swap P with any tile in the new position
+			if ((A.getX() == P.getX() + 1) && (A.getY() == P.getY()))
 			{	
 				(A.position).swap(P.position);
 			}
-			else if ((getXPosition(B) == getXPosition(P) + 1) && (getYPosition(B) == getYPosition(P)))
+			else if ((B.getX() == P.getX() + 1) && (B.getY() == P.getY()))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getXPosition(C) == getXPosition(P) + 1) && (getYPosition(C) == getYPosition(P)))
+			else if ((C.getX() == P.getX() + 1) && (C.getY() == P.getY()))
 			{
 				(C.position).swap(P.position);
 			}
+			// otherwise move P right
 			else
 			{
-				// move P right
-				std::get<0>(P.position) += 1;
+				std::get<0>(P.position)++;
 			}
-			// rebuild grid
 			build();
 		}
-		// otherwise do nothing
 	}
 
-	void Grid::movePLeft()
+	void Grid::movePLeft() noexcept
 	{
 		// if P can move left...
-		if (getXPosition(P) != 0)
+		if (P.getX() != 0)
 		{
-			// if the new position of P is taken...
-			// swap the tile in the new position with P
-			if ((getXPosition(A) == getXPosition(P) - 1) && (getYPosition(A) == getYPosition(P)))
+			// swap P with any tile in the new position
+			if ((A.getX() == P.getX() - 1) && (A.getY() == P.getY()))
 			{
 				(A.position).swap(P.position);
 			}
-			else if ((getXPosition(B) == getXPosition(P) - 1) && (getYPosition(B) == getYPosition(P)))
+			else if ((B.getX() == P.getX() - 1) && (B.getY() == P.getY()))
 			{
 				(B.position).swap(P.position);
 			}
-			else if ((getXPosition(C) == getXPosition(P) - 1) && (getYPosition(C) == getYPosition(P)))
+			else if ((C.getX() == P.getX() - 1) && (C.getY() == P.getY()))
 			{
 				(C.position).swap(P.position);
 			}
+			// otherwise move P left
 			else
 			{
-				// move P le
-				std::get<0>(P.position) -= 1;
+				std::get<0>(P.position)--;
 			}
-			// rebuild grid
 			build();
 		}
-		// otherwise do nothing
 	}
 
 	// compare the configuration of two grids
 	bool operator==(const Grid &lhs, const Grid &rhs)
 	{
-		if ((&lhs == &rhs) || (lhs.getConfiguration() == rhs.getConfiguration()))
-		{
-			return true;
-		}
-		return false;
-	}
-
-	// get x position of a specific tile within the grid
-	int Grid::getXPosition(const tile &grid_tile) const
-	{
-		return std::get<0>(grid_tile.position);
-	}
-
-	// get y position of a specific tile within the grid
-	int Grid::getYPosition(const tile &grid_tile) const
-	{
-		return std::get<1>(grid_tile.position);
-	}
-
-	// get ID of a specific tile within the grid
-	char Grid::getID(const tile &grid_tile) const
-	{
-		return grid_tile.ID;
-	}
-
-	// return the configuration of the grid
-	const std::array<std::array<char, Grid::height>, Grid::width>& Grid::getConfiguration() const
-	{
-		return configuration;
+		return (&lhs == &rhs) || (lhs.getConfiguration() == rhs.getConfiguration());
 	}
 }

@@ -126,7 +126,7 @@ namespace TileSearch
 
 	/* ========== DepthFirstTreeSearch Class ========== */
 
-	// frontier for breadth-first search is LIFO 
+	// frontier for depth-first search is LIFO 
 	template class TreeSearch<std::stack<Node>>;
 
 	DepthFirstTreeSearch::DepthFirstTreeSearch(const Node& root, const Node& goal)
