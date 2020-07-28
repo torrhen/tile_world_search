@@ -6,7 +6,7 @@ namespace TileSearch
 {
 	/* ========== Tile Class ========== */
 
-	Tile::Tile(unsigned int x, unsigned int y, char id)
+	Tile::Tile(uint x, uint y, char id)
 		: position(std::make_pair(x, y)), id(id) 
 	{}
 
@@ -64,7 +64,7 @@ namespace TileSearch
 		std::cout << "                =========================\n";
 	}
 
-	void Grid::movePUp() noexcept
+	void Grid::move_P_up() noexcept
 	{
 		// check P can move upwards
 		if (P.getY() != height - 1)
@@ -91,7 +91,7 @@ namespace TileSearch
 		}
 	}
 
-	void Grid::movePDown() noexcept
+	void Grid::move_P_down() noexcept
 	{
 		// check P can move downwards
 		if (P.getY() != 0)
@@ -118,7 +118,7 @@ namespace TileSearch
 		}
 	}
 
-	void Grid::movePRight() noexcept
+	void Grid::move_P_right() noexcept
 	{
 		// check P can move right
 		if (P.getX() != width - 1)
@@ -145,7 +145,7 @@ namespace TileSearch
 		}
 	}
 
-	void Grid::movePLeft() noexcept
+	void Grid::move_P_left() noexcept
 	{
 		// if P can move left...
 		if (P.getX() != 0)
@@ -173,8 +173,8 @@ namespace TileSearch
 	}
 
 	// compare the configuration of two grids
-	bool operator==(const Grid &lhs, const Grid &rhs)
+	bool operator==(const Grid& Left, const Grid& Right)
 	{
-		return (&lhs == &rhs) || (lhs.getConfiguration() == rhs.getConfiguration());
+		return (&Left == &Right) || (Left.get_configuration() == Right.get_configuration());
 	}
 }

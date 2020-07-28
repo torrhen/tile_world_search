@@ -6,29 +6,33 @@
 
 namespace TileSearch
 {
+	typedef unsigned int uint;
+
 	// store position and id of each grid tile
 	class Tile 
 	{
 		friend class Grid;
 
 	private:
-		std::pair<unsigned int, unsigned int> position;
+		std::pair<uint, uint> position;
 		char id;
 
-		unsigned int getX() const { return std::get<0>(position); }
-		unsigned int getY() const { return std::get<1>(position); }
+		uint getX() const { return std::get<0>(position); }
+		uint getY() const { return std::get<1>(position); }
 
 	public:
-		Tile(unsigned int x, unsigned int y, char id);
+		Tile(uint x, uint y, char id);
+
 	};
 
 	// store and manage the locations of each tile
 	class Grid
 	{
+
 	private:
 		// set dimensions of grid
-		static constexpr unsigned int width = 4;
-		static constexpr unsigned int height = 4;
+		static constexpr uint width = 4;
+		static constexpr uint height = 4;
 		// store tile locations
 		std::array<std::array<char, height>, width> configuration;
 
@@ -45,17 +49,18 @@ namespace TileSearch
 		// display the configuration to the console
 		void show() const noexcept;
 		// move P tile
-		void movePUp() noexcept;
-		void movePDown() noexcept;
-		void movePLeft() noexcept;
-		void movePRight() noexcept;
+		void move_P_up() noexcept;
+		void move_P_down() noexcept;
+		void move_P_left() noexcept;
+		void move_P_right() noexcept;
 
 		// return the configuration of the grid
-		const std::array<std::array<char, height>, width>& getConfiguration() const { return configuration; }
+		const std::array<std::array<char, height>, width>& get_configuration() const { return configuration; }
+
 	};
 
 	// check if two grids have identical configurations
-	bool operator==(const Grid& lhs, const Grid& rhs);
+	bool operator==(const Grid& Left, const Grid& Right);
 }
 
 #endif

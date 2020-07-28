@@ -23,7 +23,7 @@ namespace TileSearch
 	// tile final positions
 	namespace Goal
 	{
-		Tile P(3, 0, 'P');
+		Tile P(3, 2, 'P');
 		Tile A(0, 0, 'A');
 		Tile B(1, 0, 'B');
 		Tile C(2, 0, 'C');		
@@ -37,28 +37,12 @@ int main()
 	using namespace TileSearch;
 
 	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
+	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
 
 	Node RootNode(StartGrid);
+	Node GoalNode(GoalGrid);
 
-	RootNode.createChildren();
-
-	for (std::size_t i = 0; i < RootNode.getChildren().size(); ++i)
-	{
-		RootNode.getChildren()[i].getState().show();
-	}
-
-	// Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
-
-	// Node GoalNode(GoalGrid);
-
-	// DepthFirstTreeSearch b(RootNode, GoalNode);
-
-	// b.run();
-
-	// b.displaySolution();
-	// std::cout << b.getTimeComplexity() << std::endl;
-	// std::cout << b.getSpaceComplexity() << std::endl;
-
+	breadth_first_tree_search(RootNode, GoalNode);
 
 	std::cout << "Finished." << std::endl;
 

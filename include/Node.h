@@ -8,33 +8,37 @@
 
 namespace TileSearch
 {
+	typedef unsigned int uint;
+
 	class Node
 	{
 	private:
-		Grid state;
+		Grid State;
 		// multiple nodes can share the same parent
 		std::shared_ptr<Node> parent;
 		// store the depth of the node within the search tree
-		unsigned int depth;
+		uint depth;
 		// store child nodes
 		std::vector<Node> children;
 
+		static constexpr uint max_children = 4;
+
+		// shuffle the order of child nodes
+		void shuffle_children() noexcept;
+
 	public:
-		Node(const Grid &state);
+		explicit Node(const Grid& State);
 
-		void createChildren();
+		// create and store all valid child nodes
+		void expand();
 
-		// return node state
-		const Grid& getState() const;
-		// return pointer to parent
-		const Node* getParent() const;
-		// return depth of node
-		const unsigned int& getDepth() const;
-		// return child nodes 
-		const std::vector<Node>& getChildren() const;
+		const Grid& get_state() const { return State; }
+		const Node* get_parent() const { return parent.get(); }
+		const uint& get_depth() const { return depth; }
+		const std::vector<Node>& get_children() const { return children; }
 	};
 
-	bool operator==(const Node& lhs, const Node& rhs);
+	bool operator==(const Node& Left, const Node& Right);
 }
 
 #endif

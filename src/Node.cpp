@@ -2,6 +2,7 @@
 #include "../include/Node.h"
 
 #include <memory>
+#include <cstddef>
 #include <vector>
 #include <random>
 #include <algorithm>
@@ -10,69 +11,50 @@ namespace TileSearch
 {
 	/* ============ Node Class =============== */
 
-	Node::Node(const Grid &state)
-		: state(state), parent(nullptr), depth(0)
+	Node::Node(const Grid& State)
+		: State(State), parent(nullptr), depth(0)
 	{}
 
-	void Node::createChildren()
+	void Node::expand()
 	{
-		for (int i = 0; i < 4; ++i)
+		for (std::size_t i = 0; i < max_children; ++i)
 		{
-			Grid child_state(getState());
+			Grid ChildState(get_state());
 			switch(i)
 	 		{
 	 			case 0:
-	 			(child_state).movePUp();
+	 			(ChildState).move_P_up();
 	 			break;
 	 			case 1:
-				(child_state).movePLeft();
+				(ChildState).move_P_left();
 	 			break;
 	 			case 2:
-				(child_state).movePDown();
+				(ChildState).move_P_down();
 	 			break;
 	 			case 3:
-				(child_state).movePRight();
+				(ChildState).move_P_right();
 	 			break;
 	 		}
-	 		if (!(child_state == getState()))
+	 		if (!(ChildState == get_state()))
 	 		{
-	 			children.emplace_back(child_state);	
-	 			children.back().depth = getDepth() + 1;
+	 			children.emplace_back(ChildState);	
+	 			children.back().depth = get_depth() + 1;
 	 			children.back().parent = std::make_shared<Node>(*this);
 	 		}
 		}
-		// shuffle the order of children
+		shuffle_children();
+	}
+
+	// shuffle the order of node children
+	void Node::shuffle_children() noexcept
+	{
 		auto rnd = std::random_device();
 		auto rng = std::default_random_engine(rnd());
-		std::shuffle(begin(children), end(children), rng);
+		std::shuffle(std::begin(children), std::end(children), rng);
 	}
 
-	const Grid& Node::getState() const
+	bool operator==(const Node& Left, const Node& Right)
 	{
-		 return state;
-	}
-
-	const Node* Node::getParent() const
-	{
-	 	return parent.get();
-	}
-
-	const unsigned int& Node::getDepth() const
-	{
-	 	return depth;
-	}
-
-	const std::vector<Node>& Node::getChildren() const
-	{
-		return children;
-	}
-
-	bool operator==(const Node& lhs, const Node& rhs)
-	{
-		if (lhs.getState() == rhs.getState())
-		{
-			return true;
-		}
-		return false;
+		return (&Left == &Right) || (Left.get_state() == Right.get_state());
 	}
 }
