@@ -63,7 +63,6 @@ namespace TileSearch
 			std::cout << "\n";
 		}
 		std::cout << "\n"; 
-		//std::cout << "                =========================\n";
 	}
 
 	void Grid::move_P_up() noexcept

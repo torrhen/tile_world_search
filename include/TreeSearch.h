@@ -14,6 +14,7 @@ namespace TileSearch
 
 	void breadth_first_tree_search(const Node& Root, const Node& Goal);
 	void depth_first_tree_search(const Node& Root, const Node& Goal);
+	void iterative_deepening_tree_search(const Node& Root, const Node& Goal);
 
 	template <typename T>
 	uint push_children(T& frontier, Node& CurrentNode)

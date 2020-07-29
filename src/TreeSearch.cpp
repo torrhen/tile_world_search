@@ -86,6 +86,55 @@ namespace TileSearch
 		show_performance(num_nodes_generated, max_nodes_generated);
 	}
 
+	void iterative_deepening_tree_search(const Node& Root, const Node& Goal)
+	{
+		bool is_running = true;
+		uint depth_limit = 0;
+
+		while(is running)
+		{
+			std::stack<Node> frontier;
+			uint num_nodes_generated = 0;
+			uint max_nodes_generated = 0;
+
+			std::cout << "Starting Depth First Tree Search. (Depth Limit = " << depth_limit << ")\n";
+
+			frontier.push(Root);
+			num_nodes_generated++;
+			max_nodes_generated++;
+
+			Node Current(get_next_node(frontier));
+
+			while(!(Current == Goal))
+			{
+				if (Current.get_depth() > depth_limit) { num_nodes_generated += push_children(frontier, Current); }
+				
+				frontier.pop();
+
+				if (frontier.size() >= max_nodes_generated) { max_nodes_generated = frontier.size(); }
+
+				// if there are no nodes on the frontier left to expend before the goal node has been found...
+				if (frontier.empty())
+				{
+					// stop the search
+					std::cout << "No Solution Found...increasing the depth limit.\n";
+					depth_limit++;
+					break;
+				}
+				else
+				{
+					Current = get_next_node(frontier);
+				}
+				std::cout << "Goal Node Found at depth " << depth_limit << ".\n";
+				std::cout << "Iterative Deepening Search Complete.\nGenerating Solution Path...";
+				std::cout << "done.\n";
+				is_running = false;
+				show_solution(Current);
+				show_performance(num_nodes_generated, max_nodes_generated);
+			}
+		}
+	}
+
 	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
 	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
 
