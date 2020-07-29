@@ -3,8 +3,6 @@
 #include "../include/TreeSearch.h"
 
 #include <iostream>
-#include <vector>
-#include <cstddef>
 
 namespace TileSearch
 {

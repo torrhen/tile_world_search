@@ -1,9 +1,7 @@
 #include "../include/Grid.h"
 #include "../include/Node.h"
 
-#include <memory>
 #include <cstddef>
-#include <vector>
 #include <random>
 #include <algorithm>
 
