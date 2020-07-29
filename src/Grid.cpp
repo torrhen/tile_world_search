@@ -13,7 +13,7 @@ namespace TileSearch
 	/* ========== Grid Class ========== */
 
 	Grid::Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C)
-		: P(P), A(A), B(B), C(C)
+		: P(P), A(A), B(B), C(C), move_count(0)
 	{
 		build();
 	}
@@ -48,10 +48,12 @@ namespace TileSearch
 	void Grid::show() const noexcept
 	{
 		std::cout << "\n";
+		std::cout << "\t" << move_count << "\n\n";
+
 		// iterate over each row in reverse order so the grid is properly displayed within the console
 		for (std::array<std::array<char, height>, width>::const_reverse_iterator row = configuration.crbegin(); row != configuration.crend(); ++row)
 		{
-			std::cout << "                    | ";
+			std::cout << "\t| ";
 			// iterate over each column of each row...
 			for (std::array<char, width>::const_iterator col = row->cbegin(); col != row->cend(); ++col)
 			{
@@ -61,7 +63,7 @@ namespace TileSearch
 			std::cout << "\n";
 		}
 		std::cout << "\n"; 
-		std::cout << "                =========================\n";
+		//std::cout << "                =========================\n";
 	}
 
 	void Grid::move_P_up() noexcept
@@ -87,6 +89,7 @@ namespace TileSearch
 			{
 				std::get<1>(P.position)++;
 			}
+			move_count++;
 			build();
 		}
 	}
@@ -114,6 +117,7 @@ namespace TileSearch
 			{
 				std::get<1>(P.position)--;
 			}
+			move_count++;
 			build();
 		}
 	}
@@ -141,6 +145,7 @@ namespace TileSearch
 			{
 				std::get<0>(P.position)++;
 			}
+			move_count++;
 			build();
 		}
 	}
@@ -168,6 +173,7 @@ namespace TileSearch
 			{
 				std::get<0>(P.position)--;
 			}
+			move_count++;
 			build();
 		}
 	}

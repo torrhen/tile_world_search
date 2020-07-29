@@ -42,15 +42,7 @@ namespace TileSearch
 	 			children.back().parent = std::make_shared<Node>(*this);
 	 		}
 		}
-		shuffle_children();
-	}
-
-	// shuffle the order of node children
-	void Node::shuffle_children() noexcept
-	{
-		auto rnd = std::random_device();
-		auto rng = std::default_random_engine(rnd());
-		std::shuffle(std::begin(children), std::end(children), rng);
+		std::shuffle(children.begin(), children.end(), std::default_random_engine());
 	}
 
 	bool operator==(const Node& Left, const Node& Right)

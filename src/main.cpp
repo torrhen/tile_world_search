@@ -10,7 +10,6 @@ namespace TileSearch
 {
 	// tile is defined in Grid.h
 	// tile positions must be positive and less than 4
-
 	// tile starting positions
 	namespace Start
 	{
@@ -23,8 +22,8 @@ namespace TileSearch
 	// tile final positions
 	namespace Goal
 	{
-		Tile P(3, 2, 'P');
-		Tile A(0, 0, 'A');
+		Tile P(0, 0, 'P');
+		Tile A(0, 1, 'A');
 		Tile B(1, 0, 'B');
 		Tile C(2, 0, 'C');		
 	}

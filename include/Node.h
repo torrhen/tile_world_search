@@ -23,9 +23,6 @@ namespace TileSearch
 
 		static constexpr uint max_children = 4;
 
-		// shuffle the order of child nodes
-		void shuffle_children() noexcept;
-
 	public:
 		explicit Node(const Grid& State);
 

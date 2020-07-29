@@ -37,6 +37,7 @@ namespace TileSearch
 		std::array<std::array<char, height>, width> configuration;
 
 		Tile P, A, B, C;
+		uint move_count;
 
 		// remove tiles from grid
 		void clear() noexcept;

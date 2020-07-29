@@ -119,6 +119,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+[Dd]oc/
+
 ### Visual Studio ###
 
 **.sln
