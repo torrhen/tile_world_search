@@ -35,6 +35,7 @@ namespace TileSearch
 
 	const Node& get_next_node(const std::queue<Node>& frontier);
 	const Node& get_next_node(const std::stack<Node>& frontier);
+	const HeuristicNode& get_next_node(const std::priority_queue<HeuristicNode> frontier);
 
 	void show_solution(Node CurrentNode);
 	void show_performance(uint time_complexity, uint space_complexity);

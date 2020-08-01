@@ -118,6 +118,7 @@ namespace TileSearch
 
 	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
 	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
+	const HeuristicNode& get_next_node(const std::priority_queue<HeuristicNode> frontier) { return frontier.top(); }
 
 	void show_solution(Node Current)
 	{

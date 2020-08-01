@@ -55,6 +55,14 @@ namespace TileSearch
 		const uint& get_path_cost() const { return path_cost; }
 	};
 
+	struct HeuristicCostComparator
+	{
+    	bool operator()(const HeuristicNode& Left, const HeuristicNode& Right)
+    	{
+        	return Left.get_heuristic_cost() >= Right.get_heuristic_cost();
+    	}
+	};
+
 	bool operator==(const Node& Left, const Node& Right);
 }
 
