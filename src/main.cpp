@@ -1,6 +1,6 @@
 #include "../include/Grid.h"
 #include "../include/Node.h"
-#include "../include/TreeSearch.h"
+#include "../include/Search.h"
 
 #include <iostream>
 
@@ -20,8 +20,8 @@ namespace TileSearch
 	// tile final positions
 	namespace Goal
 	{
-		Tile P(0, 0, 'P');
-		Tile A(0, 1, 'A');
+		Tile P(0, 2, 'P');
+		Tile A(0, 0, 'A');
 		Tile B(1, 0, 'B');
 		Tile C(2, 0, 'C');		
 	}
@@ -39,7 +39,8 @@ int main()
 	Node RootNode(StartGrid);
 	Node GoalNode(GoalGrid);
 
-	breadth_first_tree_search(RootNode, GoalNode);
+	std::cout << "=====================================\n\n";
+	Tree::iterative_deepening_search(RootNode, GoalNode);
 
 	std::cout << "Finished." << std::endl;
 

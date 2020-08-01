@@ -1,5 +1,5 @@
-#ifndef TREE_SEARCH_H
-#define TREE_SEARCH_H
+#ifndef SEARCH_H
+#define SEARCH_H
 
 #include "Grid.h"
 #include "Node.h"
@@ -8,13 +8,18 @@
 #include <queue>
 #include <stack>
 
+#include <iostream>
+
 namespace TileSearch
 {	
 	typedef unsigned int uint;
 
-	void breadth_first_tree_search(const Node& Root, const Node& Goal);
-	void depth_first_tree_search(const Node& Root, const Node& Goal);
-	void iterative_deepening_tree_search(const Node& Root, const Node& Goal);
+	namespace Tree
+	{
+		void breadth_first_search(const Node& Root, const Node& Goal);
+		void depth_first_search(const Node& Root, const Node& Goal);
+		void iterative_deepening_search(const Node& Root, const Node& Goal);		
+	}
 
 	template <typename T>
 	uint push_children(T& frontier, Node& CurrentNode)
