@@ -18,7 +18,8 @@ namespace TileSearch
 	{
 		void breadth_first_search(const Node& Root, const Node& Goal);
 		void depth_first_search(const Node& Root, const Node& Goal);
-		void iterative_deepening_search(const Node& Root, const Node& Goal);		
+		void iterative_deepening_search(const Node& Root, const Node& Goal);
+		void a_star_search(const HeuristicNode& Root, const HeuristicNode& Goal);		
 	}
 
 	template <typename T>

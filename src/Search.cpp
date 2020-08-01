@@ -109,6 +109,11 @@ namespace TileSearch
 				depth_limit++;
 			}
 		}
+
+		void a_star_search([[maybe_unused]] const HeuristicNode& Root, [[maybe_unused]] const HeuristicNode& Goal)
+		{
+			return;
+		}
 	}
 
 	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
