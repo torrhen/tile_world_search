@@ -20,9 +20,9 @@ namespace TileSearch
 	// tile final positions
 	namespace Goal
 	{
-		Tile P(3, 1, 'P');
+		Tile P(0, 3, 'P');
 		Tile A(0, 0, 'A');
-		Tile B(1, 0, 'B');
+		Tile B(1, 1, 'B');
 		Tile C(2, 0, 'C');		
 	}
 }
@@ -41,7 +41,7 @@ int main()
 
 	std::cout << "=====================================\n\n";
 	Tree::breadth_first_search(RootNode, GoalNode);
-	Tree::depth_first_search(RootNode, GoalNode);
+	//Tree::depth_first_search(RootNode, GoalNode);
 	Tree::iterative_deepening_search(RootNode, GoalNode);
 	Tree::a_star_search(RootNode, GoalNode);
 

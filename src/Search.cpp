@@ -10,147 +10,174 @@ namespace TileSearch
 
 	namespace Tree
 	{
+		// breadth-first tree search
 		void breadth_first_search(const Node& Root, const Node& Goal)
 		{
+			// nodes stored on the frontier are FIFO
 			std::queue<Node> frontier;
 			uint num_nodes_generated = 0;
 			uint max_nodes_generated = 0;
 
 			std::cout << "Starting breadth first tree search... \n";
-			frontier.push(Root);
+			Node CurrentNode(Root);
+			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
 			while (!frontier.empty())
 			{
-				if (frontier.size() >= max_nodes_generated) max_nodes_generated = frontier.size();
+				// if the current frontier size is larger than the maximum size of the frontier before this point...
+				if (frontier.size() >= max_nodes_generated)
+					// update this maximum value
+					max_nodes_generated = frontier.size();
 
-				Node Current(get_next_node(frontier));
+				CurrentNode = get_next_node(frontier);
 				frontier.pop();
 
-				if (Current == Goal)
+				if (CurrentNode == Goal)
 				{
-					std::cout << "Goal node found.\n";
-					std::cout << "Breadth first tree search complete.\n";
-					std::cout << "Generating solution...\n";
-					show_solution(Current);
+					std::cout << "Goal node found.\nBreadth first tree search complete.\nGenerating solution...\n";
+					show_solution(CurrentNode);
 					show_performance(num_nodes_generated, max_nodes_generated);
+					// stop the search
 					return;
 				}
-				Current.expand();
-				num_nodes_generated += push_children(frontier, Current.get_children());
+
+				CurrentNode.expand();
+				num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 			}
 			std::cout << "No solution found.\n";
 		}
 
+		// depth-first tree search
 		void depth_first_search(const Node& Root, const Node& Goal)
 		{
+			// nodes stored on the frontier are LIFO
 			std::stack<Node> frontier;
 			uint num_nodes_generated = 0;
 			uint max_nodes_generated = 0;
 
 			std::cout << "Starting depth first tree search... \n";
-			frontier.push(Root);
+			Node CurrentNode(Root);
+			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
 			while (!frontier.empty())
 			{
-				if (frontier.size() >= max_nodes_generated) max_nodes_generated = frontier.size();
+				// if the current frontier size is larger than the maximum size of the frontier before this point...
+				if (frontier.size() >= max_nodes_generated)
+					// update this maximum value
+					max_nodes_generated = frontier.size();
 
-				Node Current(get_next_node(frontier));
+				CurrentNode = get_next_node(frontier);
 				frontier.pop();
 
-				if (Current == Goal)
+				if (CurrentNode == Goal)
 				{
-					std::cout << "Goal node found.\n";
-					std::cout << "Depth first tree search complete.\n";
-					std::cout << "Generating solution...\n";
-					show_solution(Current);
+					std::cout << "Goal node found.\nDepth first tree search complete.\nGenerating solution...\n";
+					show_solution(CurrentNode);
 					show_performance(num_nodes_generated, max_nodes_generated);
+					// stop the search
 					return;
 				}
-				Current.expand();
-				num_nodes_generated += push_children(frontier, Current.get_children());
+
+				CurrentNode.expand();
+				num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 			}
 			std::cout << "No solution found.\n";
 		}
 
+		// iterative deepening tree search
 		void iterative_deepening_search(const Node& Root, const Node& Goal)
 		{
+			// store the current depth limit of search
 			uint depth_limit = 0;
 			uint num_nodes_generated = 0;
 			uint max_nodes_generated = 0;
 
 			std::cout << "Starting iterative deepening tree search... \n";
-
 			while (true)
 			{
+				// nodes stored on the frontier are LIFO
 				std::stack<Node> frontier;
+				// start a new iteration of depth-limited tree search
 				std::cout << "Starting depth limited tree search... \t(depth limit: " << depth_limit << ")\n";
-				frontier.push(Root);
+				Node CurrentNode(Root);
+				frontier.push(CurrentNode);
 				num_nodes_generated++;
 
 				while (!frontier.empty())
 				{
-					if (frontier.size() >= max_nodes_generated) max_nodes_generated = frontier.size();
+					// if the current frontier size is larger than the maximum size of the frontier before this point...
+					if (frontier.size() >= max_nodes_generated)
+						// update this maximum value
+						max_nodes_generated = frontier.size();
 
-					Node Current(get_next_node(frontier));
+					CurrentNode = get_next_node(frontier);
 					frontier.pop();
 
-					if (Current == Goal)
+					if (CurrentNode == Goal)
 					{
-						std::cout << "Goal node found.\n";
-						std::cout << "Iterative deepening tree search complete.\n";
-						std::cout << "Generating solution...\n";
-						show_solution(Current);
+						std::cout << "Goal node found.\nIterative deepening tree search complete.\nGenerating solution...\n";
+						show_solution(CurrentNode);
 						show_performance(num_nodes_generated, max_nodes_generated);
+						// stop the search
 						return;
 					}
-
-					if (Current.get_depth() < depth_limit)
+					// if the depth of the current node is not equal to the depth limit...
+					if (CurrentNode.get_depth() < depth_limit)
 					{
-						Current.expand();
-						num_nodes_generated += push_children(frontier, Current.get_children());
+						// allow its child nodes to be generated and added to the frontier
+						CurrentNode.expand();
+						num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					}
-
 				}
 				std::cout << "No solution found. Increasing the depth limit... \n";
+				// increase the depth of the tree to explore if the goal node was not found by the current iteration of depth-limited search
 				depth_limit++;
 			}
 		}
 
-		void a_star_search(Node& Root, const Node& Goal)
+		// A* tree search
+		void a_star_search(const Node& Root, const Node& Goal)
 		{
+			// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
 			std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
 			uint num_nodes_generated = 0;
 			uint max_nodes_generated = 0;
 
 			std::cout << "Starting A* tree search... \n";
-			Root.set_heuristic_cost(Goal);
-			frontier.push(Root);
+			Node CurrentNode(Root);
+			CurrentNode.set_heuristic_cost(Goal);
+			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
 			while (!frontier.empty())
 			{
-				if (frontier.size() >= max_nodes_generated) max_nodes_generated = frontier.size();
+				// if the current frontier size is larger than the maximum size of the frontier before this point...
+				if (frontier.size() >= max_nodes_generated)
+					// update this maximum value
+					max_nodes_generated = frontier.size();
 		
-				Node Current(get_next_node(frontier));
+				CurrentNode = get_next_node(frontier);
 				frontier.pop();
 
-				if (Current == Goal)
+				if (CurrentNode == Goal)
 				{
-					std::cout << "Goal node found.\n";
-					std::cout << "A* tree search complete.\n";
-					std::cout << "Generating solution...\n";
-					show_solution(Current);
+					std::cout << "Goal node found.\nA* tree search complete.\nGenerating solution...\n";
+					show_solution(CurrentNode);
 					show_performance(num_nodes_generated, max_nodes_generated);
+					// stop the search
 					return;
 				}
-				Current.expand();
-				for (std::vector<Node>::const_iterator it = begin(Current.get_children()); it != end(Current.get_children()); ++it)
+
+				CurrentNode.expand();
+				// calculate the heuristic of each child node before adding them to the frontier
+				// without this step child nodes will be incorrectly ordered within the priority queue
+				for (std::vector<Node>::const_iterator it = begin(CurrentNode.get_children()); it != end(CurrentNode.get_children()); ++it)
 				{
 					it->set_heuristic_cost(Goal);
 				}
-				num_nodes_generated += push_children(frontier, Current.get_children());
+				num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 			}
 			std::cout << "No solution found.\n";
 		}
@@ -158,14 +185,15 @@ namespace TileSearch
 
 	/* ========== End Tree Search Functions ========== */
 
-	void show_solution(Node Current)
+	void show_solution(Node CurrentNode)
 	{
-		while (Current.get_parent() != nullptr)
+		// display the state of all node from the current node to the root node up the search tree 
+		while (CurrentNode.get_parent() != nullptr)
 		{
-			Current.get_state().show();
-			Current = *Current.get_parent();
+			CurrentNode.get_state().show();
+			CurrentNode = *CurrentNode.get_parent();
 		}
-		Current.get_state().show();
+		CurrentNode.get_state().show();
 	}
 
 	void show_performance(uint time_complexity, uint space_complexity)
@@ -174,20 +202,5 @@ namespace TileSearch
 		std::cout << "Time Complexity:\t" << time_complexity << "\n";
 		std::cout << "Space Complexity:\t" << space_complexity << "\n";
 		std::cout << "=================================\n";
-	}
-
-	const Node& get_next_node(const std::queue<Node>& frontier)
-	{
-		return frontier.front();
-	}
-	
-	const Node& get_next_node(const std::stack<Node>& frontier)
-	{
-		return frontier.top();
-	}
-	
-	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier)
-	{
-		return frontier.top();
 	}
 }

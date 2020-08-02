@@ -8,15 +8,15 @@ namespace TileSearch
 {
 	typedef unsigned int uint;
 
-	// store position and id of each grid tile
 	class Tile 
 	{
+		// allows the modification of each tile position by the grid class during movements of the P tile
 		friend class Grid;
-
 	private:
+		// store the position and id of each grid tile
 		std::pair<uint, uint> position;
 		char id;
-
+		// get methods are used for easier understanding
 		uint getX() const { return std::get<0>(position); }
 		uint getY() const { return std::get<1>(position); }
 
@@ -24,43 +24,33 @@ namespace TileSearch
 		Tile(uint x, uint y, char id);
 	};
 
-	// store and manage the locations of each tile
 	class Grid
 	{
-
 	private:
-		// set dimensions of grid
 		static constexpr uint width = 4;
 		static constexpr uint height = 4;
-		// store tile locations
+		// store the locations of each tile in a 2d array
 		std::array<std::array<char, height>, width> configuration;
-
 		Tile P, A, B, C;
+		// count the current total number of moves made by the P tile
 		uint move_count;
-
-		// remove tiles from grid
+		// temporarily remove grid tiles from the configuration while their positions are updated
 		void clear() noexcept;
-		// place tiles within grid
+		// place the tiles in their new grid positions
 		void build() noexcept;
 
 	public:
 		Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C);
-
-		// display the configuration to the console
+		// display the current configuration of the grid to the console
 		void show() const noexcept;
-		// move P tile
 		void move_P_up() noexcept;
 		void move_P_down() noexcept;
 		void move_P_left() noexcept;
 		void move_P_right() noexcept;
-
+		// calculate the total manhattan distance between every tile in the current configuration compared to the goal configuration
 		uint manhattan_distance_to(const Grid& Other) const;
-
-		// return the configuration of the grid
 		const std::array<std::array<char, height>, width>& get_configuration() const { return configuration; }
-
 	};
-
 	// check if two grids have identical configurations
 	bool operator==(const Grid& Left, const Grid& Right);
 }

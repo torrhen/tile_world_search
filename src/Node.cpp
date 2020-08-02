@@ -15,6 +15,7 @@ namespace TileSearch
 
 	void Node::expand()
 	{
+		// generate the state of every possible child node by moving the P tile
 		for (std::size_t i = 0; i < max_children; ++i)
 		{
 			Grid ChildState(get_state());
@@ -33,14 +34,19 @@ namespace TileSearch
 				(ChildState).move_P_right();
 	 			break;
 	 		}
+	 		// only keep child nodes with a state different from their parent
+	 		// if a child node has the same state as their parent then the movement of the P tile was unsuccessful in that direction
 	 		if (!(ChildState == get_state()))
 	 		{
-	 			children.emplace_back(ChildState);	
+	 			// create a node directly on the vector using the legal grid state to save an object copy
+	 			children.emplace_back(ChildState);
+	 			// link the child node with its parent
 	 			children.back().parent = std::make_shared<Node>(*this);
 	 			children.back().depth = get_depth() + 1;
 	 			children.back().path_cost = get_path_cost() + 1;
 	 		}
 		}
+		// shuffle the order of child nodes to help search functions avoid sub-optimal paths
 		std::shuffle(children.begin(), children.end(), std::default_random_engine());
 	}
 
