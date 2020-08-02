@@ -6,6 +6,8 @@
 
 namespace TileSearch
 {
+	/* ========== Tree Search Functions ========== */
+
 	namespace Tree
 	{
 		void breadth_first_search(const Node& Root, const Node& Goal)
@@ -28,13 +30,14 @@ namespace TileSearch
 				if (Current == Goal)
 				{
 					std::cout << "Goal node found.\n";
-					std::cout << "Breadth first search complete.\n";
+					std::cout << "Breadth first tree search complete.\n";
 					std::cout << "Generating solution...\n";
 					show_solution(Current);
 					show_performance(num_nodes_generated, max_nodes_generated);
 					return;
 				}
-				num_nodes_generated += push_children(frontier, Current);
+				Current.expand();
+				num_nodes_generated += push_children(frontier, Current.get_children());
 			}
 			std::cout << "No solution found.\n";
 		}
@@ -59,13 +62,14 @@ namespace TileSearch
 				if (Current == Goal)
 				{
 					std::cout << "Goal node found.\n";
-					std::cout << "Depth first search complete.\n";
+					std::cout << "Depth first tree search complete.\n";
 					std::cout << "Generating solution...\n";
 					show_solution(Current);
 					show_performance(num_nodes_generated, max_nodes_generated);
 					return;
 				}
-				num_nodes_generated += push_children(frontier, Current);
+				Current.expand();
+				num_nodes_generated += push_children(frontier, Current.get_children());
 			}
 			std::cout << "No solution found.\n";
 		}
@@ -95,14 +99,18 @@ namespace TileSearch
 					if (Current == Goal)
 					{
 						std::cout << "Goal node found.\n";
-						std::cout << "Iterative deepening search complete.\n";
+						std::cout << "Iterative deepening tree search complete.\n";
 						std::cout << "Generating solution...\n";
 						show_solution(Current);
 						show_performance(num_nodes_generated, max_nodes_generated);
 						return;
 					}
 
-					if (Current.get_depth() < depth_limit) num_nodes_generated += push_children(frontier, Current);
+					if (Current.get_depth() < depth_limit)
+					{
+						Current.expand();
+						num_nodes_generated += push_children(frontier, Current.get_children());
+					}
 
 				}
 				std::cout << "No solution found. Increasing the depth limit... \n";
@@ -110,15 +118,45 @@ namespace TileSearch
 			}
 		}
 
-		void a_star_search([[maybe_unused]] const HeuristicNode& Root, [[maybe_unused]] const HeuristicNode& Goal)
+		void a_star_search(Node& Root, const Node& Goal)
 		{
-			return;
+			std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
+			uint num_nodes_generated = 0;
+			uint max_nodes_generated = 0;
+
+			std::cout << "Starting A* tree search... \n";
+			Root.set_heuristic_cost(Goal);
+			frontier.push(Root);
+			num_nodes_generated++;
+
+			while (!frontier.empty())
+			{
+				if (frontier.size() >= max_nodes_generated) max_nodes_generated = frontier.size();
+		
+				Node Current(get_next_node(frontier));
+				frontier.pop();
+
+				if (Current == Goal)
+				{
+					std::cout << "Goal node found.\n";
+					std::cout << "A* tree search complete.\n";
+					std::cout << "Generating solution...\n";
+					show_solution(Current);
+					show_performance(num_nodes_generated, max_nodes_generated);
+					return;
+				}
+				Current.expand();
+				for (std::vector<Node>::const_iterator it = begin(Current.get_children()); it != end(Current.get_children()); ++it)
+				{
+					it->set_heuristic_cost(Goal);
+				}
+				num_nodes_generated += push_children(frontier, Current.get_children());
+			}
+			std::cout << "No solution found.\n";
 		}
 	}
 
-	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
-	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
-	const HeuristicNode& get_next_node(const std::priority_queue<HeuristicNode> frontier) { return frontier.top(); }
+	/* ========== End Tree Search Functions ========== */
 
 	void show_solution(Node Current)
 	{
@@ -136,5 +174,20 @@ namespace TileSearch
 		std::cout << "Time Complexity:\t" << time_complexity << "\n";
 		std::cout << "Space Complexity:\t" << space_complexity << "\n";
 		std::cout << "=================================\n";
+	}
+
+	const Node& get_next_node(const std::queue<Node>& frontier)
+	{
+		return frontier.front();
+	}
+	
+	const Node& get_next_node(const std::stack<Node>& frontier)
+	{
+		return frontier.top();
+	}
+	
+	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier)
+	{
+		return frontier.top();
 	}
 }

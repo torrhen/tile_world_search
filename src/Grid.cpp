@@ -10,6 +10,8 @@ namespace TileSearch
 		: position(std::make_pair(x, y)), id(id) 
 	{}
 
+	/* ========== End Tile Class ========== */
+
 	/* ========== Grid Class ========== */
 
 	Grid::Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C)
@@ -176,6 +178,19 @@ namespace TileSearch
 			build();
 		}
 	}
+
+	uint Grid::manhattan_distance_to(const Grid& Other) const
+	{
+		uint x_distance = abs(P.getX() - Other.P.getX()) + abs(A.getX() - Other.A.getX()) 
+							+ abs(B.getX() - Other.B.getX()) + abs(C.getX() - Other.C.getX());
+
+		uint y_distance = abs(P.getY() - Other.P.getY()) + abs(A.getY() - Other.A.getY()) 
+							+ abs(B.getY() - Other.B.getY()) + abs(C.getY() - Other.C.getY());
+
+		return x_distance + y_distance;	
+	}
+
+	/* ========== End Grid Class ========== */
 
 	// compare the configuration of two grids
 	bool operator==(const Grid& Left, const Grid& Right)

@@ -22,7 +22,6 @@ namespace TileSearch
 
 	public:
 		Tile(uint x, uint y, char id);
-
 	};
 
 	// store and manage the locations of each tile
@@ -54,6 +53,8 @@ namespace TileSearch
 		void move_P_down() noexcept;
 		void move_P_left() noexcept;
 		void move_P_right() noexcept;
+
+		uint manhattan_distance_to(const Grid& Other) const;
 
 		// return the configuration of the grid
 		const std::array<std::array<char, height>, width>& get_configuration() const { return configuration; }
