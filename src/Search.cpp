@@ -185,6 +185,15 @@ namespace TileSearch
 
 	/* ========== End Tree Search Functions ========== */
 
+	/* ========== Graph Search Functions ========== */
+
+	namespace Graph
+	{
+
+	}
+
+	/* ========== End Graph Search Functions ========== */
+
 	void show_solution(Node CurrentNode)
 	{
 		// display the state of all node from the current node to the root node up the search tree 
@@ -203,4 +212,8 @@ namespace TileSearch
 		std::cout << "Space Complexity:\t" << space_complexity << "\n";
 		std::cout << "=================================\n";
 	}
+
+	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
+	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
+	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier) { return frontier.top(); }
 }

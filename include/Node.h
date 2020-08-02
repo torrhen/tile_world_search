@@ -28,14 +28,14 @@ namespace TileSearch
 		explicit Node(const Grid& State);
 		// create node children
 		void expand();
-		// calculate the estimate cost from the current node to the goal node (based on manhattan distance)
+		// calculate the estimated cost from the current node to the goal node (based on manhattan distance)
 		void set_heuristic_cost(const Node& Goal) const;
 		const Grid& get_state() const { return State; }
-		const Node* get_parent() const { return parent.get(); }
-		const uint get_depth() const { return depth; }
+		Node* get_parent() const { return parent.get(); }
+		uint get_depth() const { return depth; }
 		const std::vector<Node>& get_children() const { return children; }
-		const uint get_heuristic_cost() const { return heuristic_cost; }
-		const uint get_path_cost() const { return path_cost; }
+		uint get_heuristic_cost() const { return heuristic_cost; }
+		uint get_path_cost() const { return path_cost; }
 	};
 	// check if two nodes have identical states
 	bool operator==(const Node& Left, const Node& Right);

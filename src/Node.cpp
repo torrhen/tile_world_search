@@ -22,16 +22,16 @@ namespace TileSearch
 			switch(i)
 	 		{
 	 			case 0:
-	 			(ChildState).move_P_up();
+	 			ChildState.move_P_up();
 	 			break;
 	 			case 1:
-				(ChildState).move_P_left();
+				ChildState.move_P_left();
 	 			break;
 	 			case 2:
-				(ChildState).move_P_down();
+				ChildState.move_P_down();
 	 			break;
 	 			case 3:
-				(ChildState).move_P_right();
+				ChildState.move_P_right();
 	 			break;
 	 		}
 	 		// only keep child nodes with a state different from their parent

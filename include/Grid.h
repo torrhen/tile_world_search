@@ -29,7 +29,7 @@ namespace TileSearch
 	private:
 		static constexpr uint width = 4;
 		static constexpr uint height = 4;
-		// store the locations of each tile in a 2d array
+		// store the locations of each tile in a 2D array
 		std::array<std::array<char, height>, width> configuration;
 		Tile P, A, B, C;
 		// count the current total number of moves made by the P tile
