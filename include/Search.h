@@ -21,10 +21,14 @@ namespace TileSearch
 		void a_star_search(const Node& Root, const Node& Goal);		
 	}
 
-	// graph search functions (coming soon...)
+	// graph search functions
 	namespace Graph
 	{
-
+		bool has_been_visited(const std::vector<Node>& visted_nodes, const Node& CurrentNode);
+		void breadth_first_search(const Node& Root, const Node& Goal);
+		void depth_first_search(const Node& Root, const Node& Goal);
+		void iterative_deepening_search(const Node& Root, const Node& Goal);
+		void a_star_search(const Node& Root, const Node& Goal);	
 	}
 
 	// push the children of the current node to the frontier of the seach function
