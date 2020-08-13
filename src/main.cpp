@@ -37,16 +37,16 @@ int main()
 
 	std::cout << "=====================================\n\n";
 	// run tree searches
-	// Tree::breadth_first_search(RootNode, GoalNode);
-	// Tree::depth_first_search(RootNode, GoalNode);
-	// Tree::iterative_deepening_search(RootNode, GoalNode);
-	// Tree::a_star_search(RootNode, GoalNode);
+	Tree::breadth_first_search(RootNode, GoalNode);
+	//Tree::depth_first_search(RootNode, GoalNode);
+	Tree::iterative_deepening_search(RootNode, GoalNode);
+	Tree::a_star_search(RootNode, GoalNode);
 
 	// // run graph searches
 	Graph::breadth_first_search(RootNode, GoalNode);
-	// Graph::depth_first_search(RootNode, GoalNode);
+	//Graph::depth_first_search(RootNode, GoalNode);
 	Graph::iterative_deepening_search(RootNode, GoalNode);
-	// Graph::a_star_search(RootNode, GoalNode);
+	Graph::a_star_search(RootNode, GoalNode);
 
 	std::cout << "Finished." << std::endl;
 	return 0;

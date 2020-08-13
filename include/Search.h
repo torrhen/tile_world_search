@@ -31,8 +31,8 @@ namespace TileSearch
 		void a_star_search(const Node& Root, const Node& Goal);	
 	}
 
-	// push the children of the current node to the frontier of the seach function
-	// the type of the frontier depends on the type of search function used
+	// push all generated children of the current node to the frontier
+	// the type of the frontier will depend on the search function used
 	template <typename T>
 	uint push_children(T& frontier, const std::vector<Node>& children)
 	{

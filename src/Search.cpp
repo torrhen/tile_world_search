@@ -189,11 +189,11 @@ namespace TileSearch
 
 	namespace Graph
 	{
-		// check if the current node has already been expanded
 		bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode)
 		{
 			for (std::vector<Node>::const_iterator it = begin(expanded_nodes); it != end(expanded_nodes); ++it)
 			{
+				// do not expand the current node if a shallower node with the same state has already been expanded
 				if ((CurrentNode == *it) && (CurrentNode.get_depth() >= it->get_depth()))
 					return true;
 			}
