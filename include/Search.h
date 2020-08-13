@@ -24,7 +24,7 @@ namespace TileSearch
 	// graph search functions
 	namespace Graph
 	{
-		bool has_been_visited(const std::vector<Node>& visted_nodes, const Node& CurrentNode);
+		bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode);
 		void breadth_first_search(const Node& Root, const Node& Goal);
 		void depth_first_search(const Node& Root, const Node& Goal);
 		void iterative_deepening_search(const Node& Root, const Node& Goal);

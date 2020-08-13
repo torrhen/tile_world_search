@@ -190,11 +190,11 @@ namespace TileSearch
 	namespace Graph
 	{
 		// check if the current node has already been expanded
-		bool has_been_visited(const std::vector<Node>& visted_nodes, const Node& CurrentNode)
+		bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode)
 		{
-			for (std::vector<Node>::const_iterator it = begin(visted_nodes); it != end(visted_nodes); ++it)
+			for (std::vector<Node>::const_iterator it = begin(expanded_nodes); it != end(expanded_nodes); ++it)
 			{
-				if (CurrentNode == *it)
+				if ((CurrentNode == *it) && (CurrentNode.get_depth() >= it->get_depth()))
 					return true;
 			}
 			return false;
@@ -204,7 +204,7 @@ namespace TileSearch
 		void breadth_first_search(const Node& Root, const Node& Goal)
 		{
 			// already expanded nodes
-			std::vector<Node> visited;
+			std::vector<Node> expanded_nodes;
 			// nodes stored on the frontier are FIFO
 			std::queue<Node> frontier;
 			uint num_nodes_generated = 0;
@@ -234,12 +234,12 @@ namespace TileSearch
 					return;
 				}
 				// expand the node if it has not already been visited by the search
-				if (!has_been_visited(visited, CurrentNode))
+				if (!has_been_expanded(expanded_nodes, CurrentNode))
 				{
 					CurrentNode.expand();
 					num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					// remember the current node
-					visited.push_back(CurrentNode);			
+					expanded_nodes.push_back(CurrentNode);			
 				}
 			}
 			std::cout << "No solution found.\n";
@@ -249,7 +249,7 @@ namespace TileSearch
 		void depth_first_search(const Node& Root, const Node& Goal)
 		{
 			// already expanded nodes
-			std::vector<Node> visited;
+			std::vector<Node> expanded_nodes;
 			// nodes stored on the frontier are LIFO
 			std::stack<Node> frontier;
 			uint num_nodes_generated = 0;
@@ -279,12 +279,12 @@ namespace TileSearch
 					return;
 				}
 				// expand the node if it has not already been visited by the search
-				if (!has_been_visited(visited, CurrentNode))
+				if (!has_been_expanded(expanded_nodes, CurrentNode))
 				{
 					CurrentNode.expand();
 					num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					// remember the current node
-					visited.push_back(CurrentNode);			
+					expanded_nodes.push_back(CurrentNode);			
 				}
 			}
 			std::cout << "No solution found.\n";
@@ -302,7 +302,7 @@ namespace TileSearch
 			while (true)
 			{
 				// already expanded nodes
-				std::vector<Node> visited;
+				std::vector<Node> expanded_nodes;
 				// nodes stored on the frontier are LIFO
 				std::stack<Node> frontier;
 				// start a new iteration of depth-limited tree search
@@ -331,13 +331,13 @@ namespace TileSearch
 					}
 					// if the depth of the current node is not equal to the depth limit...
 					// expand the node if it has not already been visited by the search
-					if ((CurrentNode.get_depth() < depth_limit) && (!has_been_visited(visited, CurrentNode)))
+					if ((CurrentNode.get_depth() < depth_limit) && (!has_been_expanded(expanded_nodes, CurrentNode)))
 					{
 						// allow its child nodes to be generated and added to the frontier
 						CurrentNode.expand();
 						num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 						// remember the current node
-						visited.push_back(CurrentNode);
+						expanded_nodes.push_back(CurrentNode);
 					}
 				}
 				std::cout << "No solution found. Increasing the depth limit... \n";
@@ -349,7 +349,7 @@ namespace TileSearch
 		// A* graph search
 		void a_star_search(const Node& Root, const Node& Goal)
 		{
-			std::vector<Node> visited;
+			std::vector<Node> expanded_nodes;
 			// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
 			std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
 			uint num_nodes_generated = 0;
@@ -380,7 +380,7 @@ namespace TileSearch
 					return;
 				}
 				// expand the node if it has not already been visited by the search
-				if (!has_been_visited(visited, CurrentNode))
+				if (!has_been_expanded(expanded_nodes, CurrentNode))
 				{
 					CurrentNode.expand();
 					// calculate the heuristic of each child node before adding them to the frontier
@@ -391,7 +391,7 @@ namespace TileSearch
 					}
 					num_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					// remember the current node
-					visited.push_back(CurrentNode);
+					expanded_nodes.push_back(CurrentNode);
 				}
 			}
 			std::cout << "No solution found.\n";
