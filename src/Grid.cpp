@@ -6,8 +6,8 @@ namespace TileSearch
 {
 	/* ========== Tile Class ========== */
 
-	Tile::Tile(uint x, uint y, char id)
-		: position(std::make_pair(x, y)), id(id) 
+	Tile::Tile(uint x, uint y, Letter ID)
+		: position(std::make_pair(x, y)), ID(ID) 
 	{}
 
 	/* ========== End Tile Class ========== */
@@ -23,14 +23,13 @@ namespace TileSearch
 	void Grid::clear() noexcept
 	{
 		// iterate over each row of the grid...
-		for (std::array<std::array<char, height>, width>::iterator row = configuration.begin(); 
-					row != configuration.end(); ++row)
+		for (auto row = configuration.begin(); row != configuration.end(); ++row)
 		{
 			// iterate over each column of each row...
-			for (std::array<char, width>::iterator col = row->begin(); col != row->end(); ++col)
+			for (auto col = row->begin(); col != row->end(); ++col)
 			{
 				// mark the grid position as blank
-				*col = '-';
+				*col = Letter::BLANK;
 			}
 		}
 	}
@@ -42,10 +41,10 @@ namespace TileSearch
 		clear();
 		// y position of tiles indicate rows of the grid
 		// x position of tiles indicate columns of the grid
-		configuration[P.getY()][P.getX()] = P.id;
-		configuration[A.getY()][A.getX()] = A.id;
-		configuration[B.getY()][B.getX()] = B.id;
-		configuration[C.getY()][C.getX()] = C.id;
+		configuration[P.getY()][P.getX()] = P.ID;
+		configuration[A.getY()][A.getX()] = A.ID;
+		configuration[B.getY()][B.getX()] = B.ID;
+		configuration[C.getY()][C.getX()] = C.ID;
 	}
 
 	void Grid::show() const noexcept
@@ -53,14 +52,14 @@ namespace TileSearch
 		std::cout << "\n";
 		std::cout << "\t" << move_count << "\n\n";
 		// iterate over each row in reverse order so the grid is properly displayed within the console
-		for (std::array<std::array<char, height>, width>::const_reverse_iterator row = configuration.crbegin(); row != configuration.crend(); ++row)
+		for (auto row = configuration.crbegin(); row != configuration.crend(); ++row)
 		{
 			std::cout << "\t| ";
 			// iterate over each column of each row...
-			for (std::array<char, width>::const_iterator col = row->cbegin(); col != row->cend(); ++col)
+			for (auto col = row->cbegin(); col != row->cend(); ++col)
 			{
 				// print the character id located at the grid position
-				std::cout << *col << " | ";
+				std::cout << (char)*col << " | ";
 			}
 			std::cout << "\n";
 		}

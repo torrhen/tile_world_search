@@ -6,7 +6,11 @@
 
 namespace TileSearch
 {
-	typedef unsigned int uint;
+	using uint = unsigned int;
+	enum class Letter : char
+	{
+		P = 'P', A = 'A', B = 'B', C = 'C', BLANK = '-'
+	};
 
 	class Tile 
 	{
@@ -15,13 +19,13 @@ namespace TileSearch
 	private:
 		// store the position and id of each grid tile
 		std::pair<uint, uint> position;
-		char id;
+		Letter ID;
 		// get methods are used for easier understanding
 		uint getX() const { return std::get<0>(position); }
 		uint getY() const { return std::get<1>(position); }
 
 	public:
-		Tile(uint x, uint y, char id);
+		Tile(uint x, uint y, Letter ID);
 	};
 
 	class Grid
@@ -30,7 +34,7 @@ namespace TileSearch
 		static constexpr uint width = 4;
 		static constexpr uint height = 4;
 		// store the locations of each tile in a 2D array
-		std::array<std::array<char, height>, width> configuration;
+		std::array<std::array<Letter, height>, width> configuration;
 		Tile P, A, B, C;
 		// count the current total number of moves made by the P tile
 		uint move_count;
@@ -49,7 +53,7 @@ namespace TileSearch
 		void move_P_right() noexcept;
 		// calculate the total manhattan distance between every tile in the current configuration compared to the goal configuration
 		uint manhattan_distance_to(const Grid& Other) const;
-		const std::array<std::array<char, height>, width>& get_configuration() const { return configuration; }
+		auto& get_configuration() const { return configuration; }
 	};
 	// check if two grids have identical configurations
 	bool operator==(const Grid& Left, const Grid& Right);

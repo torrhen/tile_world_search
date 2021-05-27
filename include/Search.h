@@ -10,13 +10,12 @@
 
 namespace TileSearch
 {	
-	typedef unsigned int uint;
+	using uint = unsigned int;
 
 	// tree search functions
 	namespace Tree
 	{
 		void breadth_first_search(const Node& Root, const Node& Goal);
-		void depth_first_search(const Node& Root, const Node& Goal);
 		void iterative_deepening_search(const Node& Root, const Node& Goal);
 		void a_star_search(const Node& Root, const Node& Goal);		
 	}
@@ -26,7 +25,6 @@ namespace TileSearch
 	{
 		bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode);
 		void breadth_first_search(const Node& Root, const Node& Goal);
-		void depth_first_search(const Node& Root, const Node& Goal);
 		void iterative_deepening_search(const Node& Root, const Node& Goal);
 		void a_star_search(const Node& Root, const Node& Goal);	
 	}
@@ -36,7 +34,7 @@ namespace TileSearch
 	template <typename T>
 	uint push_children(T& frontier, const std::vector<Node>& children)
 	{
-		for (std::vector<Node>::const_iterator it = cbegin(children); it != cend(children); ++it)
+		for (auto it = children.cbegin(); it != children.cend(); ++it)
 		{
 			frontier.push(*it);
 		}

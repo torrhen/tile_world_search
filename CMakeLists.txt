@@ -6,4 +6,12 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
 
-add_executable (output src/main.cpp src/Node.cpp src/Grid.cpp src/Search.cpp)
+set(PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
+
+add_executable(output 
+	${PROJECT_SOURCE_DIR}/main.cpp
+	${PROJECT_SOURCE_DIR}/Grid.cpp
+	${PROJECT_SOURCE_DIR}/Node.cpp
+	${PROJECT_SOURCE_DIR}/Search.cpp)
+
+target_include_directories(output PUBLIC ${PROJECT_INCLUDE_DIR})
