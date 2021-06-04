@@ -13,5 +13,3 @@ add_executable(output
 	${PROJECT_SOURCE_DIR}/Grid.cpp
 	${PROJECT_SOURCE_DIR}/Node.cpp
 	${PROJECT_SOURCE_DIR}/Search.cpp)
-
-target_include_directories(output PUBLIC ${PROJECT_INCLUDE_DIR})

@@ -6,6 +6,9 @@
 
 namespace TileSearch
 {
+
+	constexpr int node_limit = 1000000;
+
 	/* ========== Tree Search Functions ========== */
 
 	namespace Tree
@@ -23,7 +26,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty())
+			while (!frontier.empty() && max_nodes_generated < node_limit)
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -68,7 +71,7 @@ namespace TileSearch
 				frontier.push(CurrentNode);
 				num_nodes_generated++;
 
-				while (!frontier.empty())
+				while (!frontier.empty() && max_nodes_generated < node_limit)
 				{
 					// if the current frontier size is larger than the maximum size of the frontier before this point...
 					if (frontier.size() >= max_nodes_generated)
@@ -115,7 +118,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty())
+			while (!frontier.empty() && max_nodes_generated < node_limit)
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -180,7 +183,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty())
+			while (!frontier.empty() && max_nodes_generated < node_limit)
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -232,7 +235,7 @@ namespace TileSearch
 				frontier.push(CurrentNode);
 				num_nodes_generated++;
 
-				while (!frontier.empty())
+				while (!frontier.empty() && max_nodes_generated < node_limit)
 				{
 					// if the current frontier size is larger than the maximum size of the frontier before this point...
 					if (frontier.size() >= max_nodes_generated)
@@ -283,7 +286,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty())
+			while (!frontier.empty() && max_nodes_generated < node_limit)
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
