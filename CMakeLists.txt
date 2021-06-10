@@ -8,8 +8,8 @@ add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 set(PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 
-add_executable(output 
+add_executable(run 
 	${PROJECT_SOURCE_DIR}/main.cpp
 	${PROJECT_SOURCE_DIR}/grid.cpp
 	${PROJECT_SOURCE_DIR}/node.cpp
-	${PROJECT_SOURCE_DIR}/Search.cpp)
+	${PROJECT_SOURCE_DIR}/search.cpp)

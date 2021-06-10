@@ -1,8 +1,8 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "../src/grid.hpp"
-#include "../src/node.hpp"
+#include "grid.hpp"
+#include "node.hpp"
 
 #include <vector>
 #include <queue>

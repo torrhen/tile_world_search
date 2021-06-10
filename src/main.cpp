@@ -1,6 +1,6 @@
 #include "grid.hpp"
 #include "node.hpp"
-#include "../include/Search.h"
+#include "search.hpp"
 
 #include <iostream>
 #include <cstdint>
