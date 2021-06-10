@@ -11,5 +11,5 @@ set(PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 add_executable(output 
 	${PROJECT_SOURCE_DIR}/main.cpp
 	${PROJECT_SOURCE_DIR}/grid.cpp
-	${PROJECT_SOURCE_DIR}/Node.cpp
+	${PROJECT_SOURCE_DIR}/node.cpp
 	${PROJECT_SOURCE_DIR}/Search.cpp)

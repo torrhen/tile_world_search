@@ -1,5 +1,5 @@
 #include "grid.hpp"
-#include "../include/Node.h"
+#include "node.hpp"
 
 #include <cstddef>
 #include <random>
@@ -16,10 +16,10 @@ namespace TileSearch
 	void Node::expand()
 	{
 		// generate the state of every possible child node by moving the P tile
-		for (std::size_t i = 0; i < max_children; ++i)
+		for (std::size_t n = 0; n < max_children; ++n)
 		{
 			Grid ChildState(get_state());
-			switch(i)
+			switch(n)
 	 		{
 	 			case 0:
 	 			ChildState.move_player(Direction::UP);

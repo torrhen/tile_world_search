@@ -2,7 +2,7 @@
 #define SEARCH_H
 
 #include "../src/grid.hpp"
-#include "Node.h"
+#include "../src/node.hpp"
 
 #include <vector>
 #include <queue>

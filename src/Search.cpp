@@ -1,5 +1,5 @@
 #include "grid.hpp"
-#include "../include/Node.h"
+#include "node.hpp"
 #include "../include/Search.h"
 
 #include <iostream>
