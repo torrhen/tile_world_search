@@ -1,7 +1,7 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "Grid.h"
+#include "../src/grid.hpp"
 #include "Node.h"
 
 #include <vector>

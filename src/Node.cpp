@@ -1,4 +1,4 @@
-#include "../include/Grid.h"
+#include "grid.hpp"
 #include "../include/Node.h"
 
 #include <cstddef>
@@ -22,16 +22,16 @@ namespace TileSearch
 			switch(i)
 	 		{
 	 			case 0:
-	 			ChildState.move_P_up();
+	 			ChildState.move_player(Direction::UP);
 	 			break;
 	 			case 1:
-				ChildState.move_P_left();
+				ChildState.move_player(Direction::LEFT);
 	 			break;
 	 			case 2:
-				ChildState.move_P_down();
+				ChildState.move_player(Direction::DOWN);
 	 			break;
 	 			case 3:
-				ChildState.move_P_right();
+				ChildState.move_player(Direction::RIGHT);
 	 			break;
 	 		}
 	 		// only keep child nodes with a state different from their parent

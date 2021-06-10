@@ -1,8 +1,9 @@
-#include "../include/Grid.h"
+#include "grid.hpp"
 #include "../include/Node.h"
 #include "../include/Search.h"
 
 #include <iostream>
+#include <cstdint>
 
 namespace TileSearch
 {
@@ -29,8 +30,8 @@ int main()
 {
 	using namespace TileSearch;
 
-	int search_type;
-	int search_method;
+	std::uint32_t search_type;
+	std::uint32_t search_method;
 
 	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
 	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);

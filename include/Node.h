@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "Grid.h"
+#include "../src/grid.hpp"
 
 #include <memory>
 #include <vector>

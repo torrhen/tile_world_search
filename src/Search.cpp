@@ -1,4 +1,4 @@
-#include "../include/Grid.h"
+#include "grid.hpp"
 #include "../include/Node.h"
 #include "../include/Search.h"
 
