@@ -10,8 +10,6 @@
 
 namespace TileSearch
 {	
-	using uint = unsigned int;
-
 	// tree search functions
 	namespace Tree
 	{

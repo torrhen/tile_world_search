@@ -3,10 +3,11 @@
 #include "search.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 namespace TileSearch
 {
-
+	// the search is stopped if either the time complexity or space complexity exceeds the node limit
 	constexpr int node_limit = 1000000;
 
 	/* ========== Tree Search Functions ========== */
@@ -18,15 +19,15 @@ namespace TileSearch
 		{
 			// nodes stored on the frontier are FIFO
 			std::queue<Node> frontier;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting breadth first tree search... \n";
 			Node CurrentNode(Root);
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty() && max_nodes_generated < node_limit)
+			while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -56,9 +57,9 @@ namespace TileSearch
 		void iterative_deepening_search(const Node& Root, const Node& Goal)
 		{
 			// store the current depth limit of search
-			uint depth_limit = 0;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t depth_limit = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting iterative deepening tree search... \n";
 			while (true)
@@ -71,8 +72,14 @@ namespace TileSearch
 				frontier.push(CurrentNode);
 				num_nodes_generated++;
 
-				while (!frontier.empty() && max_nodes_generated < node_limit)
+				while (!frontier.empty())
 				{
+					if (!(num_nodes_generated < node_limit && max_nodes_generated < node_limit))
+					{
+						std::cout << "No solution found.\n";
+						return;
+					}
+
 					// if the current frontier size is larger than the maximum size of the frontier before this point...
 					if (frontier.size() >= max_nodes_generated)
 						// update this maximum value
@@ -109,8 +116,8 @@ namespace TileSearch
 		{
 			// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
 			std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting A* tree search... \n";
 			Node CurrentNode(Root);
@@ -118,7 +125,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty() && max_nodes_generated < node_limit)
+			while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -175,15 +182,15 @@ namespace TileSearch
 			std::vector<Node> expanded_nodes;
 			// nodes stored on the frontier are FIFO
 			std::queue<Node> frontier;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting breadth first graph search... \n";
 			Node CurrentNode(Root);
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty() && max_nodes_generated < node_limit)
+			while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -218,9 +225,9 @@ namespace TileSearch
 		void iterative_deepening_search(const Node& Root, const Node& Goal)
 		{
 			// store the current depth limit of search
-			uint depth_limit = 0;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t depth_limit = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting iterative deepening tree search... \n";
 			while (true)
@@ -235,8 +242,14 @@ namespace TileSearch
 				frontier.push(CurrentNode);
 				num_nodes_generated++;
 
-				while (!frontier.empty() && max_nodes_generated < node_limit)
+				while (!frontier.empty())
 				{
+					if (!(num_nodes_generated < node_limit && max_nodes_generated < node_limit))
+					{
+						std::cout << "No solution found.\n";
+						return;
+					}
+
 					// if the current frontier size is larger than the maximum size of the frontier before this point...
 					if (frontier.size() >= max_nodes_generated)
 						// update this maximum value
@@ -277,8 +290,8 @@ namespace TileSearch
 			std::vector<Node> expanded_nodes;
 			// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
 			std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
-			uint num_nodes_generated = 0;
-			uint max_nodes_generated = 0;
+			std::uint32_t num_nodes_generated = 0;
+			std::uint32_t max_nodes_generated = 0;
 
 			std::cout << "Starting A* graph search... \n";
 			Node CurrentNode(Root);
@@ -286,7 +299,7 @@ namespace TileSearch
 			frontier.push(CurrentNode);
 			num_nodes_generated++;
 
-			while (!frontier.empty() && max_nodes_generated < node_limit)
+			while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 			{
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
 				if (frontier.size() >= max_nodes_generated)
@@ -337,7 +350,7 @@ namespace TileSearch
 		CurrentNode.get_state().show();
 	}
 
-	void show_performance(uint time_complexity, uint space_complexity)
+	void show_performance(std::uint32_t time_complexity, std::uint32_t space_complexity)
 	{
 		std::cout << "=================================\n";
 		std::cout << "Time Complexity:\t" << time_complexity << "\n";

@@ -8,6 +8,8 @@ add_compile_options(-Wall -Wextra -pedantic -Werror)
 
 set(PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+
 add_executable(run 
 	${PROJECT_SOURCE_DIR}/main.cpp
 	${PROJECT_SOURCE_DIR}/grid.cpp

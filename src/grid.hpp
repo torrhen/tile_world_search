@@ -41,7 +41,7 @@ namespace TileSearch
 		// store the locations of each tile in a 2D array
 		std::array<std::array<Letter, height>, width> configuration;
 		Tile P, A, B, C;
-		// count the current total number of moves made by the P tile
+		// count the current total number of moves made by the player tile
 		std::uint32_t move_count;
 		// place the tiles in their grid positions
 		void build() noexcept;

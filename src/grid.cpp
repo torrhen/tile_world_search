@@ -20,8 +20,6 @@ namespace TileSearch
 		build();
 	}
 
-	// build() throws no exception provided that the starting position of every tile lies within the grid
-	// this will be guaranteed by the final program, but should be highlighted
 	void Grid::build() noexcept
 	{
 		//temporarily remove all tiles from the grid
@@ -56,15 +54,15 @@ namespace TileSearch
 	void Grid::move_player_by(std::int32_t x, std::int32_t y)
 	{
 		// swap player with any tile that exists in the new position
-		if ((A.getY() == P.getY() + y) && (A.getX() == P.getX() + x))
+		if ((A.getX() == P.getX() + x) && (A.getY() == P.getY() + y))
 		{
 			(A.position).swap(P.position);
 		}
-		else if ((B.getY() == P.getY() + y) && (B.getX() == P.getX() + x))
+		else if ((B.getX() == P.getX() + x) && (B.getY() == P.getY() + y))
 		{
 			(B.position).swap(P.position);
 		}
-		else if ((C.getY() == P.getY() + y) && (C.getX() == P.getX() + x))
+		else if ((C.getX() == P.getX() + x) && (C.getY() == P.getY() + y))
 		{
 			(C.position).swap(P.position);
 		}
@@ -83,22 +81,26 @@ namespace TileSearch
 		// check the player tile is not within the top row of the grid
 		if (value == Direction::UP && P.getY() != height - 1)
 		{
+			// move the player upwards by 1 unit
 			move_player_by(0,1);
 		}
 		// check the player tile is not within the bottom row of the grid
 		else if (value == Direction::DOWN && P.getY() != 0)
 		{
+			// move the player down by 1 unit
 			move_player_by(0,-1);
-		}
-		// check the player tile is not within the right column of the grid
-		else if (value == Direction::RIGHT && P.getX() != width - 1)
-		{
-			move_player_by(1,0);
 		}
 		// check the player tile is not within the left column of the grid
 		else if (value == Direction::LEFT && P.getX() != 0)
 		{
+			// move the player left by 1 unit
 			move_player_by(-1,0);
+		}
+		// check the player tile is not within the right column of the grid
+		else if (value == Direction::RIGHT && P.getX() != width - 1)
+		{
+			// move the player right by 1 unit
+			move_player_by(1,0);
 		}
 	}
 
