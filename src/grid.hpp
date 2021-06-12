@@ -7,15 +7,9 @@
 
 namespace TileSearch
 {
-	enum class Letter : char
-	{
-		P = 'P', A = 'A', B = 'B', C = 'C', BLANK = '-'
-	};
+	enum class Letter : char { P = 'P', A = 'A', B = 'B', C = 'C', BLANK = '-' };
 
-	enum class Direction : std::uint32_t
-	{
-		UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
-	};
+	enum class Direction : std::uint32_t { UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4 };
 
 	class Tile 
 	{

@@ -66,15 +66,15 @@ int main()
 		{
 			case 1:
 			std::cout << "Breadth-first tree search selected.\n";
-			Tree::breadth_first_search(RootNode, GoalNode);
+			breadth_first_search(Structure::TREE, RootNode, GoalNode);
 			break;
 			case 2:
 			std::cout << "Iterative deepening tree search selected.\n";
-			Tree::iterative_deepening_search(RootNode, GoalNode);
+			iterative_deepening_search(Structure::TREE, RootNode, GoalNode);
 			break;
 			case 3:
 			std::cout << "A* tree search selected.\n";
-			Tree::a_star_search(RootNode, GoalNode);
+			a_star_search(Structure::TREE, RootNode, GoalNode);
 		}
 		break;
 		case 2:
@@ -82,18 +82,17 @@ int main()
 		{
 			case 1:
 			std::cout << "Breadth-first graph search selected.\n";
-			Graph::breadth_first_search(RootNode, GoalNode);
+			breadth_first_search(Structure::GRAPH, RootNode, GoalNode);
 			break;
 			case 2:
 			std::cout << "Iterative deepening graph search selected.\n";
-			Graph::iterative_deepening_search(RootNode, GoalNode);
+			iterative_deepening_search(Structure::GRAPH, RootNode, GoalNode);
 			break;
 			case 3:
 			std::cout << "A* graph search selected.\n";
-			Graph::a_star_search(RootNode, GoalNode);
+			a_star_search(Structure::GRAPH, RootNode, GoalNode);
 		}
 	}
-	
 	std::cout << "Finished." << std::endl;
 	return 0;
 }

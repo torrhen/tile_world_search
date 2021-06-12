@@ -10,27 +10,17 @@
 
 namespace TileSearch
 {	
-	// tree search functions
-	namespace Tree
-	{
-		void breadth_first_search(const Node& Root, const Node& Goal);
-		void iterative_deepening_search(const Node& Root, const Node& Goal);
-		void a_star_search(const Node& Root, const Node& Goal);		
-	}
+	enum class Structure : std::uint32_t { TREE = 0, GRAPH = 1 };
 
-	// graph search functions
-	namespace Graph
-	{
-		bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode);
-		void breadth_first_search(const Node& Root, const Node& Goal);
-		void iterative_deepening_search(const Node& Root, const Node& Goal);
-		void a_star_search(const Node& Root, const Node& Goal);	
-	}
+	bool has_been_expanded(const std::vector<Node>& expanded_nodes, const Node& CurrentNode);
+	void breadth_first_search(const Structure type, const Node& Root, const Node& Goal);
+	void iterative_deepening_search(const Structure type, const Node& Root, const Node& Goal);
+	void a_star_search(const Structure type, const Node& Root, const Node& Goal);
 
 	// push all generated children of the current node to the frontier
 	// the type of the frontier will depend on the search function used
 	template <typename T>
-	uint push_children(T& frontier, const std::vector<Node>& children)
+	std::uint32_t push_children(T& frontier, const std::vector<Node>& children)
 	{
 		for (auto it = children.cbegin(); it != children.cend(); ++it)
 		{
@@ -51,14 +41,15 @@ namespace TileSearch
 		}
 	};
 
-	// display the solution path between the root node and the goal node of the tree to the console
-	void show_solution(Node CurrentNode);
-	// display the time complexity and space complexity of the search function to the console
-	void show_performance(uint time_complexity, uint space_complexity);
 	// overload function based on the type of frontier used by each search function
 	const Node& get_next_node(const std::queue<Node>& frontier);
 	const Node& get_next_node(const std::stack<Node>& frontier);
 	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier);
+	
+	// display the solution path between the root node and the goal node of the tree to the console
+	void show_solution(Node CurrentNode);
+	// display the time complexity and space complexity of the search function to the console
+	void show_performance(std::uint32_t time_complexity, std::uint32_t space_complexity);
 }
 
 #endif
