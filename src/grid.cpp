@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace TileSearch
+namespace tile_world_search
 {
 	/* ========== Tile Class ========== */
 
@@ -35,16 +35,16 @@ namespace TileSearch
 	void Grid::show() const noexcept
 	{
 		std::cout << "\n";
-		std::cout << "\t" << move_count << "\n\n";
+		std::cout << "\t\tMove: " << move_count << "\n\n";
 		// iterate over each row in reverse order so the grid is properly displayed within the console
 		for (auto row = configuration.crbegin(); row != configuration.crend(); ++row)
 		{
-			std::cout << "\t| ";
+			std::cout << "\t\t";
 			// iterate over each column of each row...
 			for (auto col = row->cbegin(); col != row->cend(); ++col)
 			{
 				// print the character id located at the grid position
-				std::cout << (char)*col << " | ";
+				std::cout << "[" << (char)*col << "]";
 			}
 			std::cout << "\n";
 		}

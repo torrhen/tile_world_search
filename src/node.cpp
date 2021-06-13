@@ -5,7 +5,7 @@
 #include <random>
 #include <algorithm>
 
-namespace TileSearch
+namespace tile_world_search
 {
 	/* ============ Node Class =============== */
 

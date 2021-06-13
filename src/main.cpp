@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace TileSearch
+namespace tile_world_search
 {
 	// set the starting configuration of the root node
 	namespace Start
@@ -28,7 +28,7 @@ namespace TileSearch
 
 int main()
 {
-	using namespace TileSearch;
+	using namespace tile_world_search;
 
 	std::uint32_t search_type;
 	std::uint32_t search_method;
@@ -39,8 +39,11 @@ int main()
 	Node RootNode(StartGrid);
 	Node GoalNode(GoalGrid);
 
-	std::cout << "Pick a search type...\n\n";
-	std::cout << "[1] Tree Search\n[2] Graph Search\n\n";
+	std::cout << "\n[SELECT]\tSearch type\n";
+	std::cout << "...\n";
+	std::cout << "[1]\t\tTree Search\n[2]\t\tGraph Search\n";
+	std::cout << "\n";
+
 	std::cin >> search_type;
 
 	if (search_type != 1 && search_type != 2)
@@ -49,8 +52,11 @@ int main()
 		return 0;
 	}
 
-	std::cout << "Pick a search method...\n\n";
-	std::cout << "[1] Breadth-First Search\n[2] Iterative Deepening Search\n[3] A* Search\n\n";
+	std::cout << "\n[SELECT]\tSearch method\n";
+	std::cout << "...\n";
+	std::cout << "[1]\t\tBreadth-First Search\n[2]\t\tIterative Deepening Search\n[3]\t\tA* Search\n";
+	std::cout << "\n";
+
 	std::cin >> search_method;
 
 	if (search_method != 1 && search_method != 2 && search_method != 3)
@@ -65,15 +71,15 @@ int main()
 		switch (search_method)
 		{
 			case 1:
-			std::cout << "Breadth-first tree search selected.\n";
+			std::cout << "\n[SELECTED]\tBreadth-first tree search\n";
 			breadth_first_search(Structure::TREE, RootNode, GoalNode);
 			break;
 			case 2:
-			std::cout << "Iterative deepening tree search selected.\n";
+			std::cout << "\n[SELECTED]\tIterative deepening tree search\n";
 			iterative_deepening_search(Structure::TREE, RootNode, GoalNode);
 			break;
 			case 3:
-			std::cout << "A* tree search selected.\n";
+			std::cout << "\n[SELECTED]\tA* tree search\n";
 			a_star_search(Structure::TREE, RootNode, GoalNode);
 		}
 		break;
@@ -81,18 +87,17 @@ int main()
 		switch (search_method)
 		{
 			case 1:
-			std::cout << "Breadth-first graph search selected.\n";
+			std::cout << "\n[SELECTED]\tBreadth-first graph search\n";
 			breadth_first_search(Structure::GRAPH, RootNode, GoalNode);
 			break;
 			case 2:
-			std::cout << "Iterative deepening graph search selected.\n";
+			std::cout << "\n[SELECTED]\tIterative deepening graph search\n";
 			iterative_deepening_search(Structure::GRAPH, RootNode, GoalNode);
 			break;
 			case 3:
-			std::cout << "A* graph search selected.\n";
+			std::cout << "\n[SELECTED]\tA* graph search\n";
 			a_star_search(Structure::GRAPH, RootNode, GoalNode);
 		}
 	}
-	std::cout << "Finished." << std::endl;
 	return 0;
 }

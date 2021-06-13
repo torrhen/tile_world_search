@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace TileSearch
+namespace tile_world_search
 {
 	// the search is stopped if either the time complexity or space complexity exceeds the node limit
 	constexpr std::uint32_t node_limit = 1000000;
@@ -32,9 +32,9 @@ namespace TileSearch
 		std::uint32_t max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
-			std::cout << "Starting breadth first tree search...\n";
-		else
-			std::cout << "Starting breadth first graph search...\n";
+			std::cout << "[START]\t\tBreadth-first tree search\n";
+		if (type == Structure::GRAPH)
+			std::cout << "[START]\t\tBreadth-first graph search\n";
 
 		Node CurrentNode(Root);
 		frontier.push(CurrentNode);
@@ -42,6 +42,11 @@ namespace TileSearch
 
 		while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 		{
+			if (num_nodes_generated % 1000 == 0)
+			{
+				std::cout << "[SEARCHING]\t..." << std::endl;
+			}
+
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
 			if (frontier.size() >= max_nodes_generated)
 				// update this maximum value
@@ -52,13 +57,13 @@ namespace TileSearch
 
 			if (CurrentNode == Goal)
 			{
-				if (type == Structure::TREE)
-					std::cout << "Goal node found.\nBreadth first tree search complete.\nGenerating solution...\n";
-				if (type == Structure::GRAPH)
-					std::cout << "Goal node found.\nBreadth first graph search complete.\nGenerating solution...\n";
-
+				std::cout << "[SUCCESS]\tGoal node found\n";
+				std::cout << "[SOLUTION]\tSolution generated\n";
+				
 				show_solution(CurrentNode);
-				show_performance(num_nodes_generated, max_nodes_generated);
+				// show performance
+				std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
+					"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
 				// stop the search
 				return;
 			}
@@ -82,7 +87,7 @@ namespace TileSearch
 				}				
 			}
 		}
-		std::cout << "No solution found.\n";
+		std::cout << "[FAILURE]\tNo solution found\n";
 	}
 
 	// iterative deepening tree search
@@ -94,9 +99,9 @@ namespace TileSearch
 		std::uint32_t max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
-			std::cout << "Starting iterative deepening tree search...\n";
-		else
-			std::cout << "Starting iterative deepening graph search...\n";
+			std::cout << "[START]\t\tIterative deepening tree search\n";
+		if (type == Structure::GRAPH)
+			std::cout << "[START]\t\tIterative deepening graph search\n";
 
 		while (true)
 		{
@@ -105,10 +110,8 @@ namespace TileSearch
 			// nodes stored on the frontier are LIFO
 			std::stack<Node> frontier;
 			// start a new iteration of depth-limited tree search
-			if (type == Structure::TREE)
-				std::cout << "Starting depth limited tree search... \t(depth limit: " << depth_limit << ")\n";
-			else
-				std::cout << "Starting depth limited graph search... \t(depth limit: " << depth_limit << ")\n";
+			std::cout << "[DEPTH LIMIT]\tIncreasing the depth limit to " << depth_limit << std::endl;
+			std::cout << "[SEARCHING]\t..." << std::endl;
 
 			Node CurrentNode(Root);
 			frontier.push(CurrentNode);
@@ -118,7 +121,7 @@ namespace TileSearch
 			{
 				if (!(num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 				{
-					std::cout << "No solution found.\n";
+					std::cout << "[FAILURE]\tNo solution found\n";
 					return;
 				}
 
@@ -132,13 +135,13 @@ namespace TileSearch
 
 				if (CurrentNode == Goal)
 				{
-					if (type == Structure::TREE)
-						std::cout << "Goal node found.\nIterative deepening tree search complete.\nGenerating solution...\n";
-					else
-						std::cout << "Goal node found.\nIterative deepening graph search complete.\nGenerating solution...\n";
+					std::cout << "[SUCCESS]\tGoal node found\n";
+					std::cout << "[SOLUTION]\tSolution generated\n";
 
 					show_solution(CurrentNode);
-					show_performance(num_nodes_generated, max_nodes_generated);
+					// show performance
+					std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
+						"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
 					// stop the search
 					return;
 				}
@@ -166,7 +169,6 @@ namespace TileSearch
 					}
 				}
 			}
-			std::cout << "No solution found. Increasing the depth limit... \n";
 			// increase the depth of the tree to explore if the goal node was not found by the current iteration of depth-limited search
 			depth_limit++;
 		}
@@ -183,9 +185,9 @@ namespace TileSearch
 		std::uint32_t max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
-			std::cout << "Starting A* tree search...\n";
-		else
-			std::cout << "Starting A* graph search...\n";
+			std::cout << "[START]\t\tA* tree search\n";
+		if (type == Structure::GRAPH)
+			std::cout << "[START]\t\tA* graph search\n";
 
 		Node CurrentNode(Root);
 		CurrentNode.set_heuristic_cost(Goal);
@@ -194,6 +196,11 @@ namespace TileSearch
 
 		while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
 		{
+			if (num_nodes_generated % 1000 == 0)
+			{
+				std::cout << "[SEARCHING]\t..." << std::endl;
+			}
+
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
 			if (frontier.size() >= max_nodes_generated)
 				// update this maximum value
@@ -204,13 +211,13 @@ namespace TileSearch
 
 			if (CurrentNode == Goal)
 			{
-				if (type == Structure::TREE)
-					std::cout << "Goal node found.\nA* tree search complete.\nGenerating solution...\n";
-				else
-					std::cout << "Goal node found.\nA* graph search complete.\nGenerating solution...\n";
+				std::cout << "[SUCCESS]\tGoal node found\n";
+				std::cout << "[SOLUTION]\tSolution generated\n";
 
 				show_solution(CurrentNode);
-				show_performance(num_nodes_generated, max_nodes_generated);
+				// show performance
+				std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
+					"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
 				// stop the search
 				return;
 			}
@@ -246,7 +253,7 @@ namespace TileSearch
 				}				
 			}
 		}
-		std::cout << "No solution found.\n";
+		std::cout << "[FAILURE]\tNo solution found\n";
 	}
 
 	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
@@ -262,13 +269,5 @@ namespace TileSearch
 			CurrentNode = *CurrentNode.get_parent();
 		}
 		CurrentNode.get_state().show();
-	}
-
-	void show_performance(std::uint32_t time_complexity, std::uint32_t space_complexity)
-	{
-		std::cout << "=================================\n";
-		std::cout << "Time Complexity:\t" << time_complexity << "\n";
-		std::cout << "Space Complexity:\t" << space_complexity << "\n";
-		std::cout << "=================================\n";
 	}
 }

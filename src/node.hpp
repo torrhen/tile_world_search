@@ -7,7 +7,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace TileSearch
+namespace tile_world_search
 {
 	class Node
 	{

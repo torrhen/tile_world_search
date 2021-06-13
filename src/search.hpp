@@ -8,7 +8,7 @@
 #include <queue>
 #include <stack>
 
-namespace TileSearch
+namespace tile_world_search
 {	
 	enum class Structure : std::uint32_t { TREE = 0, GRAPH = 1 };
 
@@ -48,8 +48,6 @@ namespace TileSearch
 	
 	// display the solution path between the root node and the goal node of the tree to the console
 	void show_solution(Node CurrentNode);
-	// display the time complexity and space complexity of the search function to the console
-	void show_performance(std::uint32_t time_complexity, std::uint32_t space_complexity);
 }
 
 #endif
