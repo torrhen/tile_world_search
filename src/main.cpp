@@ -7,7 +7,7 @@
 
 namespace tile_world_search
 {
-	// set the starting configuration of the root node
+	// set the start state of the root node
 	namespace Start
 	{
 		Tile P(3, 0, Letter::P);
@@ -16,7 +16,7 @@ namespace tile_world_search
 		Tile C(2, 0, Letter::C);		
 	}
 
-	// set the final configuration of the goal node
+	// set the end state of the goal node
 	namespace Goal
 	{
 		Tile P(3, 0, Letter::P);
@@ -99,5 +99,5 @@ int main()
 			a_star_search(Structure::GRAPH, RootNode, GoalNode);
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }

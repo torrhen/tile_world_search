@@ -31,20 +31,15 @@ namespace tile_world_search
 	}
 
 	// used to order the nodes stored the priority queue used by A* search
-	struct HeuristicComparator
+	auto heuristic = [](const Node& Left, const Node& Right)
 	{
-		bool operator()(const Node& Left, const Node& Right)
-		{
-			// nodes with a lower combined sum of their path from the root node and the estimated path to the goal are given priority
-			// used as heuristic for A* search
-			return (Left.get_path_cost() + Left.get_heuristic_cost()) >= (Right.get_path_cost() + Right.get_heuristic_cost());
-		}
+		return (Left.get_path_cost() + Left.get_heuristic_cost()) >= (Right.get_path_cost() + Right.get_heuristic_cost());
 	};
 
 	// overload function based on the type of frontier used by each search function
 	const Node& get_next_node(const std::queue<Node>& frontier);
 	const Node& get_next_node(const std::stack<Node>& frontier);
-	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier);
+	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, decltype(heuristic)>& frontier);
 	
 	// display the solution path between the root node and the goal node of the tree to the console
 	void show_solution(Node CurrentNode);

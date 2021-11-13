@@ -44,7 +44,7 @@ namespace tile_world_search
 		{
 			if (num_nodes_generated % 1000 == 0)
 			{
-				std::cout << "[SEARCHING]\t..." << std::endl;
+				std::cout << "[SEARCHING]\t...\r";
 			}
 
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
@@ -57,7 +57,7 @@ namespace tile_world_search
 
 			if (CurrentNode == Goal)
 			{
-				std::cout << "[SUCCESS]\tGoal node found\n";
+				std::cout << "\n[SUCCESS]\tGoal node found\n";
 				std::cout << "[SOLUTION]\tSolution generated\n";
 				
 				show_solution(CurrentNode);
@@ -87,7 +87,7 @@ namespace tile_world_search
 				}				
 			}
 		}
-		std::cout << "[FAILURE]\tNo solution found\n";
+		std::cout << "\n[FAILURE]\tNo solution found\n";
 	}
 
 	// iterative deepening tree search
@@ -111,7 +111,7 @@ namespace tile_world_search
 			std::stack<Node> frontier;
 			// start a new iteration of depth-limited tree search
 			std::cout << "[DEPTH LIMIT]\tIncreasing the depth limit to " << depth_limit << std::endl;
-			std::cout << "[SEARCHING]\t..." << std::endl;
+			std::cout << "[SEARCHING]\t...\n";
 
 			Node CurrentNode(Root);
 			frontier.push(CurrentNode);
@@ -180,7 +180,7 @@ namespace tile_world_search
 		// already expanded nodes
 		std::vector<Node> expanded_nodes;
 		// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
-		std::priority_queue<Node, std::vector<Node>, HeuristicComparator> frontier;
+		std::priority_queue<Node, std::vector<Node>, decltype(heuristic)> frontier(heuristic);
 		std::uint32_t num_nodes_generated = 0;
 		std::uint32_t max_nodes_generated = 0;
 
@@ -198,7 +198,7 @@ namespace tile_world_search
 		{
 			if (num_nodes_generated % 1000 == 0)
 			{
-				std::cout << "[SEARCHING]\t..." << std::endl;
+				std::cout << "[SEARCHING]\t...\r";
 			}
 
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
@@ -211,7 +211,7 @@ namespace tile_world_search
 
 			if (CurrentNode == Goal)
 			{
-				std::cout << "[SUCCESS]\tGoal node found\n";
+				std::cout << "\n[SUCCESS]\tGoal node found\n";
 				std::cout << "[SOLUTION]\tSolution generated\n";
 
 				show_solution(CurrentNode);
@@ -253,12 +253,12 @@ namespace tile_world_search
 				}				
 			}
 		}
-		std::cout << "[FAILURE]\tNo solution found\n";
+		std::cout << "\n[FAILURE]\tNo solution found\n";
 	}
 
 	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
 	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
-	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, HeuristicComparator>& frontier) { return frontier.top(); }
+	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, decltype(heuristic)>& frontier) { return frontier.top(); }
 
 	void show_solution(Node CurrentNode)
 	{

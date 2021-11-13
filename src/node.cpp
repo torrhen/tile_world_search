@@ -15,7 +15,7 @@ namespace tile_world_search
 
 	void Node::expand()
 	{
-		// generate the state of every possible child node by moving the P tile
+		// generate the state of every possible child node by moving the player tile
 		for (std::size_t n = 0; n < max_children; ++n)
 		{
 			Grid ChildState(get_state());
@@ -35,7 +35,7 @@ namespace tile_world_search
 	 			break;
 	 		}
 	 		// only keep child nodes with a state different from their parent
-	 		// if a child node has the same state as their parent then the movement of the P tile was unsuccessful in that direction
+	 		// if a child node has the same state as their parent then the player move was unsuccessful
 	 		if (!(ChildState == get_state()))
 	 		{
 	 			// create a node directly on the vector using the legal grid state to save an object copy

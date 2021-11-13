@@ -19,7 +19,7 @@ namespace tile_world_search
 		std::uint32_t path_cost;
 		// the heuristic cost of a node is calculated by A* search separate from the instantiation of the class
 		std::uint32_t mutable heuristic_cost;
-		// the P tile can only move in four unique directions therefore only four children are possible for each node in the tree
+		// the player can only move in four unique directions therefore only four children are possible for each node in the tree
 		static constexpr std::uint32_t max_children = 4;
 		std::vector<Node> children;
 

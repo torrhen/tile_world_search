@@ -1,17 +1,8 @@
-cmake_minimum_required (VERSION 3.10)
+cmake_minimum_required (VERSION 3.15)
 
-project(TileSearch)
+project(tile_world_search VERSION 1.0.0 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+add_executable(run src/main.cpp src/grid.cpp src/node.cpp src/search.cpp)
 
-add_compile_options(-Wall -Wextra -pedantic -Werror)
-
-set(PROJECT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/src")
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
-
-add_executable(run 
-	${PROJECT_SOURCE_DIR}/main.cpp
-	${PROJECT_SOURCE_DIR}/grid.cpp
-	${PROJECT_SOURCE_DIR}/node.cpp
-	${PROJECT_SOURCE_DIR}/search.cpp)
+target_compile_features(run PUBLIC cxx_std_17)
+target_compile_options(run INTERFACE -Wall -Wextra -pedantic -Werror)
