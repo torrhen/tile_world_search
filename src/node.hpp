@@ -11,7 +11,26 @@ namespace tile_world_search
 {
 	class Node
 	{
+
+	public:
+
+		explicit Node(const Grid& State);
+		// create node children
+		void expand();
+		// calculate the estimated cost from the current node to the goal node (based on a heuristic function)
+		void set_heuristic_cost(const Node& Goal, std::uint32_t(*func)(const Grid&, const Grid&)) const;
+		const Grid& get_state() const { return State; }
+		Node* get_parent() const { return parent.get(); }
+		std::uint32_t get_depth() const { return depth; }
+		const std::vector<Node>& get_children() const { return children; }
+		std::uint32_t get_heuristic_cost() const { return heuristic_cost; }
+		std::uint32_t get_path_cost() const { return path_cost; }
+
+		static std::uint32_t total_nodes_generated;
+		static std::uint32_t max_nodes_generated;
+
 	private:
+
 		Grid State;
 		// multiple tree nodes can share the same parent node
 		std::shared_ptr<Node> parent;
@@ -23,19 +42,8 @@ namespace tile_world_search
 		static constexpr std::uint32_t max_children = 4;
 		std::vector<Node> children;
 
-	public:
-		explicit Node(const Grid& State);
-		// create node children
-		void expand();
-		// calculate the estimated cost from the current node to the goal node (based on manhattan distance)
-		void set_heuristic_cost(const Node& Goal) const;
-		const Grid& get_state() const { return State; }
-		Node* get_parent() const { return parent.get(); }
-		std::uint32_t get_depth() const { return depth; }
-		const std::vector<Node>& get_children() const { return children; }
-		std::uint32_t get_heuristic_cost() const { return heuristic_cost; }
-		std::uint32_t get_path_cost() const { return path_cost; }
 	};
+	
 	// check if two nodes have identical states
 	bool operator==(const Node& Left, const Node& Right);
 }

@@ -32,6 +32,7 @@ int main()
 
 	std::uint32_t search_type;
 	std::uint32_t search_method;
+	std::uint32_t search_heuristic;
 
 	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
 	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
@@ -64,6 +65,24 @@ int main()
 		std::cout << "Invalid search method.\n";
 		return 0;
 	}
+	else
+	{
+		if (search_method == 3)
+		{
+			std::cout << "\n[SELECT]\tSearch heuristic\n";
+			std::cout << "...\n";
+			std::cout << "[1]\t\tMisplaced tiles\n[2]\t\tManhattan distance\n";
+			std::cout << "\n";
+
+			std::cin >> search_heuristic;
+
+			if (search_heuristic != 1 && search_heuristic != 2)
+			{
+				std::cout << "Invalid search heuristic.\n";
+				return 0;
+			}
+		}
+	}
 
 	switch (search_type)
 	{
@@ -79,8 +98,17 @@ int main()
 			iterative_deepening_search(Structure::TREE, RootNode, GoalNode);
 			break;
 			case 3:
-			std::cout << "\n[SELECTED]\tA* tree search\n";
-			a_star_search(Structure::TREE, RootNode, GoalNode);
+			switch (search_heuristic)
+			{
+				case 1:
+				std::cout << "\n[SELECTED]\tA* tree search (misplaced tiles)\n";
+				a_star_search(Structure::TREE, RootNode, GoalNode, Heuristic::MISPLACED_TILES);
+				break;
+				case 2:
+				std::cout << "\n[SELECTED]\tA* tree search (manhattan distance)\n";
+				a_star_search(Structure::TREE, RootNode, GoalNode, Heuristic::MANHATTAN_DISTANCE);
+				break;
+			}
 		}
 		break;
 		case 2:
@@ -95,9 +123,19 @@ int main()
 			iterative_deepening_search(Structure::GRAPH, RootNode, GoalNode);
 			break;
 			case 3:
-			std::cout << "\n[SELECTED]\tA* graph search\n";
-			a_star_search(Structure::GRAPH, RootNode, GoalNode);
+			switch (search_heuristic)
+			{
+				case 1:
+				std::cout << "\n[SELECTED]\tA* graph search (misplaced tiles)\n";
+				a_star_search(Structure::GRAPH, RootNode, GoalNode, Heuristic::MISPLACED_TILES);
+				break;
+				case 2:
+				std::cout << "\n[SELECTED]\tA* graph search (manhattan distance)\n";
+				a_star_search(Structure::GRAPH, RootNode, GoalNode, Heuristic::MANHATTAN_DISTANCE);
+				break;
+			}
 		}
 	}
+
 	return EXIT_SUCCESS;
 }

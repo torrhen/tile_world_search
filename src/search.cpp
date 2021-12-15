@@ -28,8 +28,8 @@ namespace tile_world_search
 		std::vector<Node> expanded_nodes;
 		// nodes stored on the frontier are FIFO
 		std::queue<Node> frontier;
-		std::uint32_t num_nodes_generated = 0;
-		std::uint32_t max_nodes_generated = 0;
+		Node::total_nodes_generated = 0;
+		Node::max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
 			std::cout << "[START]\t\tBreadth-first tree search\n";
@@ -38,21 +38,21 @@ namespace tile_world_search
 
 		Node CurrentNode(Root);
 		frontier.push(CurrentNode);
-		num_nodes_generated++;
+		Node::total_nodes_generated++;
 
-		while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
+		while (!frontier.empty() && (Node::total_nodes_generated < node_limit && Node::max_nodes_generated < node_limit))
 		{
-			if (num_nodes_generated % 1000 == 0)
+			if (Node::total_nodes_generated % 1000 == 0)
 			{
 				std::cout << "[SEARCHING]\t...\r";
 			}
 
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
-			if (frontier.size() >= max_nodes_generated)
+			if (frontier.size() >= Node::max_nodes_generated)
 				// update this maximum value
-				max_nodes_generated = frontier.size();
+				Node::max_nodes_generated = frontier.size();
 
-			CurrentNode = get_next_node(frontier);
+			CurrentNode = frontier.front();
 			frontier.pop();
 
 			if (CurrentNode == Goal)
@@ -62,8 +62,8 @@ namespace tile_world_search
 				
 				show_solution(CurrentNode);
 				// show performance
-				std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
-					"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
+				std::cout << "[RESULTS]\tTime complexity:\t" << Node::total_nodes_generated << 
+					"\n\t\tSpace complexity:\t" << Node::max_nodes_generated << "\n\n";
 				// stop the search
 				return;
 			}
@@ -72,7 +72,7 @@ namespace tile_world_search
 			{
 				CurrentNode.expand();
 				// add the children of the current node to the frontier and update the total number of nodes generated
-				num_nodes_generated += push_children(frontier, CurrentNode.get_children());			
+				Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());			
 			}
 			else if (type == Structure::GRAPH)
 			{
@@ -81,7 +81,7 @@ namespace tile_world_search
 				{
 					CurrentNode.expand();
 					// add the children of the current node to the frontier and update the total number of nodes generated
-					num_nodes_generated += push_children(frontier, CurrentNode.get_children());
+					Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					// remember the current node
 					expanded_nodes.push_back(CurrentNode);			
 				}				
@@ -95,8 +95,8 @@ namespace tile_world_search
 	{
 		// store the current depth limit of search
 		std::uint32_t depth_limit = 0;
-		std::uint32_t num_nodes_generated = 0;
-		std::uint32_t max_nodes_generated = 0;
+		Node::total_nodes_generated = 0;
+		Node::max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
 			std::cout << "[START]\t\tIterative deepening tree search\n";
@@ -115,22 +115,22 @@ namespace tile_world_search
 
 			Node CurrentNode(Root);
 			frontier.push(CurrentNode);
-			num_nodes_generated++;
+			Node::total_nodes_generated++;
 
 			while (!frontier.empty())
 			{
-				if (!(num_nodes_generated < node_limit && max_nodes_generated < node_limit))
+				if (!(Node::total_nodes_generated < node_limit && Node::max_nodes_generated < node_limit))
 				{
 					std::cout << "[FAILURE]\tNo solution found\n";
 					return;
 				}
 
 				// if the current frontier size is larger than the maximum size of the frontier before this point...
-				if (frontier.size() >= max_nodes_generated)
+				if (frontier.size() >= Node::max_nodes_generated)
 					// update this maximum value
-					max_nodes_generated = frontier.size();
+					Node::max_nodes_generated = frontier.size();
 
-				CurrentNode = get_next_node(frontier);
+				CurrentNode = frontier.top();
 				frontier.pop();
 
 				if (CurrentNode == Goal)
@@ -140,8 +140,8 @@ namespace tile_world_search
 
 					show_solution(CurrentNode);
 					// show performance
-					std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
-						"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
+					std::cout << "[RESULTS]\tTime complexity:\t" << Node::total_nodes_generated << 
+						"\n\t\tSpace complexity:\t" << Node::max_nodes_generated << "\n\n";
 					// stop the search
 					return;
 				}
@@ -153,7 +153,7 @@ namespace tile_world_search
 						// allow its child nodes to be generated and added to the frontier
 						CurrentNode.expand();
 						// add the children of the current node to the frontier and update the total number of nodes generated
-						num_nodes_generated += push_children(frontier, CurrentNode.get_children());						
+						Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());						
 					}
 					else if (type == Structure::GRAPH)
 					{
@@ -162,7 +162,7 @@ namespace tile_world_search
 							// allow its child nodes to be generated and added to the frontier
 							CurrentNode.expand();
 							// add the children of the current node to the frontier and update the total number of nodes generated
-							num_nodes_generated += push_children(frontier, CurrentNode.get_children());
+							Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());
 							// remember the current node
 							expanded_nodes.push_back(CurrentNode);						
 						}
@@ -174,15 +174,21 @@ namespace tile_world_search
 		}
 	}
 
+	// used to order the nodes stored the priority queue used by A* search
+	auto calculate_heuristic = [](const Node& Left, const Node& Right)
+	{
+		return (Left.get_path_cost() + Left.get_heuristic_cost()) >= (Right.get_path_cost() + Right.get_heuristic_cost());
+	};
+
 	// A* tree search
-	void a_star_search(const Structure type, const Node& Root, const Node& Goal)
+	void a_star_search(const Structure type, const Node& Root, const Node& Goal, Heuristic heuristic_method)
 	{
 		// already expanded nodes
 		std::vector<Node> expanded_nodes;
 		// nodes stored on the frontier are ordered based on the quality of their admissable heuristic to the goal node
-		std::priority_queue<Node, std::vector<Node>, decltype(heuristic)> frontier(heuristic);
-		std::uint32_t num_nodes_generated = 0;
-		std::uint32_t max_nodes_generated = 0;
+		std::priority_queue<Node, std::vector<Node>, decltype(calculate_heuristic)> frontier(calculate_heuristic);
+		Node::total_nodes_generated = 0;
+		Node::max_nodes_generated = 0;
 
 		if (type == Structure::TREE)
 			std::cout << "[START]\t\tA* tree search\n";
@@ -190,23 +196,34 @@ namespace tile_world_search
 			std::cout << "[START]\t\tA* graph search\n";
 
 		Node CurrentNode(Root);
-		CurrentNode.set_heuristic_cost(Goal);
-		frontier.push(CurrentNode);
-		num_nodes_generated++;
-
-		while (!frontier.empty() && (num_nodes_generated < node_limit && max_nodes_generated < node_limit))
+		
+		if (heuristic_method == Heuristic::MISPLACED_TILES)
 		{
-			if (num_nodes_generated % 1000 == 0)
+			CurrentNode.set_heuristic_cost(Goal, misplaced_tiles);
+		}
+		if (heuristic_method == Heuristic::MANHATTAN_DISTANCE)
+		{
+			CurrentNode.set_heuristic_cost(Goal, manhattan_distance);
+		}
+
+		//CurrentNode.set_heuristic_cost(Goal, manhattan_distance);
+		
+		frontier.push(CurrentNode);
+		Node::total_nodes_generated++;
+
+		while (!frontier.empty() && (Node::total_nodes_generated < node_limit && Node::max_nodes_generated < node_limit))
+		{
+			if (Node::total_nodes_generated % 1000 == 0)
 			{
 				std::cout << "[SEARCHING]\t...\r";
 			}
 
 			// if the current frontier size is larger than the maximum size of the frontier before this point...
-			if (frontier.size() >= max_nodes_generated)
+			if (frontier.size() >= Node::max_nodes_generated)
 				// update this maximum value
-				max_nodes_generated = frontier.size();
+				Node::max_nodes_generated = frontier.size();
 	
-			CurrentNode = get_next_node(frontier);
+			CurrentNode = frontier.top();
 			frontier.pop();
 
 			if (CurrentNode == Goal)
@@ -216,8 +233,8 @@ namespace tile_world_search
 
 				show_solution(CurrentNode);
 				// show performance
-				std::cout << "[RESULTS]\tTime complexity:\t" << num_nodes_generated << 
-					"\n\t\tSpace complexity:\t" << max_nodes_generated << "\n\n";
+				std::cout << "[RESULTS]\tTime complexity:\t" << Node::total_nodes_generated << 
+					"\n\t\tSpace complexity:\t" << Node::max_nodes_generated << "\n\n";
 				// stop the search
 				return;
 			}
@@ -229,10 +246,17 @@ namespace tile_world_search
 				// without this step child nodes will be incorrectly ordered within the priority queue
 				for (auto it = CurrentNode.get_children().cbegin(); it != CurrentNode.get_children().cend(); ++it)
 				{
-					it->set_heuristic_cost(Goal);
+					if (heuristic_method == Heuristic::MISPLACED_TILES)
+					{
+						it->set_heuristic_cost(Goal, misplaced_tiles);
+					}
+					if (heuristic_method == Heuristic::MANHATTAN_DISTANCE)
+					{
+						it->set_heuristic_cost(Goal, manhattan_distance);
+					}
 				}
 				// add the children of the current node to the frontier and update the total number of nodes generated
-				num_nodes_generated += push_children(frontier, CurrentNode.get_children());				
+				Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());				
 			}
 			else if (type == Structure::GRAPH)
 			{
@@ -244,10 +268,17 @@ namespace tile_world_search
 					// without this step child nodes will be incorrectly ordered within the priority queue
 					for (auto it = CurrentNode.get_children().cbegin(); it != CurrentNode.get_children().cend(); ++it)
 					{
-						it->set_heuristic_cost(Goal);
+						if (heuristic_method == Heuristic::MISPLACED_TILES)
+						{
+							it->set_heuristic_cost(Goal, misplaced_tiles);
+						}
+						if (heuristic_method == Heuristic::MANHATTAN_DISTANCE)
+						{
+							it->set_heuristic_cost(Goal, manhattan_distance);
+						}
 					}
 					// add the children of the current node to the frontier and update the total number of nodes generated
-					num_nodes_generated += push_children(frontier, CurrentNode.get_children());
+					Node::total_nodes_generated += push_children(frontier, CurrentNode.get_children());
 					// remember the current node
 					expanded_nodes.push_back(CurrentNode);
 				}				
@@ -256,18 +287,21 @@ namespace tile_world_search
 		std::cout << "\n[FAILURE]\tNo solution found\n";
 	}
 
-	const Node& get_next_node(const std::queue<Node>& frontier) { return frontier.front(); }
-	const Node& get_next_node(const std::stack<Node>& frontier) { return frontier.top(); }
-	const Node& get_next_node(const std::priority_queue<Node, std::vector<Node>, decltype(heuristic)>& frontier) { return frontier.top(); }
-
 	void show_solution(Node CurrentNode)
 	{
-		// display the state of all node from the current node to the root node up the search tree 
+		std::vector<Node> solution;
+		// store the path from the current node to the root node up the search tree 
 		while (CurrentNode.get_parent() != nullptr)
 		{
-			CurrentNode.get_state().show();
+			solution.push_back(CurrentNode);
 			CurrentNode = *CurrentNode.get_parent();
 		}
-		CurrentNode.get_state().show();
+		// add the root node to the solution
+		solution.push_back(CurrentNode);
+		// display solution
+		for (const Node& node : solution)
+		{
+			node.get_state().show();
+		}
 	}
 }

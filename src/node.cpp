@@ -13,6 +13,9 @@ namespace tile_world_search
 		: State(State), parent(nullptr), depth(0), path_cost(0), heuristic_cost(0)
 	{}
 
+	std::uint32_t Node::total_nodes_generated = 0;
+	std::uint32_t Node::max_nodes_generated = 0;
+
 	void Node::expand()
 	{
 		// generate the state of every possible child node by moving the player tile
@@ -50,9 +53,9 @@ namespace tile_world_search
 		std::shuffle(children.begin(), children.end(), std::default_random_engine());
 	}
 
-	void Node::set_heuristic_cost(const Node& Goal) const
+	void Node::set_heuristic_cost(const Node& Goal, std::uint32_t(*func)(const Grid&, const Grid&)) const
 	{
-		heuristic_cost = get_state().manhattan_distance_to(Goal.get_state());
+		heuristic_cost = func(get_state(), Goal.get_state());
 	}
 
 	/* ============ End Node Class =============== */
