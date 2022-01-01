@@ -11,9 +11,7 @@ namespace tile_world_search
 {
 	class Node
 	{
-
 	public:
-
 		explicit Node(const Grid& State);
 		// create node children
 		void expand();
@@ -25,23 +23,19 @@ namespace tile_world_search
 		const std::vector<Node>& get_children() const { return children; }
 		std::uint32_t get_heuristic_cost() const { return heuristic_cost; }
 		std::uint32_t get_path_cost() const { return path_cost; }
-
 		static std::uint32_t total_nodes_generated;
 		static std::uint32_t max_nodes_generated;
-
 	private:
-
 		Grid State;
 		// multiple tree nodes can share the same parent node
 		std::shared_ptr<Node> parent;
 		std::uint32_t depth;
 		std::uint32_t path_cost;
-		// the heuristic cost of a node is calculated by A* search separate from the instantiation of the class
+		// the heuristic cost of a node is calculated by A* search after instantiation
 		std::uint32_t mutable heuristic_cost;
-		// the player can only move in four unique directions therefore only four children are possible for each node in the tree
+		// the player can only move in four orthogonal ways within the grid
 		static constexpr std::uint32_t max_children = 4;
 		std::vector<Node> children;
-
 	};
 	
 	// check if two nodes have identical states

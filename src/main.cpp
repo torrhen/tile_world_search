@@ -7,7 +7,7 @@
 
 namespace tile_world_search
 {
-	// set the start state of the root node
+	// set the tile positions of the start grid
 	namespace Start
 	{
 		Tile P(3, 0, Letter::P);
@@ -15,8 +15,7 @@ namespace tile_world_search
 		Tile B(1, 0, Letter::B);
 		Tile C(2, 0, Letter::C);		
 	}
-
-	// set the end state of the goal node
+	// set the tile positions of the goal grid
 	namespace Goal
 	{
 		Tile P(3, 0, Letter::P);
@@ -34,32 +33,31 @@ int main()
 	std::uint32_t search_method;
 	std::uint32_t search_heuristic;
 
+	// build the start grid
 	Grid StartGrid(Start::P, Start::A, Start::B, Start::C);
+	// build the goal grid
 	Grid GoalGrid(Goal::P, Goal::A, Goal::B, Goal::C);
-
+	// set the root node and goal node
 	Node RootNode(StartGrid);
 	Node GoalNode(GoalGrid);
 
+	// ask the user to choose the search type
 	std::cout << "\n[SELECT]\tSearch type\n";
 	std::cout << "...\n";
 	std::cout << "[1]\t\tTree Search\n[2]\t\tGraph Search\n";
 	std::cout << "\n";
-
 	std::cin >> search_type;
-
 	if (search_type != 1 && search_type != 2)
 	{
 		std::cout << "Invalid search type.\n";
 		return 0;
 	}
-
+	// ask the user to choose the search method
 	std::cout << "\n[SELECT]\tSearch method\n";
 	std::cout << "...\n";
 	std::cout << "[1]\t\tBreadth-First Search\n[2]\t\tIterative Deepening Search\n[3]\t\tA* Search\n";
 	std::cout << "\n";
-
 	std::cin >> search_method;
-
 	if (search_method != 1 && search_method != 2 && search_method != 3)
 	{
 		std::cout << "Invalid search method.\n";
@@ -67,15 +65,15 @@ int main()
 	}
 	else
 	{
+		// user has selected A* search
 		if (search_method == 3)
 		{
+			// ask the user to choose the heuristic method for A* search
 			std::cout << "\n[SELECT]\tSearch heuristic\n";
 			std::cout << "...\n";
 			std::cout << "[1]\t\tMisplaced tiles\n[2]\t\tManhattan distance\n";
 			std::cout << "\n";
-
 			std::cin >> search_heuristic;
-
 			if (search_heuristic != 1 && search_heuristic != 2)
 			{
 				std::cout << "Invalid search heuristic.\n";
@@ -83,7 +81,7 @@ int main()
 			}
 		}
 	}
-
+	// run the chosen search 
 	switch (search_type)
 	{
 		case 1:
@@ -136,6 +134,5 @@ int main()
 			}
 		}
 	}
-
 	return EXIT_SUCCESS;
 }

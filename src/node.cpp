@@ -21,7 +21,8 @@ namespace tile_world_search
 		// generate the state of every possible child node by moving the player tile
 		for (std::size_t n = 0; n < max_children; ++n)
 		{
-			Grid ChildState(get_state());
+			// copy the current state of the node
+			Grid ChildState = get_state();
 			switch(n)
 	 		{
 	 			case 0:
@@ -41,9 +42,11 @@ namespace tile_world_search
 	 		// if a child node has the same state as their parent then the player move was unsuccessful
 	 		if (!(ChildState == get_state()))
 	 		{
-	 			// create a node directly on the vector using the legal grid state to save an object copy
-	 			children.emplace_back(ChildState);
+	 			// create a node directly on the vector with the moved child state
+	 			// child state memory can be reused above for the next potential child
+	 			children.emplace_back(std::move(ChildState));
 	 			// link the child node with its parent
+	 			// vector element is now the one with ownership of the child node after the move
 	 			children.back().parent = std::make_shared<Node>(*this);
 	 			children.back().depth = get_depth() + 1;
 	 			children.back().path_cost = get_path_cost() + 1;
@@ -53,6 +56,7 @@ namespace tile_world_search
 		std::shuffle(children.begin(), children.end(), std::default_random_engine());
 	}
 
+	// set the heuristic cost of the node based on the chosen heuristic function
 	void Node::set_heuristic_cost(const Node& Goal, std::uint32_t(*func)(const Grid&, const Grid&)) const
 	{
 		heuristic_cost = func(get_state(), Goal.get_state());

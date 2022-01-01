@@ -24,7 +24,6 @@ namespace tile_world_search
 	void breadth_first_search(const Structure type, const Node& Root, const Node& Goal);
 	void iterative_deepening_search(const Structure type, const Node& Root, const Node& Goal);
 	void a_star_search(const Structure type, const Node& Root, const Node& Goal, Heuristic heuristic_method);
-
 	// push all generated children of the current node to the frontier
 	// the type of the frontier will depend on the search function used
 	template <typename T>
@@ -32,13 +31,12 @@ namespace tile_world_search
 	{
 		for (auto it = children.cbegin(); it != children.cend(); ++it)
 		{
-			frontier.push(*it);
+			frontier.push(std::move(*it));
 		}
-		// return the number of children added to the frontier in order to monitor the performance of the search function
+		// return the number of children added to the frontier
 		return children.size();
 	}
-	
-	// display the solution path between the root node and the goal node of the tree to the console
+	// display the solution path found to the console
 	void show_solution(Node CurrentNode);
 }
 

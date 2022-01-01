@@ -1,7 +1,6 @@
 #include "grid.hpp"
 
 #include <iostream>
-#include <cassert>
 
 namespace tile_world_search
 {
@@ -21,8 +20,7 @@ namespace tile_world_search
 	Grid::Grid(const Tile& P, const Tile& A, const Tile& B, const Tile& C)
 		: P(P), A(A), B(B), C(C), move_count(0)
 	{
-		assert(("Grid must be square!", height == width));
-		// build the intial grid
+		// build the empty grid
 		for (std::size_t i = 0; i < height; ++i)
 		{
 			std::vector<Letter> row;
@@ -32,7 +30,6 @@ namespace tile_world_search
 			}
 			configuration.push_back(row);
 		}
-
 		place_tiles();
 	}
 
@@ -90,6 +87,7 @@ namespace tile_world_search
 			std::get<0>(P.position) += x;
 			std::get<1>(P.position) += y;
 		}
+		// update total moves
 		move_count++;
 		place_tiles();
 	}
