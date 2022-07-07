@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.20)
 
-project(tile_world_search VERSION 1.0.0 LANGUAGES CXX)
+project(tile_world_search VERSION 1.1 LANGUAGES CXX)
 
 # find GoogleTest library
 find_package(GTest REQUIRED)
